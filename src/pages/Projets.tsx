@@ -198,10 +198,10 @@ const Projets = () => {
                             e.stopPropagation();
                             navigate(`/projets/${team.id}`);
                           }}
-                          className="flex items-center gap-2 bg-transparent text-slate-900 font-medium text-base sm:text-lg uppercase tracking-[0.1em] hover:text-purple-600 transition-all group/btn"
+                          className="flex items-center gap-1.5 bg-transparent text-slate-900 font-medium text-base sm:text-lg uppercase tracking-[0.1em] hover:text-purple-600 transition-all animate-bounce-x"
                         >
                           Ouvrir ce projet
-                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 animate-bounce-x" />
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                       </div>
 
