@@ -144,8 +144,20 @@ const ProjectDetails = () => {
                 <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${gradient}`} />
                 
                 <div className="flex flex-col items-center gap-4">
+                  {/* Mobile Only: Quick Vote Button */}
+                  {voteActive && (
+                    <div className="md:hidden w-full mb-4">
+                      <button 
+                        onClick={() => setVoteModalOpen(true)}
+                        className={`w-full py-4 rounded-2xl bg-gradient-to-r ${gradient} text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-purple-900/20 active:scale-95 transition-all`}
+                      >
+                        Voter ce projet
+                      </button>
+                    </div>
+                  )}
+
                   {/* Logo and Team Number */}
-                  <div className="flex flex-col items-center gap-4 mb-4">
+                  <div className="flex flex-col items-center gap-4 mb-2">
                     <img 
                       src={team.logo_url || logoUrl} 
                       alt="Logo" 
@@ -157,14 +169,6 @@ const ProjectDetails = () => {
                   </div>
                   
                   <div className="space-y-2">
-                    <div className="flex flex-wrap items-center justify-center gap-2">
-                      <span className="px-3 py-1 bg-purple-50 text-purple-600 rounded-lg text-[10px] font-black uppercase tracking-widest">Équipe {team.name}</span>
-                      {voteActive && (
-                        <span className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 mx-auto">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> Vote Ouvert
-                        </span>
-                      )}
-                    </div>
                     <h1 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight tracking-tight max-w-xl mx-auto">
                       {team.project_title || "Projet d'Innovation"}
                     </h1>
