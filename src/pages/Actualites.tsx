@@ -7,6 +7,39 @@ import { toast } from 'sonner';
 
 import { useAdmin } from '@/context/AdminContext';
 
+const FormattedText = ({ text }: { text: string }) => {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  
+  return (
+    <div className="space-y-3">
+      {text.split('\n').map((line, i) => {
+        if (!line.trim()) return null;
+        const parts = line.split(urlRegex);
+        return (
+          <p key={i} className="text-slate-600 text-sm leading-relaxed">
+            {parts.map((part, j) => 
+              part.match(urlRegex) ? (
+                <a 
+                  key={j} 
+                  href={part} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-purple-600 font-semibold hover:underline break-all" 
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {part}
+                </a>
+              ) : (
+                <span key={j}>{part}</span>
+              )
+            )}
+          </p>
+        );
+      })}
+    </div>
+  );
+};
+
 const ActualitesPage = () => {
   const { news: newsItems, gallery: galleryImages, isLoading } = useAdmin();
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -152,9 +185,7 @@ const ActualitesPage = () => {
 
                           {expandedId === item.id && (
                             <div className="animate-fade-in mb-5">
-                              <p className="text-slate-600 text-sm leading-relaxed">
-                                {item.paragraph}
-                              </p>
+                              <FormattedText text={item.paragraph} />
                             </div>
                           )}
 
