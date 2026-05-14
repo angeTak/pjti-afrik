@@ -1,0 +1,165 @@
+ PJTI-Afrique
+Prix du Jeune Talent Informatique en Afrique
+
+ 1. Présentation du projet
+Contexte et justification
+Le numérique constitue aujourd’hui un levier majeur de développement économique, social et éducatif en Afrique. Cependant, un constat s’impose :
+•	Une grande partie des jeunes n’a pas accès à une formation pratique en informatique 
+•	Le système éducatif reste majoritairement théorique 
+•	Les talents numériques sont peu détectés et insuffisamment valorisés 
+Ce décalage limite la capacité des jeunes à saisir les opportunités du digital et à participer activement à la transformation du continent.
+ Il devient donc essentiel de former tôt, encadrer et révéler les talents.
+
+ Présentation de l’initiative
+Le PJTI-Afrique (Prix du Jeune Talent Informatique en Afrique) est un programme éducatif et compétitif qui vise à :
+•	Former les élèves aux compétences numériques essentielles 
+•	Stimuler leur créativité et leur esprit d’innovation 
+•	Identifier et récompenser les meilleurs talents 
+Le programme cible les élèves de la 6ème à la 1ère (intervalle 11 à 18 ans).
+
+ 2. Problématique
+Malgré la croissance du numérique en Afrique :
+•	 Les jeunes sont peu exposés aux métiers du digital 
+•	 L’apprentissage est rarement orienté vers la pratique 
+•	 Il existe peu de cadres pour valoriser les talents 
+•	 Les idées des jeunes restent souvent inexploitées 
+ Résultat :
+Les jeunes consomment le numérique sans en être acteurs ni créateurs.
+
+ 3. Solution proposée
+Le PJTI-Afrique propose une réponse structurée en deux phases complémentaires :
+
+ Phase 1 : Formation
+Formation pratique dans les domaines clés :
+•	 Programmation (bases du développement web) 
+•	 Cybersécurité (bonnes pratiques) 
+•	 Design digital (création graphique) 
+•	 Intelligence artificielle (initiation aux outils IA et applications pratiques)
+•	 Culture numérique (outils, digital actuel ; télé travail , marketing) 
+ Objectif :
+Donner aux jeunes des compétences concrètes et exploitables
+
+ Phase 2 : Compétition (Challenge)
+Chaque participant :
+•	Développe un projet basé sur sa formation et son choix
+•	Propose une solution à un problème réel 
+•	Présente son projet devant un jury 
+ Objectif :
+Transformer les apprenants en créateurs et innovateurs
+
+ 4. Objectifs du projet
+Objectif général
+Former et révéler les jeunes talents numériques africains.
+Objectifs spécifiques
+•	Initier les jeunes aux compétences digitales 
+•	Encourager l’innovation et la créativité 
+•	Favoriser la réalisation de projets concrets 
+•	Identifier et récompenser les meilleurs profils 
+•	Créer une communauté de jeunes talents 
+
+ 5. Cible
+•	Élèves de la 6ème à la 1ère 
+•	Âge : 11 à 18 ans 
+•	Zone : Afrique (phase pilote au Togo) 
+
+ 6. Approche méthodologique
+Le projet repose sur :
+•	Une pédagogie pratique et orientée projet 
+•	Un apprentissage progressif 
+•	Un encadrement par des formateurs 
+•	Une mise en situation réelle (challenge) 
+
+ 7. Mécanisme de compétition
+Critères d’évaluation :
+•	Innovation 
+•	Utilité 
+•	Qualité technique 
+•	Créativité 
+•	Présentation (pitch) 
+Récompenses :
+•	Prix (financiers et matériels) 
+•	Trophée et Certificats 
+•	Reconnaissance publique 
+•	Opportunités futures 
+
+ 8. Proposition de valeur
+Pour les jeunes
+•	Compétences utiles 
+•	Confiance en soi 
+•	Visibilité 
+Pour les écoles
+•	Valorisation des élèves 
+•	Modernisation de l’apprentissage 
+Pour les partenaires
+•	Accès à de jeunes talents 
+•	Image positive 
+•	Impact social fort 
+
+ 9. Avantages compétitifs
+•	Approche formation + challenge 
+•	Cible jeune (impact à long terme) 
+•	Orientation pratique 
+•	Forte capacité d’expansion 
+•	Projet adaptable à plusieurs pays 
+
+ 10. Stratégie de déploiement
+•	Phase 1 : togo (projet pilote) 
+•	Phase 2 : Extension dans 5 pays de l’Afrique de l’Ouest
+•	Phase 3 : Déploiement progression dans toute l’Afrique
+
+ 11. Durée du programme
+•	Formation : 4 semaines 
+•	Challenge : 1 semaine
+ Durée totale : environ 1 mois + 1 semaine
+
+ 12. Partenaires potentiels
+•	Écoles et établissements 
+•	Entreprises technologiques 
+•	ONG 
+•	Institutions publiques 
+•	Opérateurs télécom 
+
+ 13. Modèle économique
+•	Frais d’inscription (accessibles) 
+•	Sponsoring 
+•	Subventions 
+•	Partenariats 
+
+ 14. Vision à long terme
+La vision est progressive et structurée :
+•	1ère édition : lancement dans un seul pays pilote pour tester et valider le modèle 
+•	2ème édition : extension à 5 pays africains 
+•	Années suivantes : déploiement progressif dans plusieurs pays du continent africain
+
+ 15. Impact attendu
+•	Formation de milliers de jeunes 
+•	Création de solutions locales 
+•	Réduction de la fracture numérique 
+•	Contribution à l’économie digitale 
+
+ 
+
+16. A retenir du projet
+Le PJTI-Afrique, Prix du Jeune Talent Informatique en Afrique, est un programme destiné aux élèves de la 6ème à la 1ère, qui vise à former et révéler les futurs talents du numérique en Afrique.
+Aujourd’hui, beaucoup de jeunes utilisent le digital sans apprendre à le créer. PJTI-Afrique répond à ce défi en combinant formation pratique et compétition réelle.
+Le programme se déroule en deux phases : une formation en programmation, cybersécurité, design , intelligence artificiel et la culture du digitale, suivie d’un challenge où chaque participant développe et présente un projet concret devant un jury.
+ La vision est progressive et structurée :
+•	1ère édition : lancement dans un seul pays pilote pour tester et valider le modèle 
+•	2ème édition : extension à 5 pays africains 
+•	Années suivantes : déploiement progressif dans plusieurs pays du continent africain 
+Les meilleurs participants sont récompensés et valorisés comme jeunes talents africains du numérique.
+Au-delà d’un concours, PJTI-Afrique est un moteur de transformation, qui forme, détecte et propulse une nouvelle génération d’innovateurs africains.
+Notre ambition est claire : bâtir un réseau panafricain de jeunes talents capables de construire le futur digital du continent.
+
+ 17. Porteur du projet
+Qui suis-je ?
+Je suis Angelo TAKPAYA, jeune passionné par l’entrepreneuriat et évoluant dans le domaine de l’informatique.
+J’ai 5 ans d’expérience en graphisme et design, ainsi que 2 ans d’expérience en développement web. Parallèlement, je me forme depuis 3 ans en entrepreneuriat, afin de renforcer mes compétences dans la création et la gestion de projets innovants.
+Parcours académique
+•	 Licence en Informatique – Spécialité Web Design et multimédia 
+à IPNET Institute of Technology 
+•	 Bac +2 en Anglais
+
+Je suis pleinement engagé dans la réussite dans le domaine entrepreneurial, un secteur à la fois exigeant, stimulant et passionnant pour moi.
+Je reste ouvert à toute opportunité éthique d’accompagnement, alignée avec mes objectifs, ainsi qu’à tout partenariat gagnant-gagnant, basé sur la transparence et la confiance.
+
