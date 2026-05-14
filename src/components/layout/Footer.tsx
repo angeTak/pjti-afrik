@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from 'lucide-react';
+import logoUrl from '@/assets/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,7 +12,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
               <img 
-                src="/src/assets/logo.png" 
+                src={logoUrl} 
                 alt="pjti-Afrik Logo" 
                 className="w-12 h-12 sm:w-14 sm:h-14 object-contain brightness-0 invert" 
               />
