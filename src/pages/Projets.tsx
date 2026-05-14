@@ -210,7 +210,7 @@ const Projets = () => {
                           Équipe : <span className="border-b-2 border-purple-300 ml-1 pb-0.5">{team.name}</span>
                         </div>
                         <div className="mb-4">
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-1">Projet</span>
+                          <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-[0.2em] block mb-1">Projet</span>
                           <h2 className="text-xl font-black text-slate-900 leading-tight group-hover:text-purple-600 transition-colors">
                             {team.project_title || 'Projet sans titre'}
                           </h2>
