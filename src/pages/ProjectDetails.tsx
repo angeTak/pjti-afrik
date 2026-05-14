@@ -250,7 +250,7 @@ const ProjectDetails = () => {
                       onClick={() => setVoteModalOpen(true)}
                       className={`w-full py-4 rounded-2xl font-black text-white text-base flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-purple-900/40 bg-gradient-to-r ${gradient}`}
                     >
-                      Soutenir ce projet
+                      Voter ce projet
                       <ChevronRight className="w-5 h-5" />
                     </button>
                   ) : votePlanned ? (
