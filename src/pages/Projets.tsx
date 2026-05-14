@@ -206,8 +206,8 @@ const Projets = () => {
 
                       {/* Content */}
                       <div className="flex-1 text-center">
-                        <div className="inline-block px-5 py-2 bg-purple-50 text-purple-600 font-black text-xs sm:text-sm uppercase tracking-[0.15em] mb-6 rounded-lg">
-                          Équipe : {team.name}
+                        <div className="inline-block px-6 py-3 bg-purple-50 text-purple-600 font-black text-sm sm:text-base uppercase tracking-[0.15em] mb-6 rounded-xl">
+                          Équipe : <span className="border-b-2 border-purple-300 ml-1 pb-0.5">{team.name}</span>
                         </div>
                         <h2 className="text-xl font-black text-slate-900 leading-tight mb-4 group-hover:text-purple-600 transition-colors">
                           {team.project_title || 'Projet sans titre'}
