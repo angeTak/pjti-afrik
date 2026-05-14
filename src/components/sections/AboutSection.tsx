@@ -33,7 +33,7 @@ const AboutSection = () => {
             <span className="text-purple-600">innovante</span>
           </h2>
           <p className="reveal opacity-0 delay-200 text-lg sm:text-xl text-slate-600 leading-relaxed font-medium max-w-2xl mx-auto">
-            Notre programme est dédié à la formation des jeunes aux compétences numériques et technologiques de demain.
+            Notre programme est dédié à la formation des jeunes aux compétences Informatique et intelligence artificielle.
           </p>
         </div>
         
@@ -42,7 +42,7 @@ const AboutSection = () => {
           <div className="space-y-6 sm:space-y-8 lg:sticky lg:top-32">
             <p className="reveal opacity-0 delay-300 text-base sm:text-lg text-slate-600 leading-relaxed">
               Nous croyons que <strong className="text-slate-900 font-bold">l'avenir se construit aujourd'hui</strong>. 
-              À travers une pédagogie pratique orientée projet, nous initions les jeunes aux technologies de pointe.
+              À travers une pédagogie pratique orientée projet, nous initions les jeunes aux compétences du moment et futures.
             </p>
             
             <div className="grid grid-cols-1 gap-4">
@@ -51,7 +51,7 @@ const AboutSection = () => {
                   <GraduationCap className="w-5 h-5 text-white" />
                 </div>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Formation certifiante en programmation, IA et cybersécurité.
+                  Formation certifiante en programmation, IA, cybersécurité et graphisme.
                 </p>
               </div>
               <div className="reveal opacity-0 delay-500 flex items-start gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-100">
@@ -81,7 +81,7 @@ const AboutSection = () => {
                 <div>
                   <h3 className="text-lg font-black text-slate-900 group-hover:text-blue-600 transition-colors">Notre Vision</h3>
                   <p className="text-sm text-slate-500 font-medium leading-relaxed mt-1">
-                    Éducation numérique accessible et inclusive pour les talents du Togo.
+                    Éducation numérique accessible et inclusive pour les talents en Afrique.
                   </p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ const AboutSection = () => {
                 <div>
                   <h3 className="text-lg font-black text-slate-900 group-hover:text-pink-600 transition-colors">Impact</h3>
                   <p className="text-sm text-slate-500 font-medium leading-relaxed mt-1">
-                    Préparer les jeunes togolais aux métiers technologiques de demain.
+                    Préparer la jeunesse africaine aux métiers technologiques de demain.
                   </p>
                 </div>
               </div>

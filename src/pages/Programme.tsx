@@ -39,14 +39,14 @@ const ProgrammeHero = () => (
 const timelineSteps = [
   {
     phase: "Phase 1",
-    title: "Formation Intensive",
+    title: "Formation Pratique",
     duration: "3 Semaines",
     icon: BookOpen,
     color: "bg-blue-600",
     bgColor: "bg-blue-50",
     borderColor: "border-blue-200",
     textColor: "text-blue-700",
-    description: "Les élèves acquièrent des compétences pratiques à travers 5 modules immersifs. Ils découvrent le développement web, l'intelligence artificielle, la robotique et la conception d'objets 3D.",
+    description: "Les élèves acquièrent des compétences pratiques à travers 5 modules informatique. Ils découvrent la programmation, l'intelligence artificielle, la cybersécurité, le design graphisme et le marketing digital.",
     details: [
       "Apprentissage par la pratique (Projets concrets)",
       "Encadrement par des mentors experts",

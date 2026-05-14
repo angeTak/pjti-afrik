@@ -5,25 +5,25 @@ const rewards = [
   {
     icon: Award,
     title: "Prix pour les 3 meilleurs",
-    description: "Récompenses spéciales pour les projets les plus innovants",
+    description: "Récompenses spéciales pour les 2ème et 3ème places (équipe) + Un premier prix pour un jeune talentueux",
     color: "text-accent"
   },
   {
     icon: TrendingUp,
     title: "Opportunités futures",
-    description: "Accompagnement et visibilité pour les meilleurs talents",
+    description: "Accompagnement et stage pour les meilleurs talents",
     color: "text-secondary"
   },
   {
     icon: BookOpen,
-    title: "Fournitures scolaires",
-    description: "Kit complet offert à tous les participants",
+    title: "Orientation sur compétences",
+    description: "Nos experts orientent les jeunes pour une spécialisation",
     color: "text-primary"
   },
   {
     icon: FileBadge,
     title: "Certificats officiels",
-    description: "Attestation de participation et de compétences",
+    description: "Attestation de participation et de compétences, médaille et trophée",
     color: "text-accent"
   }
 ];

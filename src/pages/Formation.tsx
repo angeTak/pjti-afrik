@@ -15,12 +15,12 @@ const FormationHero = () => (
         Les formations du programme
       </h1>
 
-      <p className="text-slate-300 text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-        Destiné aux élèves de la <strong className="text-white font-bold">4ème à la 1ère (11–18 ans)</strong>, le programme pjti-Afrik propose 5 semaines de formation pratique dans les domaines clés du numérique, suivies d'un challenge final institutionnel.
+      <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+        Destiné aux élèves de la <strong className="text-white font-bold">4ème à la Terminale</strong>, pjti-Afrik (Prix du Jeune Talent Informatique) couvre toute l'Afrique de l'Ouest pour ses premières éditions.
       </p>
 
       <div className="flex flex-wrap justify-center gap-3 text-sm">
-        {['5 modules', '4 sem. de formation', '1 sem. de challenge', '50 000 FCFA'].map((tag, i) => (
+        {['5 modules', '4 sem. de formation', '1 sem. de challenge'].map((tag, i) => (
           <span key={i} className="bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2 text-slate-200 font-semibold">
             {tag}
           </span>
@@ -47,7 +47,7 @@ const Formation = () => (
         <div className="container text-center max-w-xl mx-auto">
           <h2 className="text-3xl font-black text-slate-900 mb-4">Inscrire votre enfant</h2>
           <p className="text-slate-600 text-base mb-8">
-            Inscription unique de 50 000 FCFA, paiement possible en 1, 2 ou 3 tranches pour faciliter l'accès au programme.
+            Paiement possible en 1, 2 ou 3 tranches pour faciliter l'accès au programme.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/inscription" className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-purple-600 text-white font-bold text-lg hover:bg-purple-700 transition-colors shadow-sm">

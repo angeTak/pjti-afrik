@@ -11,7 +11,7 @@ const judgingCriteria = [
 
 const podium = [
   {
-    rank: 2, medal: '🥈', name: '2ème place',
+    rank: 2, medal: '🥈', name: '2ème place (équipe)',
     rewards: ['Certificat de finaliste', 'Prix financier & matériel', 'Opportunités futures'],
     textColor: 'text-purple-700', borderColor: 'border-purple-200',
     podiumBg: 'bg-purple-50', podiumH: 'h-24 md:h-32', order: 'order-1',
@@ -24,7 +24,7 @@ const podium = [
     isFirst: true,
   },
   {
-    rank: 3, medal: '🥉', name: '3ème place',
+    rank: 3, medal: '🥉', name: '3ème place (équipe)',
     rewards: ['Certificat de mérite', 'Prix financier & matériel', 'Opportunités futures'],
     textColor: 'text-blue-600', borderColor: 'border-blue-200',
     podiumBg: 'bg-blue-50', podiumH: 'h-16 md:h-24', order: 'order-3',

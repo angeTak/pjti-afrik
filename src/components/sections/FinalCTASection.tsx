@@ -50,7 +50,7 @@ const FinalCTASection = () => {
         </div>
 
           <div className="reveal opacity-0 delay-300 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/partenaires" className="btn-hero-primary group">
+            <a href="/inscription" className="btn-hero-primary group">
               Réserver une place maintenant
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>

@@ -194,7 +194,7 @@ const HeroSection = () => {
 
           {/* Description */}
           <p className="reveal opacity-0 delay-300 text-base sm:text-lg text-gray-300 max-w-lg leading-relaxed mx-auto sm:mx-0">
-            Rejoignez le Prix du Jeune Talent Informatique en pjti-Afrik. Un programme de {settings.durationWeeks} semaines pour passer de consommateur à acteur du digital grâce à la programmation, l'IA et la cybersécurité.
+            Rejoignez le Prix du Jeune Talent Informatique, pjti-Afrik. Un programme de {settings.durationWeeks} semaines de formation et challenge en informatique pour les jeunes de la 4e à la Terminale.
           </p>
 
           {/* CTA Buttons */}
@@ -203,7 +203,7 @@ const HeroSection = () => {
               href="/inscription"
               className="group inline-flex items-center justify-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-base sm:text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-pink-700"
             >
-              Commencer maintenant
+              Pré-inscription
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
 
@@ -212,7 +212,7 @@ const HeroSection = () => {
               className="group inline-flex items-center justify-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-base sm:text-lg hover:bg-white/20 transition-all duration-300 hover:scale-105"
             >
               <BookOpen className="w-5 h-5" />
-              Voir les cours
+              Formation
             </a>
           </div>
         </div>
