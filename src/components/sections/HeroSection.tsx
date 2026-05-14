@@ -123,7 +123,7 @@ const HeroSection = () => {
         {/* Mobile Title */}
         <div className="w-full lg:hidden text-center sm:text-left -mb-4 min-h-[140px]">
           <h1 className="leading-[1.1] tracking-tight">
-            <span className="block text-5xl sm:text-6xl font-black uppercase text-white drop-shadow-2xl min-h-[56px] sm:min-h-[72px]">
+            <span className="block text-4xl sm:text-5xl font-black uppercase text-white drop-shadow-2xl min-h-[48px] sm:min-h-[64px]">
               <TypewriterText text="Vacance challenge" delay={70} startDelay={300} />
             </span>
             <span className="block text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-xl animate-gradient mt-2 min-h-[28px] sm:min-h-[32px]">
@@ -180,13 +180,13 @@ const HeroSection = () => {
           {/* Desktop Title */}
           <div className="hidden lg:block space-y-2 min-h-[220px]">
             <h1 className="leading-[1.1] tracking-tight">
-              <span className="block md:text-7xl lg:text-8xl font-black uppercase text-white drop-shadow-2xl min-h-[80px] lg:min-h-[100px]">
+              <span className="block md:text-5xl lg:text-6xl font-black uppercase text-white drop-shadow-2xl min-h-[64px] lg:min-h-[80px]">
                 <TypewriterText text="Vacance challenge" delay={70} startDelay={300} />
               </span>
               <span className="block md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-2xl animate-gradient mt-3 min-h-[40px] lg:min-h-[48px]">
                 <TypewriterText text="Formation + challenge" delay={40} startDelay={1200} />
               </span>
-              <span className="block md:text-5xl lg:text-6xl font-extrabold text-purple-300 drop-shadow-2xl mt-2 min-h-[60px] lg:min-h-[72px] uppercase tracking-wide">
+              <span className="block md:text-4xl lg:text-5xl font-extrabold text-purple-300 drop-shadow-2xl mt-2 min-h-[48px] lg:min-h-[64px] uppercase tracking-wide">
                 <TypewriterText text="Informatique" delay={60} startDelay={2300} showDot={true} />
               </span>
             </h1>
