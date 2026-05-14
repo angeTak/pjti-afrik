@@ -191,7 +191,7 @@ const Projets = () => {
                           }}
                           className="px-6 py-3 bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:bg-purple-600 transition-colors shadow-lg"
                         >
-                          Voir Projet
+                          Ouvrir ce projet
                         </button>
                       </div>
 
@@ -208,11 +208,30 @@ const Projets = () => {
                         </p>
                       </div>
 
-                      {/* Footer Info: Names only */}
-                      <div className="pt-6 border-t border-slate-100 text-center">
-                        <p className="text-xs font-black text-slate-700 uppercase tracking-wide">
-                          {team.member_ids.map(id => getParticipant(id)?.childName.split(' ')[0]).filter(Boolean).join(' & ')}
-                        </p>
+                      {/* Footer Info: Photos + Names */}
+                      <div className="pt-6 border-t border-slate-100">
+                        <div className="flex flex-wrap items-center justify-center gap-4">
+                          {team.member_ids.map(id => {
+                            const p = getParticipant(id);
+                            if (!p) return null;
+                            return (
+                              <div key={id} className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-slate-100 border-2 border-white shadow-sm overflow-hidden flex-shrink-0">
+                                  {p.photo ? (
+                                    <img src={p.photo} alt={p.childName} className="w-full h-full object-cover" />
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-[10px] font-black text-slate-400 bg-slate-50">
+                                      {p.childName.charAt(0)}
+                                    </div>
+                                  )}
+                                </div>
+                                <span className="text-[10px] font-black text-slate-700 uppercase tracking-tight">
+                                  {p.childName.split(' ')[0]}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   );
