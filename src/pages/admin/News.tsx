@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 
 const AdminNews = () => {
-  const { news, addNews, updateNews, deleteNews } = useAdmin();
+  const { news, addNews, updateNews, deleteNews, uploadImage } = useAdmin();
   const [isEditing, setIsEditing] = useState(false);
   const [newsToDelete, setNewsToDelete] = useState<string | null>(null);
   const [currentArticle, setCurrentArticle] = useState<Partial<NewsItem>>({
