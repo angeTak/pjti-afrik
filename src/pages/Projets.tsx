@@ -189,9 +189,10 @@ const Projets = () => {
                             e.stopPropagation();
                             navigate(`/projets/${team.id}`);
                           }}
-                          className="px-6 py-3 bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:bg-purple-600 transition-colors shadow-lg"
+                          className="flex items-center gap-2 bg-transparent text-slate-900 font-black text-xs sm:text-sm uppercase tracking-[0.2em] hover:text-purple-600 transition-all group/btn"
                         >
                           Ouvrir ce projet
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" />
                         </button>
                       </div>
 
