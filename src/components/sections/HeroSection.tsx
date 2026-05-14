@@ -124,7 +124,7 @@ const HeroSection = () => {
         <div className="w-full lg:hidden text-center sm:text-left -mb-4 min-h-[140px]">
           <h1 className="leading-[1.1] tracking-tight">
             <span className="block text-5xl sm:text-6xl font-black uppercase text-white drop-shadow-2xl min-h-[56px] sm:min-h-[72px]">
-              <TypewriterText text="PJTI-AFRIK" delay={70} startDelay={300} />
+              <TypewriterText text="pjti-Afrik" delay={70} startDelay={300} />
             </span>
             <span className="block text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-xl animate-gradient mt-2 min-h-[28px] sm:min-h-[32px]">
               <TypewriterText text="Formation et challenge" delay={40} startDelay={1200} />
@@ -181,7 +181,7 @@ const HeroSection = () => {
           <div className="hidden lg:block space-y-2 min-h-[220px]">
             <h1 className="leading-[1.1] tracking-tight">
               <span className="block md:text-7xl lg:text-8xl font-black uppercase text-white drop-shadow-2xl min-h-[80px] lg:min-h-[100px]">
-                <TypewriterText text="PJTI-AFRIK" delay={70} startDelay={300} />
+                <TypewriterText text="pjti-Afrik" delay={70} startDelay={300} />
               </span>
               <span className="block md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-2xl animate-gradient mt-3 min-h-[40px] lg:min-h-[48px]">
                 <TypewriterText text="Formation et challenge" delay={40} startDelay={1200} />
@@ -194,7 +194,7 @@ const HeroSection = () => {
 
           {/* Description */}
           <p className="reveal opacity-0 delay-300 text-base sm:text-lg text-gray-300 max-w-lg leading-relaxed mx-auto sm:mx-0">
-            Rejoignez le Prix du Jeune Talent Informatique en PJTI-AFRIK. Un programme de {settings.durationWeeks} semaines pour passer de consommateur à acteur du digital grâce à la programmation, l'IA et la cybersécurité.
+            Rejoignez le Prix du Jeune Talent Informatique en pjti-Afrik. Un programme de {settings.durationWeeks} semaines pour passer de consommateur à acteur du digital grâce à la programmation, l'IA et la cybersécurité.
           </p>
 
           {/* CTA Buttons */}

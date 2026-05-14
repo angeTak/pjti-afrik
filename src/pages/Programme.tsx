@@ -17,7 +17,7 @@ const ProgrammeHero = () => (
       </h1>
 
       <p className="text-slate-300 text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-        Découvrez les étapes clés du programme PJTI-AFRIK. De l'apprentissage intensif au couronnement des meilleurs projets lors de la remise des prix.
+        Découvrez les étapes clés du programme pjti-Afrik. De l'apprentissage intensif au couronnement des meilleurs projets lors de la remise des prix.
       </p>
 
       <div className="flex flex-wrap justify-center gap-3 text-sm">
@@ -177,7 +177,7 @@ const TimelineSection = () => {
 
 const Programme = () => {
   useEffect(() => {
-    document.title = "Programme - PJTI-AFRIK";
+    document.title = "Programme - pjti-Afrik";
   }, []);
 
   return (

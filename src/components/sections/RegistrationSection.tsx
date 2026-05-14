@@ -60,7 +60,7 @@ const RegistrationSection = () => {
   });
 
   const steps = [
-    { id: 0, title: 'Accueil', icon: Home, description: 'Bienvenue dans PJTI-AFRIK' },
+    { id: 0, title: 'Accueil', icon: Home, description: 'Bienvenue dans pjti-Afrik' },
     { id: 1, title: 'Parent', icon: Users, description: 'Informations du parent' },
     { id: 2, title: 'Enfant', icon: User, description: 'Informations de l\'enfant' },
     { id: 3, title: 'Modalités', icon: Clock, description: 'Modalités de paiement prévu' },
@@ -288,12 +288,12 @@ const RegistrationSection = () => {
           <div className="text-center">
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-purple-100 text-purple-700 mb-8 shadow-lg">
               <span className="text-2xl">Welcome</span>
-              <span className="font-bold text-lg">PJTI-AFRIK</span>
+              <span className="font-bold text-lg">pjti-Afrik</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Bienvenue dans{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">PJTI-AFRIK</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">pjti-Afrik</span>
             </h1>
             
             <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
@@ -714,7 +714,7 @@ const RegistrationSection = () => {
               <div className="text-center mb-8">
                 <div className="inline-block bg-purple-50 rounded-2xl p-6 border border-purple-100">
                   <div className="text-3xl font-bold text-purple-900 mb-2">50 000 FCFA</div>
-                  <div className="text-purple-700">Programme PJTI-AFRIK complet</div>
+                  <div className="text-purple-700">Programme pjti-Afrik complet</div>
                 </div>
               </div>
 

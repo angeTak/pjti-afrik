@@ -1,4 +1,4 @@
- PJTI-Afrique
+ pjti-Afrik
 Prix du Jeune Talent Informatique en Afrique
 
  1. Présentation du projet
@@ -11,7 +11,7 @@ Ce décalage limite la capacité des jeunes à saisir les opportunités du digit
  Il devient donc essentiel de former tôt, encadrer et révéler les talents.
 
  Présentation de l’initiative
-Le PJTI-Afrique (Prix du Jeune Talent Informatique en Afrique) est un programme éducatif et compétitif qui vise à :
+Le pjti-Afrik (Prix du Jeune Talent Informatique en Afrique) est un programme éducatif et compétitif qui vise à :
 •	Former les élèves aux compétences numériques essentielles 
 •	Stimuler leur créativité et leur esprit d’innovation 
 •	Identifier et récompenser les meilleurs talents 
@@ -27,7 +27,7 @@ Malgré la croissance du numérique en Afrique :
 Les jeunes consomment le numérique sans en être acteurs ni créateurs.
 
  3. Solution proposée
-Le PJTI-Afrique propose une réponse structurée en deux phases complémentaires :
+Le pjti-Afrik propose une réponse structurée en deux phases complémentaires :
 
  Phase 1 : Formation
 Formation pratique dans les domaines clés :
@@ -140,15 +140,15 @@ La vision est progressive et structurée :
  
 
 16. A retenir du projet
-Le PJTI-Afrique, Prix du Jeune Talent Informatique en Afrique, est un programme destiné aux élèves de la 6ème à la 1ère, qui vise à former et révéler les futurs talents du numérique en Afrique.
-Aujourd’hui, beaucoup de jeunes utilisent le digital sans apprendre à le créer. PJTI-Afrique répond à ce défi en combinant formation pratique et compétition réelle.
+Le pjti-Afrik, Prix du Jeune Talent Informatique en Afrique, est un programme destiné aux élèves de la 6ème à la 1ère, qui vise à former et révéler les futurs talents du numérique en Afrique.
+Aujourd’hui, beaucoup de jeunes utilisent le digital sans apprendre à le créer. pjti-Afrik répond à ce défi en combinant formation pratique et compétition réelle.
 Le programme se déroule en deux phases : une formation en programmation, cybersécurité, design , intelligence artificiel et la culture du digitale, suivie d’un challenge où chaque participant développe et présente un projet concret devant un jury.
  La vision est progressive et structurée :
 •	1ère édition : lancement dans un seul pays pilote pour tester et valider le modèle 
 •	2ème édition : extension à 5 pays africains 
 •	Années suivantes : déploiement progressif dans plusieurs pays du continent africain 
 Les meilleurs participants sont récompensés et valorisés comme jeunes talents africains du numérique.
-Au-delà d’un concours, PJTI-Afrique est un moteur de transformation, qui forme, détecte et propulse une nouvelle génération d’innovateurs africains.
+Au-delà d’un concours, pjti-Afrik est un moteur de transformation, qui forme, détecte et propulse une nouvelle génération d’innovateurs africains.
 Notre ambition est claire : bâtir un réseau panafricain de jeunes talents capables de construire le futur digital du continent.
 
  17. Porteur du projet

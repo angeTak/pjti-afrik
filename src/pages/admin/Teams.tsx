@@ -116,7 +116,7 @@ const AdminTeams = () => {
   const exportTeamsPDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text('Liste des Équipes - Futur Talents Togo', 14, 22);
+    doc.text('Liste des Équipes - pjti-Afrik', 14, 22);
     doc.setFontSize(11);
     doc.setTextColor(100);
     doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')}`, 14, 30);
@@ -144,7 +144,7 @@ const AdminTeams = () => {
   const exportRankingPDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text('Classement Officiel - Futur Talents Togo', 14, 22);
+    doc.text('Classement Officiel - pjti-Afrik', 14, 22);
     doc.setFontSize(11);
     doc.setTextColor(100);
     doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')}`, 14, 30);

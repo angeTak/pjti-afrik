@@ -35,7 +35,7 @@ const Projets = () => {
   const votePlanned = voteStart && voteEnd && now < voteStart;
 
   useEffect(() => {
-    document.title = 'Vote de projet - PJTI-AFRIK';
+    document.title = 'Vote de projet - pjti-Afrik';
     const observer = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }),
       { threshold: 0.05 }
@@ -76,7 +76,7 @@ const Projets = () => {
             </h1>
             
             <p className="reveal opacity-0 delay-100 text-base md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10 px-4">
-              Découvrez les projets technologiques portés par nos jeunes talents du PJTI-AFRIK 1ère édition au Togo
+              Découvrez les projets technologiques portés par nos jeunes talents du pjti-Afrik 1ère édition au Togo
             </p>
 
             {/* Stats Bar */}

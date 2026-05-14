@@ -60,7 +60,7 @@ const TarifsHero = () => (
 const Tarifs = () => {
   const { settings } = useAdmin();
   useEffect(() => {
-    document.title = "Tarifs - PJTI-AFRIK";
+    document.title = "Tarifs - pjti-Afrik";
   }, []);
 
   const priceStr = settings.programPrice || "50 000";

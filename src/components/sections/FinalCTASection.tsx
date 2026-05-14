@@ -57,7 +57,7 @@ const FinalCTASection = () => {
           </div>
 
           <p className="reveal opacity-0 delay-400 text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.2em] mt-10 text-center mx-auto max-w-2xl">
-            Programme PJTI-AFRIK – 50 000 FCFA | Certificat inclus | 04 prix à gagner | Trophée | et d'autres avantages
+            Programme pjti-Afrik – 50 000 FCFA | Certificat inclus | 04 prix à gagner | Trophée | et d'autres avantages
           </p>
         </div>
 

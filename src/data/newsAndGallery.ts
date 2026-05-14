@@ -1,12 +1,12 @@
 export const newsItems = [
   {
     id: 1,
-    title: "Lancement officiel du programme PJTI-AFRIK 2025",
+    title: "Lancement officiel du programme pjti-Afrik 2025",
     date: "15 Mai 2025",
     category: "Événement",
     image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800",
     excerpt: "Ouverture des inscriptions pour la nouvelle édition.",
-    paragraph: "Le Prix du Jeune Talent Informatique en AFRIK (PJTI-AFRIK) ouvre officiellement ses portes pour la nouvelle édition. Cette année, nous attendons de nombreux participants venant de toute la région pour se former aux métiers du numérique et relever les défis de demain. Le programme inclut des bootcamps intensifs et un challenge final."
+    paragraph: "Le Prix du Jeune Talent Informatique en AFRIK (pjti-Afrik) ouvre officiellement ses portes pour la nouvelle édition. Cette année, nous attendons de nombreux participants venant de toute la région pour se former aux métiers du numérique et relever les défis de demain. Le programme inclut des bootcamps intensifs et un challenge final."
   },
   {
     id: 2,

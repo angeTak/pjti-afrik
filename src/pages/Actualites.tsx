@@ -31,7 +31,7 @@ const ActualitesPage = () => {
   };
 
   useEffect(() => {
-    document.title = "Actualités & Galerie - PJTI-AFRIK";
+    document.title = "Actualités & Galerie - pjti-Afrik";
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -70,7 +70,7 @@ const ActualitesPage = () => {
             
             <h1 className="reveal opacity-0 delay-100 text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight uppercase tracking-tight">
               Suivez l'aventure <br />
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">PJTI-AFRIK</span>
+              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">pjti-Afrik</span>
             </h1>
             
             <p className="reveal opacity-0 delay-200 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed mb-12">
@@ -170,7 +170,7 @@ const ActualitesPage = () => {
                             <button 
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleShare(item.title, item.excerpt || 'Découvrez cette actualité sur PJTI-AFRIK');
+                                handleShare(item.title, item.excerpt || 'Découvrez cette actualité sur pjti-Afrik');
                               }}
                               className="w-9 h-9 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-purple-50 hover:text-purple-600 transition-colors mt-2"
                               title="Partager cet article"

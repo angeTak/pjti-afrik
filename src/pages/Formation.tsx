@@ -16,7 +16,7 @@ const FormationHero = () => (
       </h1>
 
       <p className="text-slate-300 text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-        Destiné aux élèves de la <strong className="text-white font-bold">4ème à la 1ère (11–18 ans)</strong>, le programme PJTI-AFRIK propose 5 semaines de formation pratique dans les domaines clés du numérique, suivies d'un challenge final institutionnel.
+        Destiné aux élèves de la <strong className="text-white font-bold">4ème à la 1ère (11–18 ans)</strong>, le programme pjti-Afrik propose 5 semaines de formation pratique dans les domaines clés du numérique, suivies d'un challenge final institutionnel.
       </p>
 
       <div className="flex flex-wrap justify-center gap-3 text-sm">

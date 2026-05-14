@@ -30,7 +30,7 @@ const ProjectDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (team) {
-      document.title = `${team.name} - PJTI-AFRIK`;
+      document.title = `${team.name} - pjti-Afrik`;
     }
   }, [team]);
 
@@ -61,7 +61,7 @@ const ProjectDetails = () => {
 
   const handleShare = (platform: 'whatsapp' | 'facebook' | 'linkedin' | 'copy') => {
     const url = window.location.href;
-    const text = `Découvrez le projet de l'équipe ${team.name} sur PJTI-AFRIK : ${team.project_title || team.name}`;
+    const text = `Découvrez le projet de l'équipe ${team.name} sur pjti-Afrik : ${team.project_title || team.name}`;
     
     let shareUrl = '';
     switch (platform) {

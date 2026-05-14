@@ -12,7 +12,7 @@ const Footer = () => {
             <div className="flex items-center gap-3 mb-6">
               <img 
                 src="/src/assets/logo.png" 
-                alt="PJTI-AFRIK Logo" 
+                alt="pjti-Afrik Logo" 
                 className="w-12 h-12 sm:w-14 sm:h-14 object-contain brightness-0 invert" 
               />
               <span className="font-black font-display text-xl sm:text-2xl text-white leading-none">

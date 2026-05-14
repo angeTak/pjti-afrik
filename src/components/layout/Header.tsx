@@ -45,7 +45,7 @@ const Header = () => {
         <a href="/" className="flex items-center gap-3 group">
           <img 
             src="/src/assets/logo.png" 
-            alt="PJTI-AFRIK Logo" 
+            alt="pjti-Afrik Logo" 
             className="w-10 h-10 sm:w-12 sm:h-12 object-contain group-hover:scale-110 transition-transform duration-300" 
           />
           <span className="font-black font-display text-base sm:text-lg text-slate-900 leading-none">

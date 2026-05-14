@@ -46,7 +46,7 @@ const PartenairesPage = () => {
   const displayPartners = managedPartners;
 
   useEffect(() => {
-    document.title = "Partenaires - PJTI-AFRIK";
+    document.title = "Partenaires - pjti-Afrik";
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -93,7 +93,7 @@ const PartenairesPage = () => {
             </h1>
 
             <p className="reveal opacity-0 delay-200 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Le PJTI-AFRIK est soutenu par un réseau d'organisations engagées — institutions publiques,
+              Le pjti-Afrik est soutenu par un réseau d'organisations engagées — institutions publiques,
               entreprises technologiques et acteurs de l'éducation — qui partagent notre vision d'un avenir
               numérique inclusif pour les jeunes togolais.
             </p>
@@ -183,7 +183,7 @@ const PartenairesPage = () => {
                 Pourquoi rejoindre notre écosystème ?
               </h2>
               <p className="text-slate-500 text-lg max-w-xl mx-auto">
-                Un partenariat PJTI-AFRIK c'est bien plus qu'un logo sur un site.
+                Un partenariat pjti-Afrik c'est bien plus qu'un logo sur un site.
               </p>
             </div>
 
@@ -232,7 +232,7 @@ const PartenairesPage = () => {
                 <div className="grid sm:grid-cols-2 gap-3 mb-10 text-left">
                   {[
                     'Visibilité sur nos supports officiels',
-                    'Accès aux événements PJTI-AFRIK',
+                    'Accès aux événements pjti-Afrik',
                     'Rapport d\'impact annuel',
                     'Co-branding sur les certificats',
                   ].map((item, i) => (

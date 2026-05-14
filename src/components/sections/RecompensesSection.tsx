@@ -18,7 +18,7 @@ const podium = [
   },
   {
     rank: 1, medal: '🥇', name: '1ère place',
-    rewards: ['Trophée PJTI-AFRIK', 'Certificat d\'excellence', 'Prix financier & matériel', 'Opportunités futures'],
+    rewards: ['Trophée pjti-Afrik', 'Certificat d\'excellence', 'Prix financier & matériel', 'Opportunités futures'],
     textColor: 'text-pink-600', borderColor: 'border-pink-200',
     podiumBg: 'bg-pink-50', podiumH: 'h-40 md:h-48', order: 'order-2',
     isFirst: true,
