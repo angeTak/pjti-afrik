@@ -7,10 +7,15 @@ import ConfirmModal from '@/components/ui/ConfirmModal';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Download } from 'lucide-react';
+import { LayoutGrid } from 'lucide-react';
+
+const CATEGORIES = ['Programmation', 'Intelligence Artificielle', 'Cybersécurité', 'Design Graphisme', 'Marketing Digital'];
 
 const EMPTY_TEAM: Omit<Team, 'id' | 'created_at'> = {
   name: '', project_title: '', description: '', captain_id: null, member_ids: [],
   is_published: false, vote_start_date: null, vote_end_date: null,
+  logo_url: '',
+  category: 'Programmation',
 };
 
 const AdminTeams = () => {
@@ -41,6 +46,22 @@ const AdminTeams = () => {
       }
     } catch {
       toast.error("Erreur lors de la mise à jour");
+    } finally {
+      setIsUploading(null);
+    }
+  };
+  
+  const handleLogoUpload = async (file: File) => {
+    if (!file) return;
+    setIsUploading('logo');
+    try {
+      const url = await uploadImage(file, 'teams');
+      if (url) {
+        setForm(prev => ({ ...prev, logo_url: url }));
+        toast.success('Logo téléchargé');
+      }
+    } catch {
+      toast.error("Erreur d'envoi");
     } finally {
       setIsUploading(null);
     }
@@ -82,9 +103,18 @@ const AdminTeams = () => {
   };
 
   const handleEdit = (t: Team) => {
-    setForm({ name: t.name, project_title: t.project_title, description: t.description, captain_id: t.captain_id,
-      member_ids: t.member_ids, is_published: t.is_published,
-      vote_start_date: t.vote_start_date, vote_end_date: t.vote_end_date });
+    setForm({ 
+      name: t.name, 
+      project_title: t.project_title, 
+      description: t.description, 
+      captain_id: t.captain_id,
+      member_ids: t.member_ids, 
+      is_published: t.is_published,
+      vote_start_date: t.vote_start_date, 
+      vote_end_date: t.vote_end_date,
+      logo_url: t.logo_url || '',
+      category: t.category || 'Programmation'
+    });
     setIsEditing(true); setEditingId(t.id);
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -246,6 +276,35 @@ const AdminTeams = () => {
 
             <form onSubmit={handleSave} className="grid md:grid-cols-2 gap-8">
               <div className="space-y-5">
+                {/* Logo Upload */}
+                <div className="flex flex-col items-center justify-center p-6 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 mb-2 group hover:border-purple-300 transition-all relative">
+                  {form.logo_url ? (
+                    <div className="relative group/logo">
+                      <img src={form.logo_url} className="w-24 h-24 rounded-2xl object-contain bg-white shadow-md" alt="Logo" />
+                      <button 
+                        type="button" 
+                        onClick={() => setForm({...form, logo_url: ''})}
+                        className="absolute -top-2 -right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover/logo:opacity-100 transition-opacity shadow-lg"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center cursor-pointer">
+                      <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                        {isUploading === 'logo' ? (
+                          <div className="animate-spin h-6 w-6 border-4 border-purple-600 border-t-transparent rounded-full" />
+                        ) : (
+                          <Upload className="w-6 h-6 text-slate-400" />
+                        )}
+                      </div>
+                      <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Logo de l'équipe</span>
+                      <input type="file" className="hidden" accept="image/*" disabled={isUploading === 'logo'}
+                        onChange={(e) => e.target.files?.[0] && handleLogoUpload(e.target.files[0])} />
+                    </label>
+                  )}
+                </div>
+
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-1.5">Nom de l'équipe *</label>
                   <input type="text" value={form.name} required
@@ -260,6 +319,19 @@ const AdminTeams = () => {
                     onChange={e => setForm({ ...form, project_title: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border-2 border-slate-100 focus:border-purple-500 outline-none transition-colors"
                     placeholder="Ex: Système de Tri Intelligent" />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1.5">Catégorie du projet *</label>
+                  <select 
+                    value={form.category}
+                    onChange={e => setForm({ ...form, category: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-100 focus:border-purple-500 outline-none bg-white text-sm font-bold text-slate-700 transition-colors cursor-pointer"
+                  >
+                    {CATEGORIES.map(cat => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>

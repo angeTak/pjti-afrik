@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Crown, Users2, Calendar, Trophy, Clock, Search, Filter, ArrowRight, LayoutGrid, Sparkles } from 'lucide-react';
 import Header from '@/components/layout/Header';
+import logoUrl from '@/assets/logo.png';
 import Footer from '@/components/layout/Footer';
 import SeparatorPattern from '@/components/ui/SeparatorPattern';
 import { useAdmin } from '@/context/AdminContext';
@@ -11,7 +12,7 @@ const Projets = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const categories = ['Tous', 'Programmation', 'Cybersécurité', 'Design', 'Intelligence Artificielle'];
+  const categories = ['Tous', 'Programmation', 'Intelligence Artificielle', 'Cybersécurité', 'Design Graphisme', 'Marketing Digital'];
   const [selectedFilter, setSelectedFilter] = useState('Tous');
 
   const publishedTeams = useMemo(() => teams.filter(t => t.is_published), [teams]);
@@ -186,12 +187,19 @@ const Projets = () => {
                       className={`reveal opacity-0 group flex flex-col bg-white rounded-lg border-2 border-purple-600 hover:border-purple-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer overflow-hidden p-8`}
                       style={{ transitionDelay: `${(idx % 8) * 100}ms` }}
                     >
-                      {/* Team Number / Action */}
-                      <div className="flex items-center justify-center gap-6 mb-8">
-                        <div className="text-4xl font-black bg-gradient-to-br from-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-tighter">
-                          #{(team.name.replace(/[^0-9]/g, '') || (idx + 1).toString()).padStart(2, '0')}
+                      {/* Card Top: Logo and Team Number */}
+                      <div className="flex flex-col items-center justify-center mb-8 gap-4">
+                        <img 
+                          src={team.logo_url || logoUrl} 
+                          alt="Logo" 
+                          className="w-14 h-14 sm:w-16 sm:h-16 object-contain" 
+                        />
+                        <div className="text-2xl font-black bg-gradient-to-br from-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-tighter">
+                          E-{(team.name.replace(/[^0-9]/g, '') || (idx + 1).toString()).padStart(2, '0')}
                         </div>
-                        
+                      </div>
+
+                      <div className="flex items-center justify-center mb-8">
                         <button 
                           onClick={(e) => {
                             e.stopPropagation();
@@ -210,7 +218,7 @@ const Projets = () => {
                           Équipe : <span className="border-b-2 border-purple-300 ml-1 pb-0.5">{team.name}</span>
                         </div>
                         <div className="mb-4">
-                          <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-[0.2em] block mb-1">Projet</span>
+                          <span className="inline-block text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-1 border-b border-slate-200 pb-0.5">Projet</span>
                           <h2 className="text-xl font-black text-slate-900 leading-tight group-hover:text-purple-600 transition-colors">
                             {team.project_title || 'Projet sans titre'}
                           </h2>
@@ -229,8 +237,8 @@ const Projets = () => {
                             return (
                               <div key={id} className="flex items-center gap-2">
                                 <div className="w-8 h-8 rounded-full bg-slate-100 border-2 border-white shadow-sm overflow-hidden flex-shrink-0">
-                                  {p.photo ? (
-                                    <img src={p.photo} alt={p.childName} className="w-full h-full object-cover" />
+                                  {p.photo_url ? (
+                                    <img src={p.photo_url} alt={p.childName} className="w-full h-full object-cover" />
                                   ) : (
                                     <div className="w-full h-full flex items-center justify-center text-[10px] font-black text-slate-400 bg-slate-50">
                                       {p.childName.charAt(0)}

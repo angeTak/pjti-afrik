@@ -83,6 +83,8 @@ export interface Team {
   vote_start_date: string | null;
   vote_end_date: string | null;
   total_points: number;
+  logo_url?: string;
+  category?: string;
 }
 
 interface AdminContextType {
@@ -572,6 +574,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       is_published: team.is_published,
       vote_start_date: team.vote_start_date,
       vote_end_date: team.vote_end_date,
+      logo_url: team.logo_url,
+      category: team.category,
     };
     const { data, error } = await supabase.from('teams').insert([dbTeam]).select().single();
     if (error) {
@@ -591,6 +595,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         vote_start_date: data.vote_start_date || null,
         vote_end_date: data.vote_end_date || null,
         total_points: data.total_points || 0,
+        logo_url: data.logo_url || '',
+        category: data.category || 'Tous',
       };
       setTeams(prev => [newTeam, ...prev]);
     }

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Crown, Users2, Trophy, ChevronRight, Clock, MapPin, Zap, Share2 } from 'lucide-react';
 import { useAdmin, Registration } from '@/context/AdminContext';
 import Header from '@/components/layout/Header';
+import logoUrl from '@/assets/logo.png';
 import Footer from '@/components/layout/Footer';
 import VotePackagesModal from '@/components/ui/VotePackagesModal';
 import { toast } from 'sonner';
@@ -143,18 +144,15 @@ const ProjectDetails = () => {
                 <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${gradient}`} />
                 
                 <div className="flex flex-col items-center gap-4">
-                  {/* Team Number and Quick Vote */}
-                  <div className="flex items-center gap-6">
-                    {voteActive && (
-                      <button 
-                        onClick={() => setVoteModalOpen(true)}
-                        className={`px-6 py-3 rounded-lg bg-gradient-to-r ${gradient} text-white font-black text-xs uppercase tracking-widest shadow-xl hover:scale-105 active:scale-95 transition-all`}
-                      >
-                        Voter
-                      </button>
-                    )}
+                  {/* Logo and Team Number */}
+                  <div className="flex flex-col items-center gap-4 mb-4">
+                    <img 
+                      src={team.logo_url || logoUrl} 
+                      alt="Logo" 
+                      className="w-16 h-16 md:w-24 md:h-24 object-contain" 
+                    />
                     <div className={`text-5xl md:text-6xl font-black bg-gradient-to-br ${gradient} bg-clip-text text-transparent tracking-tighter`}>
-                      #{ (team.name.replace(/[^0-9]/g, '') || (teamIndex + 1).toString()).padStart(2, '0') }
+                      E-{(team.name.replace(/[^0-9]/g, '') || (teamIndex + 1).toString()).padStart(2, '0')}
                     </div>
                   </div>
                   
