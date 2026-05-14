@@ -209,9 +209,12 @@ const Projets = () => {
                         <div className="inline-block px-6 py-3 bg-purple-50 text-purple-600 font-black text-sm sm:text-base uppercase tracking-[0.15em] mb-6 rounded-xl">
                           Équipe : <span className="border-b-2 border-purple-300 ml-1 pb-0.5">{team.name}</span>
                         </div>
-                        <h2 className="text-xl font-black text-slate-900 leading-tight mb-4 group-hover:text-purple-600 transition-colors">
-                          {team.project_title || 'Projet sans titre'}
-                        </h2>
+                        <div className="mb-4">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-1">Projet</span>
+                          <h2 className="text-xl font-black text-slate-900 leading-tight group-hover:text-purple-600 transition-colors">
+                            {team.project_title || 'Projet sans titre'}
+                          </h2>
+                        </div>
                         <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed mb-6 px-2">
                           {team.description}
                         </p>
