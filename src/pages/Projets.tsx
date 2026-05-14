@@ -106,7 +106,6 @@ const Projets = () => {
                   <div className="w-px h-8 md:h-10 bg-white/10" />
                   <div className="text-center animate-pulse">
                     <div className="text-2xl md:text-3xl font-black text-emerald-400">Actif</div>
-                    <div className="text-[8px] md:text-[10px] text-emerald-500/70 font-bold uppercase tracking-widest mt-1">Vote</div>
                   </div>
                 </>
               )}
@@ -200,7 +199,7 @@ const Projets = () => {
                           }}
                           className="flex items-center gap-1.5 bg-transparent text-slate-900 font-medium text-base sm:text-lg uppercase tracking-[0.1em] hover:text-purple-600 transition-all animate-bounce-x"
                         >
-                          Ouvrir ce projet
+                          Voter ce Projet
                           <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                       </div>
