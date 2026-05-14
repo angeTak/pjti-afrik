@@ -10,7 +10,7 @@ import { useAdmin } from '@/context/AdminContext';
 const ActualitesPage = () => {
   const { news: newsItems, gallery: galleryImages, isLoading } = useAdmin();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<string | number | null>(null);
   const [activeTab, setActiveTab] = useState<'actualites' | 'galerie'>('actualites');
 
   const handleShare = async (title: string, text: string, url: string = window.location.href) => {
@@ -160,7 +160,7 @@ const ActualitesPage = () => {
 
                           <div className="mt-auto pt-2 flex items-center justify-between border-t border-slate-100/50 mt-2">
                             <button 
-                              onClick={() => setExpandedId(expandedId === item.id ? null : Number(item.id))}
+                              onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
                               className="inline-flex items-center gap-2 text-purple-600 font-bold text-sm hover:text-purple-800 transition-colors group/link mt-2"
                             >
                               {expandedId === item.id ? 'Réduire' : 'Lire en plus'}
