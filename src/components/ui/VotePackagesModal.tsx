@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Trophy, CreditCard, Loader2 } from 'lucide-react';
+import { X, Trophy, CreditCard, Loader2, ArrowDown } from 'lucide-react';
 import { Team, useAdmin } from '@/context/AdminContext';
 import { toast } from 'sonner';
 
@@ -121,6 +121,12 @@ const VotePackagesModal: React.FC<VotePackagesModalProps> = ({ isOpen, onClose, 
                 <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Total points</div>
                 <div className="text-lg font-black text-amber-400">+{totalPoints} pts</div>
               </div>
+            </div>
+          )}
+
+          {selectedPackages.length > 0 && !isProcessing && (
+            <div className="flex justify-center mt-6 -mb-4 animate-bounce duration-1000">
+              <ArrowDown className="w-8 h-8 text-purple-600" />
             </div>
           )}
 
