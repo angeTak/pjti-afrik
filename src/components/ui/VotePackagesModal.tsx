@@ -19,23 +19,34 @@ const PACKAGES = [
 
 const VotePackagesModal: React.FC<VotePackagesModalProps> = ({ isOpen, onClose, team }) => {
   const { addTeamPoints } = useAdmin();
-  const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
+  const [selectedPackages, setSelectedPackages] = useState<number[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
   if (!isOpen) return null;
 
+  const togglePackage = (idx: number) => {
+    if (selectedPackages.includes(idx)) {
+      setSelectedPackages(prev => prev.filter(i => i !== idx));
+    } else if (selectedPackages.length < 2) {
+      setSelectedPackages(prev => [...prev, idx]);
+    } else {
+      toast.error("Vous pouvez sélectionner jusqu'à 2 packs maximum.");
+    }
+  };
+
+  const totalPrice = selectedPackages.reduce((sum, idx) => sum + PACKAGES[idx].price, 0);
+  const totalPoints = selectedPackages.reduce((sum, idx) => sum + PACKAGES[idx].points, 0);
+
   const handleVote = async () => {
-    if (selectedPackage === null) return;
+    if (selectedPackages.length === 0) return;
     
     setIsProcessing(true);
-    const pack = PACKAGES[selectedPackage];
     
     // Simulation of PayGate API payment flow
-    // In a real implementation, this would redirect to PayGate or open a PayGate widget
     setTimeout(async () => {
       try {
-        await addTeamPoints(team.id, pack.points);
-        toast.success(`Succès ! Vous avez offert ${pack.points} points à l'équipe ${team.name}.`);
+        await addTeamPoints(team.id, totalPoints);
+        toast.success(`Succès ! Vous avez offert ${totalPoints} points à l'équipe ${team.name}.`);
         setIsProcessing(false);
         onClose();
       } catch (error) {
@@ -64,43 +75,59 @@ const VotePackagesModal: React.FC<VotePackagesModalProps> = ({ isOpen, onClose, 
         {/* Content */}
         <div className="p-6 overflow-y-auto">
           <p className="text-center text-slate-600 font-medium mb-6">
-            Choisissez un pack de points pour propulser cette équipe vers la victoire !
+            Choisissez jusqu'à 2 packs de points pour propulser cette équipe !
           </p>
 
           <div className="space-y-3">
-            {PACKAGES.map((pkg, idx) => (
-              <button
-                key={idx}
-                disabled={isProcessing}
-                onClick={() => setSelectedPackage(idx)}
-                className={`w-full flex items-center justify-between p-4 rounded-none border-2 transition-all ${
-                  selectedPackage === idx 
-                    ? 'border-purple-600 bg-purple-50' 
-                    : 'border-slate-100 hover:border-purple-200 hover:bg-slate-50'
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                    selectedPackage === idx ? 'bg-purple-600 text-white' : 'bg-amber-100 text-amber-600'
-                  }`}>
-                    <Trophy className="w-5 h-5" />
+            {PACKAGES.map((pkg, idx) => {
+              const isSelected = selectedPackages.includes(idx);
+              return (
+                <button
+                  key={idx}
+                  disabled={isProcessing}
+                  onClick={() => togglePackage(idx)}
+                  className={`w-full flex items-center justify-between p-4 rounded-none border-2 transition-all ${
+                    isSelected 
+                      ? 'border-purple-600 bg-purple-50' 
+                      : 'border-slate-100 hover:border-purple-200 hover:bg-slate-50'
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                      isSelected ? 'bg-purple-600 text-white' : 'bg-amber-100 text-amber-600'
+                    }`}>
+                      {isSelected ? <div className="w-5 h-5 flex items-center justify-center font-black">✓</div> : <Trophy className="w-5 h-5" />}
+                    </div>
+                    <div className="text-left">
+                      <div className="font-black text-slate-900 text-lg">{pkg.points} Points</div>
+                      <div className="text-xs font-bold text-slate-500 uppercase tracking-wide">Pack {['Bronze', 'Argent', 'Or', 'Platine', 'Diamant'][idx]}</div>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <div className="font-black text-slate-900 text-lg">{pkg.points} Points</div>
-                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wide">Pack {['Bronze', 'Argent', 'Or', 'Platine', 'Diamant'][idx]}</div>
+                  <div className="font-black text-lg text-slate-800">
+                    {pkg.price} FCFA
                   </div>
-                </div>
-                <div className="font-black text-lg text-slate-800">
-                  {pkg.price} FCFA
-                </div>
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
+
+          {selectedPackages.length > 0 && (
+            <div className="mt-6 p-4 bg-slate-900 text-white flex justify-between items-center animate-in fade-in slide-in-from-bottom-2">
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Total à payer</div>
+                <div className="text-lg font-black">{totalPrice} FCFA</div>
+              </div>
+              <div className="text-right">
+                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Total points</div>
+                <div className="text-lg font-black text-amber-400">+{totalPoints} pts</div>
+              </div>
+            </div>
+          )}
 
           <div className="mt-8">
             <button
               onClick={handleVote}
-              disabled={selectedPackage === null || isProcessing}
+              disabled={selectedPackages.length === 0 || isProcessing}
               className="w-full py-4 bg-purple-600 text-white rounded-none font-black text-lg shadow-lg shadow-purple-600/20 hover:bg-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
             >
               {isProcessing ? (
@@ -111,7 +138,7 @@ const VotePackagesModal: React.FC<VotePackagesModalProps> = ({ isOpen, onClose, 
               ) : (
                 <>
                   <CreditCard className="w-5 h-5" />
-                  Payer {selectedPackage !== null ? PACKAGES[selectedPackage].price : 0} FCFA via PayGate
+                  Payer {totalPrice} FCFA
                 </>
               )}
             </button>
