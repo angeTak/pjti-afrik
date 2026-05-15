@@ -131,35 +131,45 @@ const PartenairesPage = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 sm:gap-20 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
               {isLoading ? (
-                // Skeleton loading
                 [1, 2, 3, 4].map((i) => (
-                  <div key={i} className="flex flex-col items-center">
-                    <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-[40px] bg-slate-100 animate-pulse mb-6" />
-                    <div className="h-6 w-32 bg-slate-100 rounded animate-pulse" />
+                  <div key={i} className="flex items-center gap-5 p-5 rounded-2xl bg-slate-50 border border-slate-100 animate-pulse">
+                    <div className="w-16 h-16 rounded-2xl bg-slate-200 flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 w-28 bg-slate-200 rounded" />
+                      <div className="h-3 w-20 bg-slate-100 rounded" />
+                    </div>
                   </div>
                 ))
               ) : displayPartners.length > 0 ? (
                 displayPartners.map((partner, index) => (
                   <div
                     key={partner.id}
-                    className={`reveal opacity-0 delay-${(index % 4 + 1) * 100} group flex flex-col items-center text-center transition-all duration-300`}
+                    className={`reveal opacity-0 delay-${(index % 4 + 1) * 100} group flex items-center gap-5 p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-purple-200 hover:shadow-lg transition-all duration-300`}
                   >
-                    {/* Logo container */}
-                    <div className={`w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center mb-0 group-hover:scale-110 transition-transform duration-500`}>
+                    {/* Logo */}
+                    <div className="w-16 h-16 flex-shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                       {partner.logo ? (
                         <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain" />
                       ) : (
-                        <div className={`w-full h-full rounded-[40px] ${partner.color || 'bg-slate-900'} flex items-center justify-center text-white font-black text-4xl shadow-lg`}>
+                        <div className={`w-full h-full rounded-2xl ${partner.color || 'bg-slate-900'} flex items-center justify-center text-white font-black text-xl shadow-md`}>
                           {partner.initials}
                         </div>
                       )}
                     </div>
 
-                    <h3 className="-mt-6 text-base sm:text-lg font-black text-slate-800 uppercase tracking-wider group-hover:text-purple-600 transition-colors">
-                      {partner.name}
-                    </h3>
+                    {/* Info */}
+                    <div className="min-w-0">
+                      <h3 className="text-sm sm:text-base font-black text-slate-900 group-hover:text-purple-600 transition-colors truncate">
+                        {partner.name}
+                      </h3>
+                      {partner.category && (
+                        <span className="inline-block mt-1 px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                          {partner.category}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 ))
               ) : (
