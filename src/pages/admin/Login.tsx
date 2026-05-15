@@ -17,11 +17,18 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const success = await login(email, password);
+      const { success, error: authError } = await login(email, password);
       if (success) {
         navigate('/admin');
       } else {
-        setError('Email ou mot de passe incorrect');
+        // Traduction simple des erreurs courantes
+        if (authError?.includes('Email not confirmed')) {
+          setError('Veuillez confirmer votre email (vérifiez vos spams) ou désactivez la confirmation dans Supabase.');
+        } else if (authError?.includes('Invalid login credentials')) {
+          setError('Email ou mot de passe incorrect');
+        } else {
+          setError(authError || 'Email ou mot de passe incorrect');
+        }
       }
     } catch (err) {
       setError('Une erreur est survenue lors de la connexion');

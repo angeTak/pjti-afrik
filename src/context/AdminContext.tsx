@@ -97,7 +97,7 @@ interface AdminContextType {
   partnershipRequests: PartnershipRequest[];
   teams: Team[];
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   addRegistration: (reg: Omit<Registration, 'id' | 'date' | 'status'>) => void;
   updateRegistrationStatus: (id: string, status: Registration['status']) => void;
@@ -342,17 +342,19 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         password,
       });
       
-      if (error) throw error;
+      if (error) {
+        return { success: false, error: error.message };
+      }
       
       if (data.session) {
         setIsAuthenticated(true);
         localStorage.setItem('admin_auth', 'true');
-        return true;
+        return { success: true };
       }
-      return false;
-    } catch (error) {
+      return { success: false, error: 'Session non créée' };
+    } catch (error: any) {
       console.error("Erreur de connexion:", error);
-      return false;
+      return { success: false, error: error.message || 'Erreur inconnue' };
     }
   };
 
