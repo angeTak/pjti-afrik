@@ -39,7 +39,6 @@ const TypewriterText = ({ text, delay = 50, startDelay = 0, showDot = false }: {
 const HeroSection = () => {
   const { settings } = useAdmin();
   const heroRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -56,15 +55,8 @@ const HeroSection = () => {
     const elements = heroRef.current?.querySelectorAll('.reveal');
     elements?.forEach((el) => observer.observe(el));
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
     return () => {
       observer.disconnect();
-      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -75,22 +67,18 @@ const HeroSection = () => {
     >
       {/* Dynamic background with mouse-follow effect */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Main gradient orbs that follow mouse slightly */}
+        {/* Main static gradient orbs */}
         <div
-          className="absolute w-[800px] h-[800px] rounded-full opacity-30 transition-all duration-1000 ease-out"
+          className="absolute w-[800px] h-[800px] rounded-full opacity-30 left-0 top-0"
           style={{
             background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%)',
-            left: `${mousePosition.x * 0.02}px`,
-            top: `${mousePosition.y * 0.02}px`,
             filter: 'blur(100px)',
           }}
         />
         <div
-          className="absolute w-[600px] h-[600px] rounded-full opacity-25 transition-all duration-1000 ease-out"
+          className="absolute w-[600px] h-[600px] rounded-full opacity-25 right-0 bottom-0"
           style={{
             background: 'radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)',
-            right: `${-mousePosition.x * 0.02}px`,
-            bottom: `${-mousePosition.y * 0.02}px`,
             filter: 'blur(80px)',
           }}
         />
@@ -150,6 +138,7 @@ const HeroSection = () => {
                   alt="Enfants apprenant la programmation ensemble"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   style={{ filter: 'contrast(1.1) saturate(1.2)' }}
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               </div>
@@ -164,7 +153,7 @@ const HeroSection = () => {
               </div>
 
               <div className="absolute -bottom-5 sm:-bottom-6 left-1/2 -translate-x-1/2 px-4 h-9 sm:h-10 bg-white border border-white/50 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-xl animate-float delay-400">
-                <span className="text-purple-600 font-black text-sm whitespace-nowrap">{settings.ageRange} ans</span>
+                <span className="text-purple-600 font-black text-sm whitespace-nowrap">{settings?.ageRange || "11-18"} ans</span>
               </div>
             </div>
 

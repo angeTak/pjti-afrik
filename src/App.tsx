@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import React, { Suspense } from "react";
 import { AdminProvider } from "./context/AdminContext";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import usePageTracking from "./hooks/usePageTracking";
@@ -29,22 +30,19 @@ import AdminGallery from "./pages/admin/Gallery";
 import AdminPartners from "./pages/admin/Partners";
 import AdminPartnershipRequests from "./pages/admin/PartnershipRequests";
 import AdminTeams from "./pages/admin/Teams";
-import AdminAnalytics from "./pages/admin/Analytics";
 import AdminSettings from "./pages/admin/Settings";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,
-      gcTime: 1000 * 60 * 30,
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+// Lazy loading for the analytics page to prevent it from crashing the main app
+const AdminAnalytics = React.lazy(() => import("./pages/admin/Analytics"));
+
+const queryClient = new QueryClient();
+
+const PageTracker = () => {
+  usePageTracking();
+  return null;
+};
 
 const AppContent = () => {
-  usePageTracking();
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
 
@@ -53,31 +51,34 @@ const AppContent = () => {
       <Toaster />
       <Sonner />
       <ErrorBoundary>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/inscription" element={<Inscription />} />
-          <Route path="/formation" element={<Formation />} />
-          <Route path="/tarifs" element={<Tarifs />} />
-          <Route path="/partenaires" element={<Partenaires />} />
-          <Route path="/programme" element={<Programme />} />
-          <Route path="/actualites" element={<Actualites />} />
-          <Route path="/projets" element={<Projets />} />
-          <Route path="/projets/:id" element={<ProjectDetails />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/registrations" element={<AdminRegistrations />} />
-          <Route path="/admin/news" element={<AdminNews />} />
-          <Route path="/admin/gallery" element={<AdminGallery />} />
-          <Route path="/admin/partners" element={<AdminPartners />} />
-          <Route path="/admin/partnership-requests" element={<AdminPartnershipRequests />} />
-          <Route path="/admin/teams" element={<AdminTeams />} />
-          <Route path="/admin/analytics" element={<AdminAnalytics />} />
-          <Route path="/admin/settings" element={<AdminSettings />} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PageTracker />
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-slate-50">Chargement sécurisé...</div>}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/inscription" element={<Inscription />} />
+            <Route path="/formation" element={<Formation />} />
+            <Route path="/tarifs" element={<Tarifs />} />
+            <Route path="/partenaires" element={<Partenaires />} />
+            <Route path="/programme" element={<Programme />} />
+            <Route path="/actualites" element={<Actualites />} />
+            <Route path="/projets" element={<Projets />} />
+            <Route path="/projets/:id" element={<ProjectDetails />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/registrations" element={<AdminRegistrations />} />
+            <Route path="/admin/news" element={<AdminNews />} />
+            <Route path="/admin/gallery" element={<AdminGallery />} />
+            <Route path="/admin/partners" element={<AdminPartners />} />
+            <Route path="/admin/partnership-requests" element={<AdminPartnershipRequests />} />
+            <Route path="/admin/teams" element={<AdminTeams />} />
+            <Route path="/admin/analytics" element={<AdminAnalytics />} />
+            <Route path="/admin/settings" element={<AdminSettings />} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </ErrorBoundary>
       {!isAdminPage && <WhatsAppButton />}
     </TooltipProvider>

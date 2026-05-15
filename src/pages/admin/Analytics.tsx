@@ -196,19 +196,19 @@ const AdminAnalytics = () => {
                 <div>
                   <div className="flex justify-between text-xs sm:text-sm font-bold mb-2">
                     <span className="flex items-center gap-2 text-slate-500"><Monitor className="w-4 h-4" /> Desktop</span>
-                    <span>{Math.round((stats.devices.desktop / (stats.totalViews || 1)) * 100)}%</span>
+                    <span>{Math.round(((stats?.devices?.desktop || 0) / (stats?.totalViews || 1)) * 100)}%</span>
                   </div>
                   <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="bg-slate-900 h-full rounded-full" style={{ width: `${(stats.devices.desktop / (stats.totalViews || 1)) * 100}%` }} />
+                    <div className="bg-slate-900 h-full rounded-full" style={{ width: `${((stats?.devices?.desktop || 0) / (stats?.totalViews || 1)) * 100}%` }} />
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between text-xs sm:text-sm font-bold mb-2">
                     <span className="flex items-center gap-2 text-slate-500"><Smartphone className="w-4 h-4" /> Mobile</span>
-                    <span>{Math.round((stats.devices.mobile / (stats.totalViews || 1)) * 100)}%</span>
+                    <span>{Math.round(((stats?.devices?.mobile || 0) / (stats?.totalViews || 1)) * 100)}%</span>
                   </div>
                   <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="bg-purple-600 h-full rounded-full" style={{ width: `${(stats.devices.mobile / (stats.totalViews || 1)) * 100}%` }} />
+                    <div className="bg-purple-600 h-full rounded-full" style={{ width: `${((stats?.devices?.mobile || 0) / (stats?.totalViews || 1)) * 100}%` }} />
                   </div>
                 </div>
               </div>
@@ -239,11 +239,11 @@ const AdminAnalytics = () => {
               <BarChart3 className="w-4 h-4 text-slate-300" />
             </h3>
             <div className="space-y-3 sm:space-y-4">
-              {stats.topPages.map((page: any, idx: number) => (
+              {(stats?.topPages || []).map((page: any, idx: number) => (
                 <div key={idx} className="group p-3 sm:p-4 rounded-2xl bg-slate-50 hover:bg-purple-50 border border-transparent hover:border-purple-100 transition-all">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[10px] font-black text-purple-600 uppercase tracking-widest truncate max-w-[120px]">
-                      {page.path === '/' ? 'Accueil' : page.path.split('/')[1]}
+                      {page.path === '/' ? 'Accueil' : (page.path?.split('/')[1] || 'Page')}
                     </span>
                     <span className="text-[10px] font-bold text-slate-400">{page.count} vues</span>
                   </div>
