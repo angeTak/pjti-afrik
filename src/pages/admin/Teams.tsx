@@ -451,136 +451,18 @@ const AdminTeams = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {teams.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()).map((team, idx) => {
-                const captain = team.captain_id ? officialRegistrations.find(r => r.id === team.captain_id) : null;
-                const memberCount = team.member_ids.length;
-                return (
-                  <div key={team.id} className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 hover:border-purple-200 hover:shadow-xl transition-all group flex flex-col">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-lg font-black text-slate-400 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                        {idx + 1}
-                      </div>
-                      <div className="flex gap-1.5">
-                        <button onClick={() => handleTogglePublish(team)} className={`p-2 rounded-xl transition-colors ${team.is_published ? 'text-green-600 bg-green-50' : 'text-slate-400 bg-slate-50 hover:bg-green-50 hover:text-green-600'}`}>
-                          {team.is_published ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
-                        </button>
-                        <button onClick={() => handleEdit(team)} className="p-2 text-slate-400 bg-slate-50 hover:bg-amber-50 hover:text-amber-600 rounded-xl transition-colors">
-                          <Edit3 className="w-5 h-5" />
-                        </button>
-                        <button onClick={() => setTeamToDelete(team.id)} className="p-2 text-slate-400 bg-slate-50 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors">
-                          <Trash2 className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="mb-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-xl font-black text-slate-900 group-hover:text-purple-600 transition-colors">{team.name}</h3>
-                          {team.is_published && <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />}
-                        </div>
-                        <p className="text-sm font-bold text-purple-500 uppercase tracking-wider">{team.project_title}</p>
-                      </div>
-                      
-                      <p className="text-sm text-slate-500 line-clamp-2 mb-6 leading-relaxed italic">"{team.description}"</p>
-                      
-                      <div className="flex items-center justify-between pt-6 border-t border-slate-50 mt-auto">
-                        <div className="flex items-center gap-2 text-sm">
-                          <Users2 className="w-4 h-4 text-slate-400" />
-                          <span className="font-bold text-slate-700">{memberCount} Talents</span>
-                        </div>
-                        <div className="px-4 py-1.5 bg-amber-50 rounded-xl flex items-center gap-2">
-                          <Trophy className="w-4 h-4 text-amber-500" />
-                          <span className="text-sm font-black text-amber-700">{team.total_points || 0} pts</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <TeamCards 
+              teams={teams}
+              officialRegistrations={officialRegistrations}
+              onTogglePublish={handleTogglePublish}
+              onEdit={handleEdit}
+              onDelete={setTeamToDelete}
+            />
           )}
         </div>
       ) : (
         <div className="bg-white rounded-[40px] shadow-sm border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
-            <div>
-              <h2 className="text-2xl font-black text-slate-900">Tableau de Classement</h2>
-              <p className="text-slate-500 text-sm">Classement en temps réel basé sur les votes du public</p>
-            </div>
-            <div className="bg-purple-600 text-white px-6 py-2 rounded-2xl font-black text-sm shadow-lg shadow-purple-100">
-              {teams.length} Équipes
-            </div>
-          </div>
-          
-          {/* Mobile View: Ranking Cards */}
-          <div className="md:hidden divide-y divide-slate-50">
-            {teams.sort((a, b) => (b.total_points || 0) - (a.total_points || 0)).map((team, idx) => {
-              const originalIndex = teams.slice().sort((a,b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()).findIndex(t => t.id === team.id);
-              return (
-                <div key={team.id} className="p-4 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex-shrink-0">
-                      {idx === 0 ? <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 shadow-sm"><Trophy className="w-4 h-4" /></div> : 
-                       idx === 1 ? <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-black text-xs">2</div> :
-                       idx === 2 ? <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 font-black text-xs">3</div> :
-                       <div className="w-8 h-8 flex items-center justify-center text-slate-300 font-bold text-xs">{idx + 1}</div>}
-                    </div>
-                    <div>
-                      <div className="font-black text-slate-900 text-sm">E-{(originalIndex + 1).toString().padStart(2, '0')} {team.name}</div>
-                      <div className="text-[10px] font-bold text-slate-500 truncate max-w-[150px]">{team.project_title}</div>
-                    </div>
-                  </div>
-                  <div className="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg font-black text-xs">
-                    {team.total_points || 0} pts
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Desktop View: Ranking Table */}
-          <div className="hidden md:block overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-white">
-                  <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50">N°</th>
-                  <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50">Équipe</th>
-                  <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50">Projet</th>
-                  <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50 text-right">Points</th>
-                  <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50 text-center">Rang</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {teams.sort((a, b) => (b.total_points || 0) - (a.total_points || 0)).map((team, idx) => {
-                  const originalIndex = teams.slice().sort((a,b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()).findIndex(t => t.id === team.id);
-                  return (
-                    <tr key={team.id} className="hover:bg-slate-50/50 transition-colors group">
-                      <td className="px-8 py-5 font-bold text-slate-400">{(originalIndex + 1).toString().padStart(2, '0')}</td>
-                      <td className="px-8 py-5">
-                        <div className="font-black text-slate-900 group-hover:text-purple-600 transition-colors">{team.name}</div>
-                      </td>
-                      <td className="px-8 py-5 text-sm font-medium text-slate-600">{team.project_title}</td>
-                      <td className="px-8 py-5 text-right">
-                        <span className="inline-block px-4 py-1.5 bg-purple-50 text-purple-700 rounded-xl font-black text-sm">
-                          {team.total_points || 0}
-                        </span>
-                      </td>
-                      <td className="px-8 py-5">
-                        <div className="flex justify-center">
-                          {idx === 0 ? <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 shadow-sm"><Trophy className="w-4 h-4" /></div> : 
-                           idx === 1 ? <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-black text-xs">2</div> :
-                           idx === 2 ? <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 font-black text-xs">3</div> :
-                           <div className="text-slate-300 font-bold text-xs">{idx + 1}</div>}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <TeamRanking teams={teams} />
         </div>
       )}
       
@@ -590,5 +472,146 @@ const AdminTeams = () => {
     </AdminLayout>
   );
 };
+
+// Composants mémorisés pour l'optimisation INP
+const TeamCards = React.memo(({ teams, officialRegistrations, onTogglePublish, onEdit, onDelete }: any) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {teams.slice().sort((a: any, b: any) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()).map((team: any, idx: number) => {
+        const memberCount = team.member_ids?.length || 0;
+        return (
+          <div key={team.id} className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 hover:border-purple-200 hover:shadow-xl transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-lg font-black text-slate-400 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                {idx + 1}
+              </div>
+              <div className="flex gap-1.5">
+                <button onClick={() => onTogglePublish(team)} className={`p-2 rounded-xl transition-colors ${team.is_published ? 'text-green-600 bg-green-50' : 'text-slate-400 bg-slate-50 hover:bg-green-50 hover:text-green-600'}`}>
+                  {team.is_published ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                </button>
+                <button onClick={() => onEdit(team)} className="p-2 text-slate-400 bg-slate-50 hover:bg-amber-50 hover:text-amber-600 rounded-xl transition-colors">
+                  <Edit3 className="w-5 h-5" />
+                </button>
+                <button onClick={() => onDelete(team.id)} className="p-2 text-slate-400 bg-slate-50 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors">
+                  <Trash2 className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex-1">
+              <div className="mb-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="text-xl font-black text-slate-900 group-hover:text-purple-600 transition-colors">{team.name}</h3>
+                  {team.is_published && <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />}
+                </div>
+                <p className="text-sm font-bold text-purple-500 uppercase tracking-wider">{team.project_title}</p>
+              </div>
+              
+              <p className="text-sm text-slate-500 line-clamp-2 mb-6 leading-relaxed italic">"{team.description}"</p>
+              
+              <div className="flex items-center justify-between pt-6 border-t border-slate-50 mt-auto">
+                <div className="flex items-center gap-2 text-sm">
+                  <Users2 className="w-4 h-4 text-slate-400" />
+                  <span className="font-bold text-slate-700">{memberCount} Talents</span>
+                </div>
+                <div className="px-4 py-1.5 bg-amber-50 rounded-xl flex items-center gap-2">
+                  <Trophy className="w-4 h-4 text-amber-500" />
+                  <span className="text-sm font-black text-amber-700">{team.total_points || 0} pts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+});
+
+const TeamRanking = React.memo(({ teams }: any) => {
+  const sortedTeams = [...teams].sort((a, b) => (b.total_points || 0) - (a.total_points || 0));
+  const chronologicalTeams = [...teams].sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+
+  return (
+    <>
+      <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+        <div>
+          <h2 className="text-2xl font-black text-slate-900">Tableau de Classement</h2>
+          <p className="text-slate-500 text-sm">Classement en temps réel basé sur les votes du public</p>
+        </div>
+        <div className="bg-purple-600 text-white px-6 py-2 rounded-2xl font-black text-sm shadow-lg shadow-purple-100">
+          {teams.length} Équipes
+        </div>
+      </div>
+      
+      {/* Mobile View: Ranking Cards */}
+      <div className="md:hidden divide-y divide-slate-50">
+        {sortedTeams.map((team, idx) => {
+          const originalIndex = chronologicalTeams.findIndex(t => t.id === team.id);
+          return (
+            <div key={team.id} className="p-4 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0">
+                  {idx === 0 ? <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 shadow-sm"><Trophy className="w-4 h-4" /></div> : 
+                    idx === 1 ? <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-black text-xs">2</div> :
+                    idx === 2 ? <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 font-black text-xs">3</div> :
+                    <div className="w-8 h-8 flex items-center justify-center text-slate-300 font-bold text-xs">{idx + 1}</div>}
+                </div>
+                <div>
+                  <div className="font-black text-slate-900 text-sm">E-{(originalIndex + 1).toString().padStart(2, '0')} {team.name}</div>
+                  <div className="text-[10px] font-bold text-slate-500 truncate max-w-[150px]">{team.project_title}</div>
+                </div>
+              </div>
+              <div className="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg font-black text-xs">
+                {team.total_points || 0} pts
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop View: Ranking Table */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-white">
+              <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50">N°</th>
+              <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50">Équipe</th>
+              <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50">Projet</th>
+              <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50 text-right">Points</th>
+              <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50 text-center">Rang</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-50">
+            {sortedTeams.map((team, idx) => {
+              const originalIndex = chronologicalTeams.findIndex(t => t.id === team.id);
+              return (
+                <tr key={team.id} className="hover:bg-slate-50/50 transition-colors group">
+                  <td className="px-8 py-5 font-bold text-slate-400">{(originalIndex + 1).toString().padStart(2, '0')}</td>
+                  <td className="px-8 py-5">
+                    <div className="font-black text-slate-900 group-hover:text-purple-600 transition-colors">{team.name}</div>
+                  </td>
+                  <td className="px-8 py-5 text-sm font-medium text-slate-600">{team.project_title}</td>
+                  <td className="px-8 py-5 text-right">
+                    <span className="inline-block px-4 py-1.5 bg-purple-50 text-purple-700 rounded-xl font-black text-sm">
+                      {team.total_points || 0}
+                    </span>
+                  </td>
+                  <td className="px-8 py-5">
+                    <div className="flex justify-center">
+                      {idx === 0 ? <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 shadow-sm"><Trophy className="w-4 h-4" /></div> : 
+                        idx === 1 ? <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-black text-xs">2</div> :
+                        idx === 2 ? <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 font-black text-xs">3</div> :
+                        <div className="text-slate-300 font-bold text-xs">{idx + 1}</div>}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+});
 
 export default AdminTeams;

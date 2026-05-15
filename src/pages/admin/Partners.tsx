@@ -197,47 +197,11 @@ const AdminPartners = () => {
 
         {/* Partner List */}
         <div className="lg:col-span-2 space-y-4">
-          {partners.length === 0 ? (
-            <div className="bg-white p-12 text-center rounded-3xl border border-slate-100 border-dashed">
-              <Handshake className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-              <p className="text-slate-400 font-medium italic">Aucun partenaire enregistré</p>
-            </div>
-          ) : (
-            partners.map((partner) => (
-              <div key={partner.id} className="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:border-purple-200 transition-all group">
-                <div className={`w-full sm:w-16 h-24 sm:h-16 rounded-2xl ${partner.color || 'bg-slate-900'} flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg overflow-hidden`}>
-                  {partner.logo ? (
-                    <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain bg-white p-2" />
-                  ) : (
-                    partner.initials
-                  )}
-                </div>
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-wider">{partner.category}</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight">{partner.name}</h3>
-                    <p className="text-sm text-slate-500 line-clamp-2 mt-2">{partner.description}</p>
-                  </div>
-                  <div className="flex justify-end gap-2 mt-4">
-                    <button 
-                      onClick={() => handleEdit(partner)}
-                      className="p-2 text-slate-400 hover:text-amber-500 transition-colors bg-slate-50 rounded-lg"
-                    >
-                      <Edit3 className="w-5 h-5" />
-                    </button>
-                    <button 
-                      onClick={() => setPartnerToDelete(partner.id)}
-                      className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-slate-50 rounded-lg"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
+          <PartnerList 
+            partners={partners} 
+            onEdit={handleEdit} 
+            onDelete={setPartnerToDelete} 
+          />
         </div>
       </div>
 
@@ -254,5 +218,56 @@ const AdminPartners = () => {
     </AdminLayout>
   );
 };
+
+// Composant mémorisé pour éviter les re-renders inutiles lors de la saisie
+const PartnerList = React.memo(({ partners, onEdit, onDelete }: any) => {
+  if (partners.length === 0) {
+    return (
+      <div className="bg-white p-12 text-center rounded-3xl border border-slate-100 border-dashed">
+        <Handshake className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+        <p className="text-slate-400 font-medium italic">Aucun partenaire enregistré</p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {partners.map((partner: any) => (
+        <div key={partner.id} className="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:border-purple-200 transition-all group">
+          <div className={`w-full sm:w-16 h-24 sm:h-16 rounded-2xl ${partner.color || 'bg-slate-900'} flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg overflow-hidden`}>
+            {partner.logo ? (
+              <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain bg-white p-2" />
+            ) : (
+              partner.initials
+            )}
+          </div>
+          <div className="flex-1 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-wider">{partner.category}</span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 leading-tight">{partner.name}</h3>
+              <p className="text-sm text-slate-500 line-clamp-2 mt-2">{partner.description}</p>
+            </div>
+            <div className="flex justify-end gap-2 mt-4">
+              <button 
+                onClick={() => onEdit(partner)}
+                className="p-2 text-slate-400 hover:text-amber-500 transition-colors bg-slate-50 rounded-lg"
+              >
+                <Edit3 className="w-5 h-5" />
+              </button>
+              <button 
+                onClick={() => onDelete(partner.id)}
+                className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-slate-50 rounded-lg"
+              >
+                <Trash2 className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+});
 
 export default AdminPartners;

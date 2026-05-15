@@ -254,52 +254,11 @@ const AdminNews = () => {
 
         {/* Article List */}
         <div className="lg:col-span-2 space-y-4">
-          {news.length === 0 ? (
-            <div className="bg-white p-12 text-center rounded-3xl border border-slate-100 border-dashed">
-              <Newspaper className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-              <p className="text-slate-400 font-medium italic">Aucun article publié</p>
-            </div>
-          ) : (
-            news.map((article) => (
-              <div key={article.id} className="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:border-purple-200 transition-all group">
-                <div className="w-full sm:w-32 h-48 sm:h-32 rounded-2xl bg-slate-100 overflow-hidden flex-shrink-0">
-                  {article.image ? (
-                    <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-300">
-                      <Newspaper className="w-10 h-10" />
-                    </div>
-                  )}
-                </div>
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <span className="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-black uppercase tracking-wider">{article.category}</span>
-                      <span className="flex items-center gap-1 text-[10px] font-bold text-slate-400">
-                        <Calendar className="w-3 h-3" /> {article.date}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight group-hover:text-purple-600 transition-colors">{article.title}</h3>
-                    <p className="text-sm text-slate-500 line-clamp-2 mt-2">{article.excerpt}</p>
-                  </div>
-                  <div className="flex justify-end gap-2 mt-4">
-                    <button 
-                      onClick={() => handleEdit(article)}
-                      className="p-2 text-slate-400 hover:text-amber-500 transition-colors bg-slate-50 rounded-lg"
-                    >
-                      <Edit3 className="w-5 h-5" />
-                    </button>
-                    <button 
-                      onClick={() => setNewsToDelete(article.id)}
-                      className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-slate-50 rounded-lg"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
+          <NewsList 
+            news={news} 
+            onEdit={handleEdit} 
+            onDelete={setNewsToDelete} 
+          />
         </div>
       </div>
 
@@ -316,5 +275,56 @@ const AdminNews = () => {
     </AdminLayout>
   );
 };
+
+// Composant mémorisé pour éviter les re-renders inutiles lors de la saisie
+const NewsList = React.memo(({ news, onEdit, onDelete }: any) => {
+  if (news.length === 0) {
+    return (
+      <div className="bg-white p-12 text-center rounded-3xl border border-slate-100 border-dashed">
+        <Newspaper className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+        <p className="text-slate-400 font-medium italic">Aucune actualité publiée</p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {news.map((item: any) => (
+        <div key={item.id} className="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex gap-6 hover:border-purple-200 transition-all group">
+          <div className="w-24 h-24 rounded-2xl bg-slate-100 overflow-hidden flex-shrink-0">
+            <img 
+              src={item.image || 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=200'} 
+              alt={item.title}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+          <div className="flex-1 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-1">
+                <span className="text-[10px] font-black text-purple-600 uppercase tracking-wider">{item.category}</span>
+                <span className="text-[10px] text-slate-400">{item.date}</span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 leading-tight">{item.title}</h3>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button 
+                onClick={() => onEdit(item)}
+                className="p-2 text-slate-400 hover:text-amber-500 transition-colors bg-slate-50 rounded-lg"
+              >
+                <Edit3 className="w-5 h-5" />
+              </button>
+              <button 
+                onClick={() => onDelete(item.id)}
+                className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-slate-50 rounded-lg"
+              >
+                <Trash2 className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+});
 
 export default AdminNews;
