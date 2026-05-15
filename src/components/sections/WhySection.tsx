@@ -155,7 +155,7 @@ const WhySection = () => {
         </div>
 
         {/* ── Bottom 4-cards row ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {[
             { icon: TrendingUp, title: 'Compétences du futur', desc: 'Programmation, IA, outils numériques essentiels.', bg: 'bg-blue-100', color: 'text-blue-600', hoverColor: 'group-hover:text-blue-600', num: '01' },
             { icon: Briefcase, title: 'Projets concrets', desc: 'Sites web, solutions cyber et projets IA réels.', bg: 'bg-green-100', color: 'text-green-600', hoverColor: 'group-hover:text-green-600', num: '02' },
@@ -164,14 +164,21 @@ const WhySection = () => {
           ].map((item, i) => (
             <div
               key={i}
-              className={`reveal opacity-0 delay-${(i + 1) * 100} group relative p-6 rounded-[24px] bg-white border border-slate-100 shadow-lg shadow-slate-100/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 overflow-hidden`}
+              className={`reveal opacity-0 delay-${(i + 1) * 100} group relative p-4 sm:p-6 rounded-2xl sm:rounded-[24px] bg-white border border-slate-100 shadow-md sm:shadow-lg shadow-slate-100/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 overflow-hidden`}
             >
-              <span className="absolute top-4 right-5 text-5xl font-black text-slate-100 group-hover:text-slate-200 transition-colors leading-none select-none">{item.num}</span>
-              <div className={`w-12 h-12 rounded-xl ${item.bg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 relative z-10`}>
-                <item.icon className={`w-6 h-6 ${item.color}`} />
+              {/* Numéro fantôme — masqué sur mobile pour gagner de la place */}
+              <span className="hidden sm:block absolute top-4 right-5 text-5xl font-black text-slate-100 group-hover:text-slate-200 transition-colors leading-none select-none">{item.num}</span>
+
+              {/* Icône + numéro visible sur mobile */}
+              <div className="flex items-center gap-2 mb-3 sm:mb-5">
+                <div className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-500 relative z-10`}>
+                  <item.icon className={`w-4 h-4 sm:w-6 sm:h-6 ${item.color}`} />
+                </div>
+                <span className="sm:hidden text-xs font-black text-slate-300 leading-none">{item.num}</span>
               </div>
-              <h3 className={`text-base font-black text-slate-900 mb-2 relative z-10 ${item.hoverColor} transition-colors`}>{item.title}</h3>
-              <p className="text-slate-500 text-xs leading-relaxed relative z-10 font-medium">{item.desc}</p>
+
+              <h3 className={`text-xs sm:text-base font-black text-slate-900 mb-1 sm:mb-2 relative z-10 ${item.hoverColor} transition-colors leading-tight`}>{item.title}</h3>
+              <p className="hidden sm:block text-slate-500 text-xs leading-relaxed relative z-10 font-medium">{item.desc}</p>
             </div>
           ))}
         </div>
