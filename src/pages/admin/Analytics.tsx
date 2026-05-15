@@ -51,15 +51,18 @@ const AdminAnalytics = () => {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
+        if (!views) return;
 
         // Process data
-        const totalViews = views.length;
-        const uniqueVisitors = new Set(views.map(v => v.session_id)).size;
+        const totalViews = views.length || 0;
+        const uniqueVisitors = views.length > 0 ? new Set(views.map(v => v.session_id)).size : 0;
         
         // Top pages
         const pagesMap: any = {};
         views.forEach(v => {
-          pagesMap[v.path] = (pagesMap[v.path] || 0) + 1;
+          if (v && v.path) {
+            pagesMap[v.path] = (pagesMap[v.path] || 0) + 1;
+          }
         });
         const topPages = Object.entries(pagesMap)
           .map(([path, count]) => ({ path, count }))
@@ -70,8 +73,12 @@ const AdminAnalytics = () => {
         let desktop = 0;
         let mobile = 0;
         views.forEach(v => {
-          if (/mobile|android|iphone/i.test(v.user_agent)) mobile++;
-          else desktop++;
+          if (v && v.user_agent) {
+            if (/mobile|android|iphone/i.test(v.user_agent)) mobile++;
+            else desktop++;
+          } else {
+            desktop++;
+          }
         });
 
         // Views by day (last 7 days)
@@ -82,8 +89,10 @@ const AdminAnalytics = () => {
           daysMap[d.toISOString().split('T')[0]] = 0;
         }
         views.forEach(v => {
-          const day = v.created_at.split('T')[0];
-          if (daysMap[day] !== undefined) daysMap[day]++;
+          if (v && v.created_at) {
+            const day = v.created_at.split('T')[0];
+            if (daysMap[day] !== undefined) daysMap[day]++;
+          }
         });
         const viewsByDay = Object.entries(daysMap)
           .map(([date, count]) => ({ date, count }))
