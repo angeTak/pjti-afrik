@@ -111,19 +111,6 @@ const VotePackagesModal: React.FC<VotePackagesModalProps> = ({ isOpen, onClose, 
             })}
           </div>
 
-          {selectedPackages.length > 0 && (
-            <div className="mt-6 p-4 bg-slate-900 text-white flex justify-between items-center animate-in fade-in slide-in-from-bottom-2">
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Total à payer</div>
-                <div className="text-lg font-black">{totalPrice} FCFA</div>
-              </div>
-              <div className="text-right">
-                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Total points</div>
-                <div className="text-lg font-black text-amber-400">+{totalPoints} pts</div>
-              </div>
-            </div>
-          )}
-
           {selectedPackages.length > 0 && !isProcessing && (
             <div className="flex justify-center mt-6 -mb-4 animate-bounce duration-1000">
               <ArrowDown className="w-8 h-8 text-purple-600" />
@@ -134,17 +121,17 @@ const VotePackagesModal: React.FC<VotePackagesModalProps> = ({ isOpen, onClose, 
             <button
               onClick={handleVote}
               disabled={selectedPackages.length === 0 || isProcessing}
-              className="w-full py-4 bg-purple-600 text-white rounded-none font-black text-lg shadow-lg shadow-purple-600/20 hover:bg-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+              className="w-full py-4 bg-purple-600 text-white rounded-none font-black text-lg shadow-lg shadow-purple-600/20 hover:bg-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 px-4"
             >
               {isProcessing ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Redirection vers PayGate...
+                  Redirection...
                 </>
               ) : (
                 <>
                   <CreditCard className="w-5 h-5" />
-                  Payer {totalPrice} FCFA
+                  Payer {totalPrice} FCFA (+{totalPoints} pts)
                 </>
               )}
             </button>
