@@ -184,11 +184,11 @@ const Projets = () => {
                     <div 
                       key={team.id} 
                       onClick={() => navigate(`/projets/${team.id}`)}
-                      className={`reveal opacity-0 group flex flex-col bg-white rounded-lg border-2 border-purple-600 hover:border-purple-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer overflow-hidden p-8`}
+                      className={`reveal opacity-0 group flex flex-col bg-white rounded-lg border-2 border-purple-600 hover:border-purple-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer overflow-hidden p-6`}
                       style={{ transitionDelay: `${(idx % 8) * 100}ms` }}
                     >
                       {/* Card Top: Logo and Team Number */}
-                      <div className="flex flex-col items-center justify-center mb-8 gap-4">
+                      <div className="flex flex-col items-center justify-center mb-6 gap-3">
                         <img 
                           src={team.logo_url || logoUrl} 
                           alt="Logo" 
@@ -199,7 +199,7 @@ const Projets = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-center mb-8">
+                      <div className="flex items-center justify-center mb-6">
                         <button 
                           onClick={(e) => {
                             e.stopPropagation();
@@ -214,18 +214,15 @@ const Projets = () => {
 
                       {/* Content */}
                       <div className="flex-1 text-center">
-                        <div className="inline-block px-6 py-3 bg-purple-50 text-purple-600 font-black text-sm sm:text-base uppercase tracking-[0.15em] mb-6 rounded-xl">
+                        <div className="inline-block px-5 py-2.5 bg-purple-50 text-purple-600 font-black text-xs sm:text-sm uppercase tracking-[0.15em] mb-4 rounded-xl">
                           Équipe : <span className="border-b-2 border-purple-300 ml-1 pb-0.5">{team.name}</span>
                         </div>
-                        <div className="mb-4">
-                          <span className="inline-block text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-1 border-b border-slate-200 pb-0.5">Projet</span>
-                          <h2 className="text-xl font-black text-slate-900 leading-tight group-hover:text-purple-600 transition-colors">
+                        <div className="mb-2">
+                          <span className="inline-block text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-1 border-b border-slate-200 pb-0.5">Projet</span>
+                          <h2 className="text-lg font-black text-slate-900 leading-tight group-hover:text-purple-600 transition-colors">
                             {team.project_title || 'Projet sans titre'}
                           </h2>
                         </div>
-                        <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed mb-6 px-2">
-                          {team.description}
-                        </p>
                       </div>
 
                       {/* Footer Info: Photos + Names */}
