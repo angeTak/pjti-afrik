@@ -89,6 +89,15 @@ const WhySection = () => {
           </p>
         </div>
 
+        {/* Illustration */}
+        <div className="reveal opacity-0 delay-300 w-full max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden shadow-2xl shadow-blue-100/50 border border-slate-100">
+          <img
+            src="/digital-potential.png"
+            alt="Jeunes talents développant leurs compétences numériques"
+            className="w-full h-auto object-cover"
+          />
+        </div>
+
         {/* Features grid - Premium Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {features.map((feature, index) => (
