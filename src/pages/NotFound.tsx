@@ -3,14 +3,22 @@ import { useEffect } from "react";
 import { Wrench, MessageCircle, ArrowLeft, Home } from "lucide-react";
 
 const NotFound = () => {
-  const location = useLocation();
+  let locationPath = "";
+  try {
+    const location = useLocation();
+    locationPath = location.pathname;
+  } catch (e) {
+    console.warn("Location context not available in Maintenance page");
+  }
 
   useEffect(() => {
-    console.error(
-      "Page non trouvée ou erreur détectée sur :",
-      location.pathname
-    );
-  }, [location.pathname]);
+    if (locationPath) {
+      console.error(
+        "Page non trouvée ou erreur détectée sur :",
+        locationPath
+      );
+    }
+  }, [locationPath]);
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-6 relative overflow-hidden">
@@ -39,7 +47,7 @@ const NotFound = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a 
-            href="https://wa.me/22891244036" 
+            href="https://wa.me/22893372905" 
             target="_blank" 
             rel="noopener noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-green-500 text-white font-black rounded-2xl hover:bg-green-600 transition-all shadow-xl shadow-green-200 hover:-translate-y-1"
@@ -56,10 +64,6 @@ const NotFound = () => {
             Retour à l'accueil
           </a>
         </div>
-
-        <p className="mt-12 text-slate-400 text-sm font-medium">
-          Besoin d'aide urgente ? Appelez-nous au <span className="text-slate-600">+228 91 24 40 36</span>
-        </p>
       </div>
     </div>
   );
