@@ -211,7 +211,7 @@ const AdminAnalytics = () => {
                 Le tag Google Analytics est actif. Pour des rapports détaillés, consultez votre dashboard externe.
               </p>
               <a 
-                href="https://analytics.google.com/" 
+                href="https://analytics.google.com/analytics/web/?utm_source=marketingplatform.google.com&utm_medium=et&utm_campaign=marketingplatform.google.com%2Fabout%2Fanalytics%2F#/a395007771p537940072/reports/intelligenthome?params=_u..nav%3Dmaui" 
                 target="_blank" 
                 rel="noreferrer"
                 className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-xl font-bold text-sm transition-all"
