@@ -289,6 +289,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             vote_start_date: t.vote_start_date || null,
             vote_end_date: t.vote_end_date || null,
             total_points: t.total_points || 0,
+            logo_url: t.logo_url || '',
+            category: t.category || 'Programmation',
           }));
           setTeams(finalTeams);
         }

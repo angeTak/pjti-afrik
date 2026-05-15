@@ -451,7 +451,7 @@ const AdminTeams = () => {
               </button>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {teams.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()).map((team, idx) => {
                 const captain = team.captain_id ? officialRegistrations.find(r => r.id === team.captain_id) : null;
                 const memberCount = team.member_ids.length;
@@ -514,7 +514,34 @@ const AdminTeams = () => {
             </div>
           </div>
           
-          <div className="overflow-x-auto">
+          {/* Mobile View: Ranking Cards */}
+          <div className="md:hidden divide-y divide-slate-50">
+            {teams.sort((a, b) => (b.total_points || 0) - (a.total_points || 0)).map((team, idx) => {
+              const originalIndex = teams.slice().sort((a,b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()).findIndex(t => t.id === team.id);
+              return (
+                <div key={team.id} className="p-4 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex-shrink-0">
+                      {idx === 0 ? <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 shadow-sm"><Trophy className="w-4 h-4" /></div> : 
+                       idx === 1 ? <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 font-black text-xs">2</div> :
+                       idx === 2 ? <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 font-black text-xs">3</div> :
+                       <div className="w-8 h-8 flex items-center justify-center text-slate-300 font-bold text-xs">{idx + 1}</div>}
+                    </div>
+                    <div>
+                      <div className="font-black text-slate-900 text-sm">E-{(originalIndex + 1).toString().padStart(2, '0')} {team.name}</div>
+                      <div className="text-[10px] font-bold text-slate-500 truncate max-w-[150px]">{team.project_title}</div>
+                    </div>
+                  </div>
+                  <div className="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg font-black text-xs">
+                    {team.total_points || 0} pts
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Desktop View: Ranking Table */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-white">

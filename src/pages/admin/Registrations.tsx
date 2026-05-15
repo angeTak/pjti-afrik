@@ -587,7 +587,86 @@ const AdminRegistrations = () => {
       </div>
 
       <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Mobile View: Card List */}
+        <div className="md:hidden divide-y divide-slate-50">
+          {filteredRegistrations.length === 0 ? (
+            <div className="px-6 py-12 text-center text-slate-400 font-medium italic">
+              Aucune inscription ne correspond à vos filtres
+            </div>
+          ) : (
+            filteredRegistrations.map((reg) => (
+              <div key={reg.id} className="p-4 space-y-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="font-black text-slate-900">{reg.parentName}</p>
+                    <p className="text-sm text-slate-500 flex items-center gap-1 font-bold">
+                      <User className="w-3.5 h-3.5" /> {reg.childName}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => setSelectedRegId(reg.id)}
+                      className="p-2 text-purple-600 bg-purple-50 rounded-xl"
+                    >
+                      <Eye className="w-5 h-5" />
+                    </button>
+                    <button 
+                      onClick={() => setRegToDelete(reg.id)}
+                      className="p-2 text-red-600 bg-red-50 rounded-xl"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Ville</p>
+                    <p className="text-xs font-bold text-slate-700">{reg.city}</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Paiement</p>
+                    <p className="text-xs font-bold text-slate-700">{reg.amountPaid.toLocaleString('fr-FR')} FCFA</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <select 
+                    value={reg.status}
+                    onChange={(e) => handleStatusChange(reg.id, e.target.value)}
+                    className={`text-[10px] font-black px-4 py-2 rounded-xl border-none ring-1 transition-all uppercase tracking-wider ${
+                      reg.status === 'new' ? 'bg-blue-50 text-blue-700 ring-blue-100' : 
+                      reg.status === 'contacted' ? 'bg-amber-50 text-amber-700 ring-amber-100' :
+                      reg.status === 'registered' ? 'bg-green-50 text-green-700 ring-green-100' :
+                      'bg-red-50 text-red-700 ring-red-100'
+                    }`}
+                  >
+                    <option value="new">Nouveau</option>
+                    <option value="contacted">Contacté</option>
+                    <option value="registered">Inscrit</option>
+                    <option value="cancelled">Annulé</option>
+                  </select>
+                  
+                  {!reg.isManual && (
+                    <button 
+                      onClick={async () => {
+                        await updateRegistrationPayment(reg.id, { isManual: true } as any);
+                        await updateRegistrationStatus(reg.id, 'registered');
+                        toast.success('Validé !');
+                      }}
+                      className="text-[10px] font-black text-emerald-600 uppercase tracking-widest flex items-center gap-1.5"
+                    >
+                      <CheckCircle2 className="w-4 h-4" /> Valider l'inscription
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100">

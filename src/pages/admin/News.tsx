@@ -206,35 +206,37 @@ const AdminNews = () => {
             </div>
           ) : (
             news.map((article) => (
-              <div key={article.id} className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex gap-6 hover:border-purple-200 transition-all group">
-                <div className="w-32 h-32 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
+              <div key={article.id} className="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:border-purple-200 transition-all group">
+                <div className="w-full sm:w-32 h-48 sm:h-32 rounded-2xl bg-slate-100 overflow-hidden flex-shrink-0">
                   {article.image ? (
-                    <img src={article.image} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-slate-300">
-                      <ImageIcon className="w-8 h-8" />
+                      <Newspaper className="w-10 h-10" />
                     </div>
                   )}
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-black uppercase tracking-wider">{article.category}</span>
-                      <span className="text-xs text-slate-400 flex items-center gap-1"><Calendar className="w-3 h-3" /> {article.date}</span>
+                      <span className="flex items-center gap-1 text-[10px] font-bold text-slate-400">
+                        <Calendar className="w-3 h-3" /> {article.date}
+                      </span>
                     </div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-1 leading-tight">{article.title}</h3>
-                    <p className="text-sm text-slate-500 line-clamp-2">{article.excerpt}</p>
+                    <h3 className="text-lg font-bold text-slate-900 leading-tight group-hover:text-purple-600 transition-colors">{article.title}</h3>
+                    <p className="text-sm text-slate-500 line-clamp-2 mt-2">{article.excerpt}</p>
                   </div>
                   <div className="flex justify-end gap-2 mt-4">
                     <button 
                       onClick={() => handleEdit(article)}
-                      className="p-2 text-slate-400 hover:text-amber-500 transition-colors"
+                      className="p-2 text-slate-400 hover:text-amber-500 transition-colors bg-slate-50 rounded-lg"
                     >
                       <Edit3 className="w-5 h-5" />
                     </button>
                     <button 
                       onClick={() => setNewsToDelete(article.id)}
-                      className="p-2 text-slate-400 hover:text-red-600 transition-colors"
+                      className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-slate-50 rounded-lg"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>

@@ -53,7 +53,79 @@ const AdminPartnershipRequests = () => {
       </div>
 
       <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Mobile View: Card List */}
+        <div className="md:hidden divide-y divide-slate-100">
+          {partnershipRequests.length === 0 ? (
+            <div className="py-12 px-6 text-center text-slate-500">
+              <Mail className="w-12 h-12 text-slate-200 mx-auto mb-3" />
+              Aucune demande de partenariat pour le moment.
+            </div>
+          ) : (
+            partnershipRequests.map((request) => {
+              const isExpanded = expandedRequestId === request.id;
+              const config = statusConfig[request.status];
+              return (
+                <div key={request.id} className={`p-4 space-y-4 ${isExpanded ? 'bg-slate-50' : ''}`}>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                        {new Date(request.created_at).toLocaleDateString('fr-FR')}
+                      </p>
+                      <h3 className="font-black text-slate-900">{request.organization_name}</h3>
+                      <p className="text-xs font-bold text-purple-600 uppercase tracking-wide">{request.partnership_type}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => toggleExpand(request.id)}
+                        className="p-2 text-purple-600 bg-purple-50 rounded-xl"
+                      >
+                        {isExpanded ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                      <button
+                        onClick={() => setRequestToDelete(request.id)}
+                        className="p-2 text-red-600 bg-red-50 rounded-xl"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-2 text-xs">
+                    <p className="text-slate-600 font-medium flex items-center gap-2">
+                      <Mail className="w-3.5 h-3.5 text-slate-400" /> {request.email}
+                    </p>
+                    <p className="text-slate-600 font-medium flex items-center gap-2">
+                      <Clock className="w-3.5 h-3.5 text-slate-400" /> {request.sector}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <select
+                      value={request.status}
+                      onChange={(e) => handleStatusChange(request.id, e.target.value as PartnershipRequest['status'])}
+                      className={`text-[10px] font-black px-4 py-2 rounded-xl border-none outline-none cursor-pointer uppercase tracking-wider ${config?.color}`}
+                    >
+                      <option value="new">Nouveau</option>
+                      <option value="contacted">Contacté</option>
+                      <option value="accepted">Accepté</option>
+                      <option value="rejected">Refusé</option>
+                    </select>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="bg-white p-4 rounded-2xl border border-slate-200 text-sm text-slate-700 whitespace-pre-wrap animate-in fade-in slide-in-from-top-2">
+                      <span className="font-black block mb-2 text-slate-900 uppercase text-[10px] tracking-widest">Message :</span>
+                      {request.message}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100">
@@ -77,8 +149,6 @@ const AdminPartnershipRequests = () => {
                 partnershipRequests.map((request) => {
                   const isExpanded = expandedRequestId === request.id;
                   const config = statusConfig[request.status];
-                  const StatusIcon = config?.icon || Clock;
-
                   return (
                     <React.Fragment key={request.id}>
                       <tr className={`hover:bg-slate-50 transition-colors ${isExpanded ? 'bg-slate-50' : ''}`}>
