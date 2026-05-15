@@ -49,7 +49,7 @@ const PartnersSection = () => {
                 >
                   <div className="w-24 h-24 sm:w-40 sm:h-40 flex items-center justify-center transition-all duration-500 group-hover:scale-110">
                     {partner.logo ? (
-                      <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-500" />
+                      <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain transition-transform duration-500" />
                     ) : (
                       <div className={`w-full h-full rounded-[32px] sm:rounded-[48px] ${partner.color || 'bg-slate-100'} flex items-center justify-center text-white font-black text-2xl sm:text-4xl shadow-lg shadow-slate-200/50`}>
                         {partner.initials}
