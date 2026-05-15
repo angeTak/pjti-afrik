@@ -23,6 +23,7 @@ const ProjectDetails = () => {
   const { teams, registrations, settings } = useAdmin();
   const [voteModalOpen, setVoteModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'project' | 'team'>('team');
+  const [shareMenuOpen, setShareMenuOpen] = useState(false);
 
   const team = teams.find(t => t.id === id);
   const teamIndex = teams.findIndex(t => t.id === id);
@@ -84,7 +85,6 @@ const ProjectDetails = () => {
     if (shareUrl) window.open(shareUrl, '_blank');
   };
 
-  const [shareMenuOpen, setShareMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
