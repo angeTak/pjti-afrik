@@ -63,7 +63,8 @@ const ProjectDetails = () => {
 
   const handleShare = (platform: 'whatsapp' | 'facebook' | 'linkedin' | 'copy') => {
     const url = window.location.href;
-    const text = `Voter pour ${team.name} sur pjti afrik`;
+    const teamNum = (team.name.replace(/[^0-9]/g, '') || (teamIndex + 1).toString()).padStart(2, '0');
+    const text = `Voter pour E-${teamNum} ${team.name} sur pjti afrik`;
     
     let shareUrl = '';
     switch (platform) {
