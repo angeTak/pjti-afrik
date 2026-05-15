@@ -144,6 +144,19 @@ CREATE TABLE gallery (
 
 
 -- ============================================================
+-- 9.1 TABLE ANALYTIQUES (Visites)
+-- ============================================================
+CREATE TABLE page_views (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+  path text NOT NULL,
+  user_agent text,
+  referrer text,
+  session_id text
+);
+
+
+-- ============================================================
 -- 9. ACTIVATION DU ROW LEVEL SECURITY (RLS)
 -- ============================================================
 ALTER TABLE registrations ENABLE ROW LEVEL SECURITY;
@@ -153,6 +166,7 @@ ALTER TABLE partners ENABLE ROW LEVEL SECURITY;
 ALTER TABLE gallery ENABLE ROW LEVEL SECURITY;
 ALTER TABLE teams ENABLE ROW LEVEL SECURITY;
 ALTER TABLE partnership_requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
 
 
 -- ============================================================
@@ -165,6 +179,7 @@ CREATE POLICY "Enable all for partners" ON partners FOR ALL USING (true) WITH CH
 CREATE POLICY "Enable all for gallery" ON gallery FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Enable all for teams" ON teams FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Enable all for partnership_requests" ON partnership_requests FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Enable all for page_views" ON page_views FOR ALL USING (true) WITH CHECK (true);
 
 
 -- ============================================================
@@ -191,3 +206,17 @@ CREATE POLICY "Enable all for partnership_requests" ON partnership_requests FOR 
 -- Ajout des dates de vote globales aux paramètres
 -- ALTER TABLE settings ADD COLUMN IF NOT EXISTS vote_start_date timestamp with time zone;
 -- ALTER TABLE settings ADD COLUMN IF NOT EXISTS vote_end_date timestamp with time zone;
+
+-- Création de la table page_views
+/*
+CREATE TABLE IF NOT EXISTS page_views (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+  path text NOT NULL,
+  user_agent text,
+  referrer text,
+  session_id text
+);
+ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable all for page_views" ON page_views FOR ALL USING (true) WITH CHECK (true);
+*/

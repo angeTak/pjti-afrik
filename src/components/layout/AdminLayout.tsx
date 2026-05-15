@@ -12,7 +12,8 @@ import {
   Mail,
   Users2,
   Menu,
-  X
+  X,
+  BarChart3
 } from 'lucide-react';
 import { useAdmin } from '@/context/AdminContext';
 
@@ -35,6 +36,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { path: '/admin/partners', icon: Handshake, label: 'Partenaires' },
     { path: '/admin/partnership-requests', icon: Mail, label: 'Demandes Partenariat' },
     { path: '/admin/teams', icon: Users2, label: 'Équipes' },
+    { path: '/admin/analytics', icon: BarChart3, label: 'Analytiques' },
     { path: '/admin/settings', icon: Settings, label: 'Paramètres' },
   ];
 
