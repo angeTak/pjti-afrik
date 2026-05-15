@@ -70,6 +70,7 @@ export interface Partner {
   textColor: string;
   badgeBg: string;
   borderColor: string;
+  website?: string;
 }
 
 export interface Team {
@@ -269,7 +270,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             color: p.color,
             textColor: p.text_color,
             badgeBg: p.badge_bg,
-            borderColor: p.border_color
+            borderColor: p.border_color,
+            website: p.website
           }));
           setPartners(finalPartners);
         }
@@ -510,11 +512,12 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       color: partner.color,
       text_color: partner.textColor,
       badge_bg: partner.badgeBg,
-      border_color: partner.borderColor
+      border_color: partner.borderColor,
+      website: partner.website || null
     };
     const { data, error } = await supabase.from('partners').insert([dbPartner]).select().single();
     if (!error && data) {
-      setPartners(prev => [data, ...prev]);
+      setPartners(prev => [{ ...data, website: data.website }, ...prev]);
     } else {
       console.error("Erreur insertion Partenaire:", error);
     }
@@ -531,6 +534,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (partner.textColor) dbPartner.text_color = partner.textColor;
     if (partner.badgeBg) dbPartner.badge_bg = partner.badgeBg;
     if (partner.borderColor) dbPartner.border_color = partner.borderColor;
+    dbPartner.website = partner.website || null;
 
     const { error } = await supabase.from('partners').update(dbPartner).eq('id', id);
     if (!error) {

@@ -18,7 +18,8 @@ const AdminPartners = () => {
     color: 'bg-slate-900',
     textColor: 'text-slate-900',
     badgeBg: 'bg-slate-50',
-    borderColor: 'border-slate-100'
+    borderColor: 'border-slate-100',
+    website: ''
   });
 
   const handleSave = async (e: React.FormEvent) => {
@@ -59,7 +60,8 @@ const AdminPartners = () => {
       color: 'bg-slate-900',
       textColor: 'text-slate-900',
       badgeBg: 'bg-slate-50',
-      borderColor: 'border-slate-100'
+      borderColor: 'border-slate-100',
+      website: ''
     });
   };
 
@@ -172,6 +174,18 @@ const AdminPartners = () => {
                   placeholder="Description du partenariat..."
                   required
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1.5">Site web / Réseau social</label>
+                <input
+                  type="url"
+                  value={currentPartner.website || ''}
+                  onChange={(e) => setCurrentPartner({ ...currentPartner, website: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 focus:border-purple-500 transition-colors"
+                  placeholder="https://www.example.com"
+                />
+                <p className="text-[10px] text-slate-400 mt-1">Lien affiché sous le nom sur la page publique</p>
               </div>
 
               <div className="pt-4 flex gap-3">
