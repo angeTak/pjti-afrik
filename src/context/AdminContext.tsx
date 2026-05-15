@@ -319,8 +319,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, []);
 
   const login = (password: string) => {
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin2025';
-    if (password === adminPassword) {
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+    if (adminPassword && password === adminPassword) {
       setIsAuthenticated(true);
       localStorage.setItem('admin_auth', 'true');
       return true;
