@@ -184,8 +184,21 @@ const ActualitesPage = () => {
                           )}
 
                           {expandedId === item.id && (
-                            <div className="animate-fade-in mb-5">
-                              <FormattedText text={item.paragraph} />
+                            <div className="animate-fade-in mb-5 space-y-4">
+                              {/* First half of text */}
+                              <FormattedText text={item.paragraph.split('\n').slice(0, Math.ceil(item.paragraph.split('\n').length / 2)).join('\n')} />
+                              {/* Second image in the middle */}
+                              {item.image2 && (
+                                <div className="rounded-xl overflow-hidden border border-slate-100 shadow-sm my-4">
+                                  <img
+                                    src={item.image2}
+                                    alt={`${item.title} — illustration`}
+                                    className="w-full h-auto object-cover max-h-72"
+                                  />
+                                </div>
+                              )}
+                              {/* Second half of text */}
+                              <FormattedText text={item.paragraph.split('\n').slice(Math.ceil(item.paragraph.split('\n').length / 2)).join('\n')} />
                             </div>
                           )}
 

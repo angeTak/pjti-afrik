@@ -157,6 +157,61 @@ const AdminNews = () => {
               </div>
 
               <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1.5">2e image (milieu d'article) <span className="text-slate-400 font-normal text-xs">— optionnel</span></label>
+                <div className="flex flex-col gap-3">
+                  <input
+                    type="url"
+                    value={currentArticle.image2 || ''}
+                    onChange={(e) => setCurrentArticle({ ...currentArticle, image2: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 focus:border-purple-500 transition-colors"
+                    placeholder="URL de la 2e image (ex: https://...)"
+                  />
+                  
+                  <div className="relative">
+                    <input 
+                      type="file" 
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const loadingToast = toast.loading('Upload de la 2e image...');
+                          const url = await uploadImage(file, 'news');
+                          toast.dismiss(loadingToast);
+                          if (url) {
+                            setCurrentArticle({ ...currentArticle, image2: url });
+                            toast.success('2e image chargée avec succès');
+                          } else {
+                            toast.error('Erreur lors de l\'upload');
+                          }
+                        }
+                      }}
+                      className="hidden" 
+                      id="news-image2-upload"
+                    />
+                    <label 
+                      htmlFor="news-image2-upload"
+                      className="flex items-center justify-center gap-2 w-full py-3 border-2 border-dashed border-blue-200 rounded-xl text-slate-500 font-bold hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all cursor-pointer"
+                    >
+                      <ImageIcon className="w-5 h-5" />
+                      Charger la 2e image depuis le PC
+                    </label>
+                  </div>
+                  {currentArticle.image2 && (
+                    <div className="relative w-full h-24 rounded-xl overflow-hidden border border-slate-100">
+                      <img src={currentArticle.image2} alt="2e image preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setCurrentArticle({ ...currentArticle, image2: '' })}
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 shadow"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
                 <label className="block text-sm font-bold text-slate-700 mb-1.5">Résumé court</label>
                 <textarea
                   value={currentArticle.excerpt}

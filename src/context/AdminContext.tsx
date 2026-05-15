@@ -30,6 +30,7 @@ export interface NewsItem {
   date: string;
   category: string;
   image: string;
+  image2?: string;
   excerpt: string;
   paragraph: string;
 }
