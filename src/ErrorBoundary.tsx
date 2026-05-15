@@ -29,7 +29,7 @@ class ErrorBoundary extends Component<Props, State> {
       return <NotFound />;
     }
 
-    return this.children;
+    return this.props.children;
   }
 }
 
