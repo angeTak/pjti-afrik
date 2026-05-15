@@ -97,8 +97,8 @@ interface AdminContextType {
   partnershipRequests: PartnershipRequest[];
   teams: Team[];
   isAuthenticated: boolean;
-  login: (password: string) => boolean;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<boolean>;
+  logout: () => Promise<void>;
   addRegistration: (reg: Omit<Registration, 'id' | 'date' | 'status'>) => void;
   updateRegistrationStatus: (id: string, status: Registration['status']) => void;
   updateRegistrationPayment: (id: string, data: Partial<Pick<Registration, 'amountPaid' | 'paymentMethodActual' | 'installmentsPaid' | 'photo_url'>>) => void;
@@ -135,9 +135,26 @@ const defaultSettings: SiteSettings = {
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('admin_auth') === 'true';
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Écouter les changements d'état d'authentification Supabase
+  useEffect(() => {
+    // Vérifier l'état actuel au montage
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthenticated(!!session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+      if (!session) {
+        localStorage.removeItem('admin_auth'); // Nettoyage au cas où
+      } else {
+        localStorage.setItem('admin_auth', 'true');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -318,17 +335,29 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     fetchData();
   }, []);
 
-  const login = (password: string) => {
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-    if (adminPassword && password === adminPassword) {
-      setIsAuthenticated(true);
-      localStorage.setItem('admin_auth', 'true');
-      return true;
+  const login = async (email: string, password: string) => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) throw error;
+      
+      if (data.session) {
+        setIsAuthenticated(true);
+        localStorage.setItem('admin_auth', 'true');
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Erreur de connexion:", error);
+      return false;
     }
-    return false;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut();
     setIsAuthenticated(false);
     localStorage.removeItem('admin_auth');
   };

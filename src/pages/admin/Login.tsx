@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, User, AlertCircle } from 'lucide-react';
+import { Lock, Mail, AlertCircle, Loader2 } from 'lucide-react';
 import { useAdmin } from '@/context/AdminContext';
 
 const AdminLogin = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAdmin();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
-      navigate('/admin');
-    } else {
-      setError('Mot de passe incorrect');
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const success = await login(email, password);
+      if (success) {
+        navigate('/admin');
+      } else {
+        setError('Email ou mot de passe incorrect');
+      }
+    } catch (err) {
+      setError('Une erreur est survenue lors de la connexion');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -26,10 +38,25 @@ const AdminLogin = () => {
             <Lock className="w-8 h-8 text-purple-600" />
           </div>
           <h1 className="text-2xl font-black text-slate-900">Espace Administration</h1>
-          <p className="text-slate-500 mt-2">Veuillez vous connecter pour continuer</p>
+          <p className="text-slate-500 mt-2">Connectez-vous avec vos identifiants Supabase</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-2">Email</label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-100 focus:border-purple-500 transition-colors"
+                placeholder="votre@email.com"
+                required
+              />
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm font-bold text-slate-700 mb-2">Mot de passe</label>
             <div className="relative">
@@ -39,7 +66,7 @@ const AdminLogin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-100 focus:border-purple-500 transition-colors"
-                placeholder="Entrez votre mot de passe"
+                placeholder="••••••••"
                 required
               />
             </div>
@@ -54,9 +81,17 @@ const AdminLogin = () => {
 
           <button
             type="submit"
-            className="w-full py-4 bg-purple-600 text-white font-black rounded-2xl hover:bg-purple-700 transition-colors shadow-lg shadow-purple-600/20"
+            disabled={isLoading}
+            className="w-full py-4 bg-purple-600 text-white font-black rounded-2xl hover:bg-purple-700 transition-all shadow-lg shadow-purple-600/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            Se connecter
+            {isLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Connexion...
+              </>
+            ) : (
+              'Se connecter'
+            )}
           </button>
         </form>
 

@@ -23,8 +23,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/admin/login');
   };
 
