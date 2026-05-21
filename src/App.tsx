@@ -65,15 +65,17 @@ const AppContent = () => {
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/registrations" element={<ProtectedRoute><AdminRegistrations /></ProtectedRoute>} />
-          <Route path="/admin/news" element={<ProtectedRoute><AdminNews /></ProtectedRoute>} />
-          <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
-          <Route path="/admin/partners" element={<ProtectedRoute><AdminPartners /></ProtectedRoute>} />
-          <Route path="/admin/partnership-requests" element={<ProtectedRoute><AdminPartnershipRequests /></ProtectedRoute>} />
-          <Route path="/admin/teams" element={<ProtectedRoute><AdminTeams /></ProtectedRoute>} />
-          <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
-          <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="registrations" element={<AdminRegistrations />} />
+            <Route path="news" element={<AdminNews />} />
+            <Route path="gallery" element={<AdminGallery />} />
+            <Route path="partners" element={<AdminPartners />} />
+            <Route path="partnership-requests" element={<AdminPartnershipRequests />} />
+            <Route path="teams" element={<AdminTeams />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="settings" element={<AdminSettings />} />
+          </Route>
           
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -191,15 +191,17 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, []);
 
-  // Charger les données depuis Supabase au montage
+  // Charger les données depuis Supabase
   useEffect(() => {
+    if (isAuthLoading) return;
+
     const fetchData = async () => {
       // On ne met isLoading à true que si on n'a pas de cache, pour éviter le flash
       if (localStorage.getItem('pjti_data_cache') === null) {
         setIsLoading(true);
       }
       
-      console.log("Début du chargement parallèle des données Supabase...");
+      console.log(`Début du chargement parallèle des données Supabase (Admin: ${isAuthenticated})...`);
       
       try {
         const [
@@ -211,16 +213,20 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           { data: prData, error: prError },
           { data: teamsData, error: teamsError }
         ] = await Promise.all([
-          supabase.from('registrations').select('*').order('created_at', { ascending: false }),
+          isAuthenticated
+            ? supabase.from('registrations').select('*').order('created_at', { ascending: false })
+            : supabase.from('registrations').select('id, child_name, city, photo_url'),
           supabase.from('news').select('*').order('created_at', { ascending: false }),
           supabase.from('gallery').select('*'),
           supabase.from('partners').select('*'),
           supabase.from('settings').select('*').single(),
-          supabase.from('partnership_requests').select('*').order('created_at', { ascending: false }),
+          isAuthenticated
+            ? supabase.from('partnership_requests').select('*').order('created_at', { ascending: false })
+            : Promise.resolve({ data: [] as any[], error: null }),
           supabase.from('teams').select('*').order('created_at', { ascending: false })
         ]);
 
-        let finalRegs = registrations;
+        let finalRegs: Registration[] = [];
         let finalNews = news;
         let finalGallery = gallery;
         let finalPartners = partners;
@@ -231,19 +237,19 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         if (regData) {
           finalRegs = regData.map(r => ({
             id: r.id,
-            date: new Date(r.created_at).toLocaleDateString('fr-FR'),
-            parentName: r.parent_name,
-            phone: r.phone,
-            email: r.email,
-            city: r.city,
-            childName: r.child_name,
-            ageGroup: r.age_group,
-            schoolLevel: r.school_level,
+            date: r.created_at ? new Date(r.created_at).toLocaleDateString('fr-FR') : '',
+            parentName: r.parent_name || '',
+            phone: r.phone || '',
+            email: r.email || '',
+            city: r.city || '',
+            childName: r.child_name || '',
+            ageGroup: r.age_group || '',
+            schoolLevel: r.school_level || '',
             hasComputer: r.has_computer,
             howFound: r.how_found,
             paymentMethod: r.payment_method,
             paymentSchedule: r.payment_schedule,
-            status: r.status,
+            status: r.status || 'new',
             amountPaid: r.amount_paid || 0,
             paymentMethodActual: r.payment_method_actual || '',
             installmentsPaid: r.installments_paid || 0,
@@ -298,6 +304,9 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         if (prData) {
           finalPRs = prData;
           setPartnershipRequests(finalPRs);
+        } else if (!isAuthenticated) {
+          finalPRs = [];
+          setPartnershipRequests([]);
         }
 
         if (teamsData && !teamsError) {
@@ -339,7 +348,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     fetchData();
-  }, []);
+  }, [isAuthenticated, isAuthLoading]);
 
   const login = async (email: string, password: string) => {
     try {
