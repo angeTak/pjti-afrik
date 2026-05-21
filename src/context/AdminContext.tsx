@@ -98,6 +98,7 @@ interface AdminContextType {
   partnershipRequests: PartnershipRequest[];
   teams: Team[];
   isAuthenticated: boolean;
+  isAuthLoading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   addRegistration: (reg: Omit<Registration, 'id' | 'date' | 'status'>) => void;
@@ -137,16 +138,19 @@ const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   // Écouter les changements d'état d'authentification Supabase
   useEffect(() => {
     // Vérifier l'état actuel au montage
     supabase.auth.getSession().then(({ data: { session } }) => {
       setIsAuthenticated(!!session);
+      setIsAuthLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsAuthenticated(!!session);
+      setIsAuthLoading(false);
       if (!session) {
         localStorage.removeItem('admin_auth'); // Nettoyage au cas où
       } else {
@@ -716,7 +720,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   return (
     <AdminContext.Provider value={{
-      registrations, news, gallery, partners, settings, partnershipRequests, teams, isAuthenticated,
+      registrations, news, gallery, partners, settings, partnershipRequests, teams, isAuthenticated, isAuthLoading,
       login, logout, addRegistration, updateRegistrationStatus, updateRegistrationPayment, deleteRegistration,
       addNews, updateNews, deleteNews, addGalleryImage, deleteGalleryImage,
       addPartner, updatePartner, deletePartner, updateSettings,

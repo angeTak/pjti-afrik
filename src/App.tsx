@@ -32,6 +32,7 @@ import AdminPartnershipRequests from "./pages/admin/PartnershipRequests";
 import AdminTeams from "./pages/admin/Teams";
 import AdminAnalytics from "./pages/admin/Analytics";
 import AdminSettings from "./pages/admin/Settings";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -64,15 +65,15 @@ const AppContent = () => {
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/registrations" element={<AdminRegistrations />} />
-          <Route path="/admin/news" element={<AdminNews />} />
-          <Route path="/admin/gallery" element={<AdminGallery />} />
-          <Route path="/admin/partners" element={<AdminPartners />} />
-          <Route path="/admin/partnership-requests" element={<AdminPartnershipRequests />} />
-          <Route path="/admin/teams" element={<AdminTeams />} />
-          <Route path="/admin/analytics" element={<AdminAnalytics />} />
-          <Route path="/admin/settings" element={<AdminSettings />} />
+          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/registrations" element={<ProtectedRoute><AdminRegistrations /></ProtectedRoute>} />
+          <Route path="/admin/news" element={<ProtectedRoute><AdminNews /></ProtectedRoute>} />
+          <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
+          <Route path="/admin/partners" element={<ProtectedRoute><AdminPartners /></ProtectedRoute>} />
+          <Route path="/admin/partnership-requests" element={<ProtectedRoute><AdminPartnershipRequests /></ProtectedRoute>} />
+          <Route path="/admin/teams" element={<ProtectedRoute><AdminTeams /></ProtectedRoute>} />
+          <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
+          <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

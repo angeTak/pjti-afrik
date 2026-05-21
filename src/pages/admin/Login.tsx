@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, AlertCircle, Loader2 } from 'lucide-react';
 import { useAdmin } from '@/context/AdminContext';
@@ -8,8 +8,14 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAdmin();
+  const { login, isAuthenticated, isAuthLoading } = useAdmin();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthLoading && isAuthenticated) {
+      navigate('/admin');
+    }
+  }, [isAuthenticated, isAuthLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
