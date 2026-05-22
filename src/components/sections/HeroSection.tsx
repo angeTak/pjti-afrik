@@ -1,44 +1,80 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Terminal, Cpu, BookOpen } from 'lucide-react';
 import heroChildren from '@/assets/hero-children.png';
-import heroIllustration from '@/assets/hero-illustration.jpg';
-import heroChild from '@/assets/hero-child.png';
 import SeparatorPattern from '@/components/ui/SeparatorPattern';
 import { useAdmin } from '@/context/AdminContext';
 
-const TypewriterText = ({ text, delay = 50, startDelay = 0, showDot = false }: { text: string, delay?: number, startDelay?: number, showDot?: boolean }) => {
+const TypewriterText = ({
+  text,
+  delay = 50,
+  startDelay = 0,
+  showDot = false,
+  startTrigger = true,
+  onComplete,
+}: {
+  text: string;
+  delay?: number;
+  startDelay?: number;
+  showDot?: boolean;
+  startTrigger?: boolean;
+  onComplete?: () => void;
+}) => {
   const [displayedText, setDisplayedText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const onCompleteRef = useRef(onComplete);
 
   useEffect(() => {
-    if (!hasStarted) {
-      const timeout = setTimeout(() => setHasStarted(true), startDelay);
-      return () => clearTimeout(timeout);
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
+    if (!startTrigger) {
+      setDisplayedText('');
+      setIsComplete(false);
+      return;
     }
 
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, delay);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, text, delay, startDelay, hasStarted]);
+    setDisplayedText('');
+    setIsComplete(false);
+
+    let index = 0;
+    let typingTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const startTimer = setTimeout(() => {
+      const typeNext = () => {
+        if (index < text.length) {
+          index += 1;
+          setDisplayedText(text.slice(0, index));
+          typingTimer = setTimeout(typeNext, delay);
+        } else {
+          setIsComplete(true);
+          onCompleteRef.current?.();
+        }
+      };
+      typeNext();
+    }, startDelay);
+
+    return () => {
+      clearTimeout(startTimer);
+      if (typingTimer) clearTimeout(typingTimer);
+    };
+  }, [text, delay, startDelay, startTrigger]);
 
   return (
-    <>
-      {displayedText}
-      {showDot && (
-        <span className="animate-pulse inline-block text-purple-400 font-black ml-1">.</span>
-      )}
-    </>
+    <span className="inline notranslate" translate="no">
+      <span aria-hidden={!displayedText}>{displayedText || '\u00A0'}</span>
+      {showDot && isComplete ? (
+        <span className="ml-1 inline-block font-black text-purple-400 animate-pulse">.</span>
+      ) : null}
+    </span>
   );
 };
 
 const HeroSection = () => {
   const { settings } = useAdmin();
   const heroRef = useRef<HTMLDivElement>(null);
+  const [line1Complete, setLine1Complete] = useState(false);
+  const [line2Complete, setLine2Complete] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -108,23 +144,8 @@ const HeroSection = () => {
       {/* Content */}
       <div className="container relative z-10 flex flex-col lg:grid lg:grid-cols-2 gap-0 sm:gap-6 lg:gap-16 items-center">
 
-        {/* Mobile Title */}
-        <div className="w-full lg:hidden text-center sm:text-left -mb-4 min-h-[140px]">
-          <h1 className="leading-[1.1] tracking-tight">
-            <span className="block text-4xl sm:text-5xl font-black uppercase text-white drop-shadow-2xl min-h-[48px] sm:min-h-[64px]">
-              <TypewriterText text="Vacance challenge" delay={70} startDelay={300} />
-            </span>
-            <span className="block text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-xl animate-gradient mt-2 min-h-[28px] sm:min-h-[32px]">
-              <TypewriterText text="Formation + challenge" delay={40} startDelay={1200} />
-            </span>
-            <span className="block text-3xl sm:text-4xl font-extrabold text-purple-300 drop-shadow-2xl mt-1 min-h-[40px] sm:min-h-[48px] uppercase tracking-wide">
-              <TypewriterText text="Informatique" delay={60} startDelay={2300} showDot={true} />
-            </span>
-          </h1>
-        </div>
-
         {/* Banner design - Right side (Image before text on mobile) */}
-        <div className="reveal opacity-0 delay-100 relative w-full lg:col-start-2 lg:row-start-1 flex justify-center lg:justify-end">
+        <div className="reveal opacity-0 delay-100 relative order-2 w-full lg:order-none lg:col-start-2 lg:row-start-1 flex justify-center lg:justify-end">
           <div className="relative flex justify-center lg:justify-end items-center h-[380px] sm:h-[460px] lg:h-[610px]">
             {/* Main hero image */}
             <div className="relative group">
@@ -165,18 +186,33 @@ const HeroSection = () => {
         </div>
 
         {/* Text content - Left side */}
-        <div className="space-y-2 sm:space-y-8 w-full lg:col-start-1 lg:row-start-1 text-center sm:text-left -mt-4">
-          {/* Desktop Title */}
-          <div className="hidden lg:block space-y-2 min-h-[220px]">
+        <div className="order-1 space-y-2 sm:space-y-8 w-full lg:order-none lg:col-start-1 lg:row-start-1 text-center sm:text-left -mb-4 lg:mb-0">
+          <div className="min-h-[140px] lg:min-h-[220px]">
             <h1 className="leading-[1.1] tracking-tight">
-              <span className="block md:text-5xl lg:text-6xl font-black uppercase text-white drop-shadow-2xl min-h-[64px] lg:min-h-[80px]">
-                <TypewriterText text="Vacance challenge" delay={70} startDelay={300} />
+              <span className="block text-4xl font-black uppercase text-white drop-shadow-2xl sm:text-5xl lg:text-6xl">
+                <TypewriterText 
+                  text="Vacances challenge" 
+                  delay={50} 
+                  startDelay={300} 
+                  startTrigger={true}
+                  onComplete={() => setLine1Complete(true)}
+                />
               </span>
-              <span className="block md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-2xl animate-gradient mt-3 min-h-[40px] lg:min-h-[48px]">
-                <TypewriterText text="Formation + challenge" delay={40} startDelay={1200} />
+              <span className="mt-2 block text-xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-xl sm:text-2xl lg:mt-3 lg:text-4xl">
+                <TypewriterText 
+                  text="Formation + Challenge" 
+                  delay={40} 
+                  startTrigger={line1Complete}
+                  onComplete={() => setLine2Complete(true)}
+                />
               </span>
-              <span className="block md:text-4xl lg:text-5xl font-extrabold text-purple-300 drop-shadow-2xl mt-2 min-h-[48px] lg:min-h-[64px] uppercase tracking-wide">
-                <TypewriterText text="Informatique" delay={60} startDelay={2300} showDot={true} />
+              <span className="mt-1 block text-3xl font-extrabold uppercase tracking-wide text-purple-300 drop-shadow-2xl sm:text-4xl lg:text-5xl">
+                <TypewriterText 
+                  text="Informatique" 
+                  delay={50} 
+                  startTrigger={line2Complete}
+                  showDot
+                />
               </span>
             </h1>
           </div>
