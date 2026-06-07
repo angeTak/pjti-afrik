@@ -73,6 +73,17 @@ export interface Partner {
   website?: string;
 }
 
+export interface Expert {
+  id: string;
+  name: string;
+  role: string;
+  photoUrl?: string;
+  linkedinUrl?: string;
+  category: string;
+  orderIndex: number;
+  isPublished: boolean;
+}
+
 export interface Team {
   id: string;
   created_at: string;
@@ -94,6 +105,7 @@ interface AdminContextType {
   news: NewsItem[];
   gallery: string[];
   partners: Partner[];
+  experts: Expert[];
   settings: SiteSettings;
   partnershipRequests: PartnershipRequest[];
   teams: Team[];
@@ -113,6 +125,9 @@ interface AdminContextType {
   addPartner: (partner: Omit<Partner, 'id'>) => void;
   updatePartner: (id: string, partner: Partial<Partner>) => void;
   deletePartner: (id: string) => void;
+  addExpert: (expert: Omit<Expert, 'id'>) => Promise<void>;
+  updateExpert: (id: string, expert: Partial<Expert>) => Promise<void>;
+  deleteExpert: (id: string) => Promise<void>;
   updateSettings: (settings: Partial<SiteSettings>) => void;
   addPartnershipRequest: (req: Omit<PartnershipRequest, 'id' | 'created_at' | 'status'>) => void;
   updatePartnershipRequestStatus: (id: string, status: PartnershipRequest['status']) => void;
@@ -165,6 +180,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [news, setNews] = useState<NewsItem[]>([]);
   const [gallery, setGallery] = useState<string[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
+  const [experts, setExperts] = useState<Expert[]>([]);
   const [settings, setSettings] = useState<SiteSettings>(defaultSettings);
   const [partnershipRequests, setPartnershipRequests] = useState<PartnershipRequest[]>([]);
   const [teams, setTeams] = useState<Team[]>([]);
@@ -175,11 +191,12 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const cachedData = localStorage.getItem('pjti_data_cache');
     if (cachedData) {
       try {
-        const { registrations, news, gallery, partners, settings, partnershipRequests, teams } = JSON.parse(cachedData);
+        const { registrations, news, gallery, partners, experts, settings, partnershipRequests, teams } = JSON.parse(cachedData);
         if (registrations) setRegistrations(registrations);
         if (news) setNews(news);
         if (gallery) setGallery(gallery);
         if (partners) setPartners(partners);
+        if (experts) setExperts(experts);
         if (settings) setSettings(settings);
         if (partnershipRequests) setPartnershipRequests(partnershipRequests);
         if (teams) setTeams(teams);
@@ -211,11 +228,12 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           { data: partnerData, error: partError },
           { data: settingsData, error: settError },
           { data: prData, error: prError },
-          { data: teamsData, error: teamsError }
+          { data: teamsData, error: teamsError },
+          { data: expertData, error: expertError }
         ] = await Promise.all([
           isAuthenticated
             ? supabase.from('registrations').select('*').order('created_at', { ascending: false })
-            : supabase.from('registrations').select('id, child_name, city, photo_url'),
+            : Promise.resolve({ data: [] as any[], error: null }),
           supabase.from('news').select('*').order('created_at', { ascending: false }),
           supabase.from('gallery').select('*'),
           supabase.from('partners').select('*'),
@@ -223,7 +241,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           isAuthenticated
             ? supabase.from('partnership_requests').select('*').order('created_at', { ascending: false })
             : Promise.resolve({ data: [] as any[], error: null }),
-          supabase.from('teams').select('*').order('created_at', { ascending: false })
+          supabase.from('teams').select('*').order('created_at', { ascending: false }),
+          supabase.from('experts').select('*').order('order_index', { ascending: true })
         ]);
 
         let finalRegs: Registration[] = [];
@@ -286,6 +305,21 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           setPartners(finalPartners);
         }
 
+        let finalExperts = experts;
+        if (expertData && !expertError) {
+          finalExperts = expertData.map((e: any) => ({
+            id: e.id,
+            name: e.name,
+            role: e.role || '',
+            photoUrl: e.photo_url || '',
+            linkedinUrl: e.linkedin_url || '',
+            category: e.category || 'Expert',
+            orderIndex: e.order_index || 0,
+            isPublished: e.is_published !== false
+          }));
+          setExperts(finalExperts);
+        }
+
         if (settingsData) {
           finalSettings = {
             id: settingsData.id,
@@ -329,13 +363,13 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         }
 
         // Sauvegarder dans le cache pour la prochaine visite
+        // ⚠️ Ne jamais mettre en cache les données sensibles (inscriptions, demandes de partenariat)
         localStorage.setItem('pjti_data_cache', JSON.stringify({
-          registrations: finalRegs,
           news: finalNews,
           gallery: finalGallery,
           partners: finalPartners,
+          experts: finalExperts,
           settings: finalSettings,
-          partnershipRequests: finalPRs,
           teams: finalTeams
         }));
 
@@ -377,6 +411,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     await supabase.auth.signOut();
     setIsAuthenticated(false);
     localStorage.removeItem('admin_auth');
+    // Vider le cache pour éviter toute fuite de données après déconnexion
+    localStorage.removeItem('pjti_data_cache');
   };
 
   const addRegistration = async (reg: Omit<Registration, 'id' | 'date' | 'status'>) => {
@@ -562,6 +598,111 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const addExpert = async (expert: Omit<Expert, 'id'>) => {
+    const dbExpert = {
+      name: expert.name,
+      role: expert.role || '',
+      photo_url: expert.photoUrl || '',
+      linkedin_url: expert.linkedinUrl || '',
+      category: expert.category || 'Expert',
+      order_index: expert.orderIndex || 0,
+      is_published: expert.isPublished !== false
+    };
+
+    const { data, error } = await supabase.from('experts').insert([dbExpert]).select().single();
+    if (!error && data) {
+      const newExpert: Expert = {
+        id: data.id,
+        name: data.name,
+        role: data.role,
+        photoUrl: data.photo_url,
+        linkedinUrl: data.linkedin_url,
+        category: data.category,
+        orderIndex: data.order_index,
+        isPublished: data.is_published
+      };
+      setExperts(prev => {
+        const updated = [...prev, newExpert].sort((a, b) => a.orderIndex - b.orderIndex);
+        localStorage.setItem('pjti_data_cache', JSON.stringify({
+          registrations, news, gallery, partners, experts: updated, settings, partnershipRequests, teams
+        }));
+        return updated;
+      });
+      toast.success("Expert ajouté avec succès");
+    } else {
+      console.error("Erreur insertion Expert Supabase, tentative de repli local...", error);
+      const fallbackExpert: Expert = {
+        id: Math.random().toString(36).substring(2, 9),
+        ...expert
+      };
+      setExperts(prev => {
+        const updated = [...prev, fallbackExpert].sort((a, b) => a.orderIndex - b.orderIndex);
+        localStorage.setItem('pjti_data_cache', JSON.stringify({
+          registrations, news, gallery, partners, experts: updated, settings, partnershipRequests, teams
+        }));
+        return updated;
+      });
+      toast.warning("Enregistré localement (migration SQL en attente)");
+    }
+  };
+
+  const updateExpert = async (id: string, expert: Partial<Expert>) => {
+    const dbExpert: any = {};
+    if (expert.name !== undefined) dbExpert.name = expert.name;
+    if (expert.role !== undefined) dbExpert.role = expert.role;
+    if (expert.photoUrl !== undefined) dbExpert.photo_url = expert.photoUrl;
+    if (expert.linkedinUrl !== undefined) dbExpert.linkedin_url = expert.linkedinUrl;
+    if (expert.category !== undefined) dbExpert.category = expert.category;
+    if (expert.orderIndex !== undefined) dbExpert.order_index = expert.orderIndex;
+    if (expert.isPublished !== undefined) dbExpert.is_published = expert.isPublished;
+
+    const { error } = await supabase.from('experts').update(dbExpert).eq('id', id);
+    if (!error) {
+      setExperts(prev => {
+        const updated = prev.map(e => e.id === id ? { ...e, ...expert } : e).sort((a, b) => a.orderIndex - b.orderIndex);
+        localStorage.setItem('pjti_data_cache', JSON.stringify({
+          registrations, news, gallery, partners, experts: updated, settings, partnershipRequests, teams
+        }));
+        return updated;
+      });
+      toast.success("Expert mis à jour");
+    } else {
+      console.error("Erreur MAJ Expert Supabase, repli local...", error);
+      setExperts(prev => {
+        const updated = prev.map(e => e.id === id ? { ...e, ...expert } : e).sort((a, b) => a.orderIndex - b.orderIndex);
+        localStorage.setItem('pjti_data_cache', JSON.stringify({
+          registrations, news, gallery, partners, experts: updated, settings, partnershipRequests, teams
+        }));
+        return updated;
+      });
+      toast.info("Mis à jour localement (non synchronisé)");
+    }
+  };
+
+  const deleteExpert = async (id: string) => {
+    const { error } = await supabase.from('experts').delete().eq('id', id);
+    if (!error) {
+      setExperts(prev => {
+        const updated = prev.filter(e => e.id !== id);
+        localStorage.setItem('pjti_data_cache', JSON.stringify({
+          registrations, news, gallery, partners, experts: updated, settings, partnershipRequests, teams
+        }));
+        return updated;
+      });
+      toast.error("Expert supprimé");
+    } else {
+      console.error("Erreur suppression Expert Supabase, repli local...", error);
+      setExperts(prev => {
+        const updated = prev.filter(e => e.id !== id);
+        localStorage.setItem('pjti_data_cache', JSON.stringify({
+          registrations, news, gallery, partners, experts: updated, settings, partnershipRequests, teams
+        }));
+        return updated;
+      });
+      toast.error("Supprimé localement (non synchronisé)");
+    }
+  };
+
   const updateSettings = async (newSettings: Partial<SiteSettings>) => {
     const dbSettings: any = {};
     if (newSettings.programPrice) dbSettings.program_price = newSettings.programPrice;
@@ -729,10 +870,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   return (
     <AdminContext.Provider value={{
-      registrations, news, gallery, partners, settings, partnershipRequests, teams, isAuthenticated, isAuthLoading,
+      registrations, news, gallery, partners, experts, settings, partnershipRequests, teams, isAuthenticated, isAuthLoading,
       login, logout, addRegistration, updateRegistrationStatus, updateRegistrationPayment, deleteRegistration,
       addNews, updateNews, deleteNews, addGalleryImage, deleteGalleryImage,
-      addPartner, updatePartner, deletePartner, updateSettings,
+      addPartner, updatePartner, deletePartner,
+      addExpert, updateExpert, deleteExpert, updateSettings,
       addPartnershipRequest,
       updatePartnershipRequestStatus,
       deletePartnershipRequest,
