@@ -60,15 +60,27 @@ const Angelo = () => {
       {/* ===================== 1. HERO : TITRE + VIDÉO ===================== */}
       <section className="relative">
         <div className="absolute top-0 right-0 w-[60%] h-[600px] bg-[radial-gradient(ellipse_at_top_right,rgba(201,162,75,0.12),transparent_60%)] pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-12 grid lg:grid-cols-2 gap-8 lg:gap-10 items-center relative">
-          {/* Colonne texte */}
-          <div className="order-1 pt-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-[2.7rem] font-black leading-[1.12] mb-5">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-12 grid lg:grid-cols-2 gap-x-10 gap-y-6 relative">
+          {/* Titre */}
+          <div className="order-1 pt-2 lg:col-start-1 lg:row-start-1 lg:self-end">
+            <h1 className="text-3xl sm:text-4xl lg:text-[2.7rem] font-black leading-[1.12]">
               {s.heroTitle}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e8cd8a] to-[#c9a24b]">
                 {s.heroHighlight}
               </span>
             </h1>
+          </div>
+
+          {/* Vidéo */}
+          <div className="order-2 relative lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
+            <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.15),transparent_70%)]" />
+            <div className="relative">
+              <VideoBlock videoUrl={s.videoUrl} thumb={s.videoThumbUrl} photo={s.photoUrl} />
+            </div>
+          </div>
+
+          {/* Reste : sous-titre, CTA, chiffres */}
+          <div className="order-3 lg:col-start-1 lg:row-start-2 lg:self-start">
             <p className="text-slate-400 text-base leading-relaxed mb-8 max-w-lg">{s.heroSubtitle}</p>
 
             <GoldButton onClick={() => openReservation(featured || null)}>
@@ -82,14 +94,6 @@ const Angelo = () => {
                   <span className="text-slate-400 text-sm">{stat.label}</span>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Colonne vidéo */}
-          <div className="order-2 relative">
-            <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.15),transparent_70%)]" />
-            <div className="relative">
-              <VideoBlock videoUrl={s.videoUrl} thumb={s.videoThumbUrl} photo={s.photoUrl} />
             </div>
           </div>
         </div>
@@ -126,9 +130,14 @@ const Angelo = () => {
 
       {/* ===================== 3. QUI SUIS-JE : PHOTO + PRÉSENTATION ===================== */}
       <section className="max-w-6xl mx-auto px-5 sm:px-8 py-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-x-12 gap-y-6">
+          {/* Titre */}
+          <div className="order-1 lg:col-start-2 lg:row-start-1 lg:self-end">
+            <h2 className="text-2xl sm:text-3xl font-black">{s.aboutTitle}</h2>
+          </div>
+
           {/* Photo */}
-          <div className="relative order-2 lg:order-1">
+          <div className="relative order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2 lg:self-center">
             <div className="relative mx-auto max-w-sm lg:max-w-md">
               <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.18),transparent_70%)]" />
               <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 bg-[#0e1424] shadow-2xl">
@@ -138,9 +147,8 @@ const Angelo = () => {
             </div>
           </div>
 
-          {/* Présentation */}
-          <div className="order-1 lg:order-2">
-            <h2 className="text-2xl sm:text-3xl font-black mb-5">{s.aboutTitle}</h2>
+          {/* Présentation (sous la photo sur mobile) */}
+          <div className="order-3 lg:col-start-2 lg:row-start-2 lg:self-start">
             <div className="space-y-4">
               {s.aboutText.split('\n').filter((p) => p.trim()).map((para, i) => (
                 <p key={i} className="text-slate-300 text-base leading-relaxed">{para}</p>
