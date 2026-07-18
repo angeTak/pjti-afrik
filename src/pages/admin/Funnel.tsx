@@ -114,7 +114,7 @@ const ContentTab = () => {
 
   return (
     <div className="max-w-4xl space-y-6">
-      <Card title="En-tête (Hero)" icon={Star}>
+      <Card collapsible defaultOpen title="En-tête (Hero)" icon={Star}>
         <div className="grid sm:grid-cols-2 gap-4">
           <Input label="Nom de marque" value={data.brand} onChange={(v) => set({ brand: v })} placeholder="ANGELO" />
           <Input label="Texte du bouton principal" value={data.heroCta} onChange={(v) => set({ heroCta: v })} />
@@ -129,19 +129,19 @@ const ContentTab = () => {
           keyA="value" keyB="label" placeholderA="+500" placeholderB="entrepreneurs formés" />
       </Card>
 
-      <Card title="Vidéo (affichée dans le hero)" icon={ImageIcon}>
+      <Card collapsible defaultOpen={false} title="Vidéo (affichée dans le hero)" icon={ImageIcon}>
         <Input label="Lien de la vidéo (YouTube, Vimeo, MP4...)" value={data.videoUrl} onChange={(v) => set({ videoUrl: v })}
           placeholder="https://youtube.com/watch?v=..." />
         <Input label="Vignette de la vidéo (URL image, optionnel)" value={data.videoThumbUrl} onChange={(v) => set({ videoThumbUrl: v })} />
       </Card>
 
-      <Card title="Section « Difficultés »" icon={X}>
+      <Card collapsible defaultOpen={false} title="Section « Difficultés »" icon={X}>
         <Input label="Titre de la section" value={data.painTitle} onChange={(v) => set({ painTitle: v })} />
         <StringListEditor label="Liste des difficultés" items={data.pains} onChange={(pains) => set({ pains })}
           placeholder="ex: Vous manquez de temps..." />
       </Card>
 
-      <Card title="Section « Qui suis-je ? »" icon={Users}>
+      <Card collapsible defaultOpen={false} title="Section « Qui suis-je ? »" icon={Users}>
         <Input label="Titre de la section" value={data.aboutTitle} onChange={(v) => set({ aboutTitle: v })} placeholder="Qui suis-je ?" />
         <TextArea label="Présentation / bio (sautez une ligne pour un nouveau paragraphe)" value={data.aboutText} onChange={(v) => set({ aboutText: v })} />
         <div>
@@ -167,7 +167,7 @@ const ContentTab = () => {
         </div>
       </Card>
 
-      <Card title="Offre & compte à rebours" icon={Rocket}>
+      <Card collapsible defaultOpen={false} title="Offre & compte à rebours" icon={Rocket}>
         <Input label="Titre de la section offre" value={data.offerTitle} onChange={(v) => set({ offerTitle: v })} placeholder="Ce que je vous offre aujourd'hui" />
         <div>
           <label className="block text-sm font-bold text-slate-700 mb-1.5">Fin de l'offre (compte à rebours)</label>
@@ -178,24 +178,24 @@ const ContentTab = () => {
         </div>
       </Card>
 
-      <Card title="Section « Pour qui ? »" icon={Users}>
+      <Card collapsible defaultOpen={false} title="Section « Pour qui ? »" icon={Users}>
         <Input label="Titre de la section" value={data.audienceTitle} onChange={(v) => set({ audienceTitle: v })} />
         <PairListEditor label="Profils ciblés" items={data.audience} onChange={(audience) => set({ audience })}
           keyA="title" keyB="text" placeholderA="Entrepreneur" placeholderB="Description du profil..." textareaB />
       </Card>
 
-      <Card title="Section « Résultats »" icon={Star}>
+      <Card collapsible defaultOpen={false} title="Section « Résultats »" icon={Star}>
         <Input label="Titre de la section" value={data.resultsTitle} onChange={(v) => set({ resultsTitle: v })} />
         <StringListEditor label="Liste des résultats" items={data.results} onChange={(results) => set({ results })}
           placeholder="ex: Créer des documents professionnels..." />
       </Card>
 
-      <Card title="Section « Avis / Témoignages »" icon={Star}>
+      <Card collapsible defaultOpen={false} title="Section « Avis / Témoignages »" icon={Star}>
         <Input label="Titre de la section" value={data.reviewsTitle} onChange={(v) => set({ reviewsTitle: v })} placeholder="Ce qu'ils en disent" />
         <ImageListEditor images={data.reviews} onChange={(reviews) => set({ reviews })} uploadImage={uploadImage} />
       </Card>
 
-      <Card title="Appel à l'action final" icon={Rocket}>
+      <Card collapsible defaultOpen={false} title="Appel à l'action final" icon={Rocket}>
         <Input label="Titre" value={data.finalTitle} onChange={(v) => set({ finalTitle: v })} />
         <TextArea label="Sous-titre" value={data.finalSubtitle} onChange={(v) => set({ finalSubtitle: v })} />
         <Input label="Texte du bouton" value={data.finalCta} onChange={(v) => set({ finalCta: v })} />
@@ -483,14 +483,36 @@ const FilterChip = ({ active, onClick, label }: any) => (
 // ============================================================
 // COMPOSANTS RÉUTILISABLES
 // ============================================================
-const Card = ({ title, icon: Icon, children }: any) => (
-  <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-4">
-    <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-      <Icon className="w-5 h-5 text-purple-600" /> {title}
-    </h2>
-    {children}
-  </div>
-);
+const Card = ({ title, icon: Icon, children, collapsible = false, defaultOpen = true }: any) => {
+  const [open, setOpen] = useState(defaultOpen);
+
+  if (!collapsible) {
+    return (
+      <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-4">
+        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <Icon className="w-5 h-5 text-purple-600" /> {title}
+        </h2>
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((o: boolean) => !o)}
+        className="w-full flex items-center justify-between gap-3 p-5 text-left hover:bg-slate-50 transition-colors"
+      >
+        <span className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <Icon className="w-5 h-5 text-purple-600" /> {title}
+        </span>
+        <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && <div className="px-5 pb-6 pt-1 space-y-4">{children}</div>}
+    </div>
+  );
+};
 
 const Input = ({ label, value, onChange, placeholder }: any) => (
   <div>

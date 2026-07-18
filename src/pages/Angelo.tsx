@@ -102,7 +102,7 @@ const Angelo = () => {
       {/* ===================== 2. DOULEURS ===================== */}
       <section className="max-w-5xl mx-auto px-5 sm:px-8 py-8">
         <div className="bg-[#0e1424] border border-white/10 rounded-3xl p-7 sm:p-10">
-          <h2 className="text-2xl sm:text-3xl font-black mb-8 text-center">{s.painTitle}</h2>
+          <h2 className="text-2xl sm:text-3xl font-black mb-8">{s.painTitle}</h2>
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
             {s.pains.map((pain, i) => (
               <div key={i} className="flex items-start gap-3">
@@ -165,10 +165,10 @@ const Angelo = () => {
 
       {/* ===================== 4. CE QUE JE VOUS OFFRE + COMPTE À REBOURS ===================== */}
       <section ref={offersRef} className="max-w-6xl mx-auto px-5 sm:px-8 py-12">
-        <div className="text-center mb-10">
+        <div className="mb-10">
           <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">Offre spéciale</span>
           <h2 className="text-2xl sm:text-3xl font-black mt-2">{s.offerTitle}</h2>
-          <p className="text-slate-400 mt-3 max-w-xl mx-auto text-sm">
+          <p className="text-slate-400 mt-3 max-w-xl text-sm">
             Formations, coaching individuel ou accompagnement complet : choisissez la formule adaptée à vos objectifs.
           </p>
         </div>
@@ -191,8 +191,8 @@ const Angelo = () => {
 
       {/* ===================== 5. POUR QUI ===================== */}
       <section className="max-w-6xl mx-auto px-5 sm:px-8 py-10">
-        <h2 className="text-2xl sm:text-3xl font-black text-center mb-3">{s.audienceTitle}</h2>
-        <p className="text-slate-400 text-center mb-10 max-w-xl mx-auto text-sm">
+        <h2 className="text-2xl sm:text-3xl font-black mb-3">{s.audienceTitle}</h2>
+        <p className="text-slate-400 mb-10 max-w-xl text-sm">
           Ce programme s'adresse à tous ceux qui veulent travailler plus efficacement grâce à l'IA.
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -213,9 +213,9 @@ const Angelo = () => {
       {/* ===================== 6. RÉSULTATS ===================== */}
       <section className="max-w-5xl mx-auto px-5 sm:px-8 py-10">
         <div className="bg-gradient-to-b from-[#12182b] to-[#0e1424] border border-[#c9a24b]/20 rounded-3xl p-7 sm:p-10">
-          <div className="flex items-center justify-center gap-2 mb-8">
+          <div className="flex items-center gap-2 mb-8">
             <Star className="w-5 h-5 text-[#e8cd8a]" />
-            <h2 className="text-2xl sm:text-3xl font-black text-center">{s.resultsTitle}</h2>
+            <h2 className="text-2xl sm:text-3xl font-black">{s.resultsTitle}</h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
             {s.results.map((res, i) => (
@@ -233,7 +233,7 @@ const Angelo = () => {
       {/* ===================== 7. PROGRAMME (formation phare) ===================== */}
       {featured && featured.program.length > 0 && (
         <section className="max-w-5xl mx-auto px-5 sm:px-8 py-10">
-          <div className="text-center mb-10">
+          <div className="mb-10">
             <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">Au programme</span>
             <h2 className="text-2xl sm:text-3xl font-black mt-2">{featured.title}</h2>
             <p className="text-slate-400 text-sm mt-2">{featured.tagline}</p>
@@ -392,10 +392,10 @@ const ReviewsSection: React.FC<{ title: string; reviews: string[] }> = ({ title,
     <section className="relative py-14">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.08),transparent_65%)]" />
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">Ils témoignent</span>
           <h2 className="text-2xl sm:text-3xl font-black mt-2">{title}</h2>
-          <div className="flex items-center justify-center gap-1 mt-3">
+          <div className="flex items-center gap-1 mt-3">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-5 h-5 text-[#e8cd8a]" fill="currentColor" />
             ))}
