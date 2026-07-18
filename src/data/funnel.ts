@@ -67,6 +67,8 @@ export interface FunnelSettings {
   audience: AudienceItem[];
   resultsTitle: string;
   results: string[];
+  reviewsTitle: string;
+  reviews: string[]; // URLs des captures d'écran d'avis
   finalTitle: string;
   finalSubtitle: string;
   finalCta: string;
@@ -169,6 +171,8 @@ export const defaultFunnelSettings: FunnelSettings = {
     'Gagner plusieurs heures de travail chaque semaine.',
     "Intégrer l'IA dans votre activité quotidienne comme un véritable assistant personnel.",
   ],
+  reviewsTitle: 'Ce qu\'ils en disent',
+  reviews: [],
   finalTitle: 'Prêt à faire partie des entrepreneurs qui tirent profit de l\'IA ?',
   finalSubtitle:
     "La question n'est plus « Faut-il utiliser l'IA ? » mais « Êtes-vous prêt à en tirer profit ? ». Réservez votre place et prenez une longueur d'avance sur vos concurrents.",

@@ -284,6 +284,9 @@ const Angelo = () => {
         </section>
       )}
 
+      {/* ===================== AVIS ===================== */}
+      <ReviewsSection title={s.reviewsTitle} reviews={s.reviews} />
+
       {/* ===================== 8. CTA FINAL ===================== */}
       <section className="relative py-16">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.1),transparent_65%)]" />
@@ -374,6 +377,64 @@ const Countdown: React.FC<{ deadline: string; variant?: 'gold' | 'red' }> = ({ d
         ))}
       </div>
     </div>
+  );
+};
+
+// ---------- Section Avis (mur créatif + zoom) ----------
+const ReviewsSection: React.FC<{ title: string; reviews: string[] }> = ({ title, reviews }) => {
+  const [zoom, setZoom] = useState<string | null>(null);
+  const items = (reviews || []).filter((u) => u && u.trim());
+  if (items.length === 0) return null;
+
+  const rotations = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2', 'rotate-0', 'rotate-1', '-rotate-2'];
+
+  return (
+    <section className="relative py-14">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.08),transparent_65%)]" />
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="text-center mb-12">
+          <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">Ils témoignent</span>
+          <h2 className="text-2xl sm:text-3xl font-black mt-2">{title}</h2>
+          <div className="flex items-center justify-center gap-1 mt-3">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 text-[#e8cd8a]" fill="currentColor" />
+            ))}
+          </div>
+        </div>
+
+        {/* Mur d'avis : collage masonry incliné */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-5">
+          {items.map((url, i) => (
+            <button
+              key={i}
+              onClick={() => setZoom(url)}
+              className={`group mb-4 sm:mb-5 w-full break-inside-avoid block rounded-2xl overflow-hidden border border-[#c9a24b]/25 bg-[#0e1424] shadow-xl transition-all duration-300 ${rotations[i % rotations.length]} hover:rotate-0 hover:scale-[1.03] hover:border-[#c9a24b]/70 hover:shadow-2xl hover:shadow-[#c9a24b]/20`}
+            >
+              <img src={url} alt={`Avis ${i + 1}`} loading="lazy" className="w-full h-auto block" />
+            </button>
+          ))}
+        </div>
+        <p className="text-center text-slate-500 text-xs mt-6">Cliquez sur un avis pour l'agrandir</p>
+      </div>
+
+      {/* Zoom plein écran */}
+      {zoom && (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm"
+          onClick={() => setZoom(null)}
+        >
+          <button className="absolute top-5 right-5 text-white/70 hover:text-white" onClick={() => setZoom(null)} aria-label="Fermer">
+            <X className="w-7 h-7" />
+          </button>
+          <img
+            src={zoom}
+            alt="Avis"
+            className="max-w-full max-h-[90vh] rounded-2xl border border-[#c9a24b]/30 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+    </section>
   );
 };
 

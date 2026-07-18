@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS funnel_settings (
   audience jsonb DEFAULT '[]'::jsonb,       -- [{title, text}]
   results_title text,
   results jsonb DEFAULT '[]'::jsonb,        -- liste des résultats (strings)
+  reviews_title text,
+  reviews jsonb DEFAULT '[]'::jsonb,        -- URLs des captures d'écran d'avis
   final_title text,
   final_subtitle text,
   final_cta text,
@@ -44,6 +46,8 @@ ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS about_title text;
 ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS about_text text;
 ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS offer_title text;
 ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS offer_deadline text;
+ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS reviews_title text;
+ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS reviews jsonb DEFAULT '[]'::jsonb;
 
 -- ------------------------------------------------------------
 -- 2. FORMATIONS / OFFRES (formation, coaching, accompagnement)

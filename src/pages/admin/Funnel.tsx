@@ -190,6 +190,11 @@ const ContentTab = () => {
           placeholder="ex: Créer des documents professionnels..." />
       </Card>
 
+      <Card title="Section « Avis / Témoignages »" icon={Star}>
+        <Input label="Titre de la section" value={data.reviewsTitle} onChange={(v) => set({ reviewsTitle: v })} placeholder="Ce qu'ils en disent" />
+        <ImageListEditor images={data.reviews} onChange={(reviews) => set({ reviews })} uploadImage={uploadImage} />
+      </Card>
+
       <Card title="Appel à l'action final" icon={Rocket}>
         <Input label="Titre" value={data.finalTitle} onChange={(v) => set({ finalTitle: v })} />
         <TextArea label="Sous-titre" value={data.finalSubtitle} onChange={(v) => set({ finalSubtitle: v })} />
@@ -570,6 +575,48 @@ const PairListEditor = ({ label, items, onChange, keyA, keyB, placeholderA, plac
       </div>
       <button type="button" onClick={add} className="mt-2 flex items-center gap-2 text-sm font-bold text-purple-600 hover:text-purple-700">
         <Plus className="w-4 h-4" /> Ajouter
+      </button>
+    </div>
+  );
+};
+
+const ImageListEditor = ({ images, onChange, uploadImage }: any) => {
+  const add = () => onChange([...images, '']);
+  const update = (i: number, v: string) => { const n = [...images]; n[i] = v; onChange(n); };
+  const remove = (i: number) => onChange(images.filter((_: any, j: number) => j !== i));
+  const handleUpload = async (file: File, i: number) => {
+    const t = toast.loading('Upload de la capture...');
+    const url = await uploadImage(file, 'reviews');
+    toast.dismiss(t);
+    if (url) { update(i, url); toast.success('Capture chargée'); } else toast.error("Erreur d'upload");
+  };
+
+  return (
+    <div>
+      <label className="block text-sm font-bold text-slate-700 mb-1.5">Captures d'écran des avis</label>
+      {images.length === 0 && <p className="text-sm text-slate-400 italic mb-3">Aucune capture. Ajoutez vos captures d'écran d'avis clients ci-dessous.</p>}
+      <div className="grid sm:grid-cols-2 gap-3">
+        {images.map((img: string, i: number) => (
+          <div key={i} className="border-2 border-slate-100 rounded-xl p-3 space-y-2">
+            <div className="aspect-video rounded-lg overflow-hidden bg-slate-50 flex items-center justify-center">
+              {img ? <img src={img} alt={`Avis ${i + 1}`} className="w-full h-full object-contain" /> : <ImageIcon className="w-6 h-6 text-slate-300" />}
+            </div>
+            <input type="url" value={img} onChange={(e) => update(i, e.target.value)} placeholder="URL de la capture"
+              className="w-full px-3 py-2 rounded-lg border-2 border-slate-100 focus:border-purple-500 transition-colors text-sm" />
+            <div className="flex gap-2">
+              <input type="file" accept="image/*" id={`review-upload-${i}`} className="hidden"
+                onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0], i)} />
+              <label htmlFor={`review-upload-${i}`}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 border-2 border-dashed border-slate-200 rounded-lg text-slate-500 font-bold hover:border-purple-300 hover:text-purple-600 hover:bg-purple-50 transition-all cursor-pointer text-xs">
+                <ImageIcon className="w-4 h-4" /> Charger
+              </label>
+              <button type="button" onClick={() => remove(i)} className="px-3 text-slate-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button type="button" onClick={add} className="mt-3 flex items-center gap-2 text-sm font-bold text-purple-600 hover:text-purple-700">
+        <Plus className="w-4 h-4" /> Ajouter une capture
       </button>
     </div>
   );
