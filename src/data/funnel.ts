@@ -92,7 +92,7 @@ export interface FunnelLead {
 // Contenu par défaut de la page /angelo
 // ------------------------------------------------------------
 export const defaultFunnelSettings: FunnelSettings = {
-  brand: 'ANGELO',
+  brand: 'Formation',
   heroEyebrow: "Arrêtez de subir. Prenez une longueur d'avance.",
   heroTitle: 'Développez votre entreprise',
   heroHighlight: "grâce à l'Intelligence Artificielle",

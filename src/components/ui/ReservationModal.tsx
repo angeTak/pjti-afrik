@@ -120,7 +120,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onClose, fo
                 onChange={(v) => setForm({ ...form, phone: v })} />
               <Field icon={Mail} type="email" placeholder="Email" value={form.email}
                 onChange={(v) => setForm({ ...form, email: v })} />
-              <Field icon={MapPin} placeholder="Ville" value={form.city}
+              <Field icon={MapPin} placeholder="Pays" value={form.city}
                 onChange={(v) => setForm({ ...form, city: v })} />
 
               <div className="relative">

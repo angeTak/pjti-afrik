@@ -242,12 +242,19 @@ export const FunnelProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const submitLead = async (lead: Omit<FunnelLead, 'id' | 'created_at' | 'status'>) => {
+    // Les formations "mock" par défaut ont un id texte (ex: "ia-pro-presentiel"),
+    // alors que la colonne formation_id est de type uuid. On n'envoie l'id que
+    // s'il s'agit d'un vrai UUID (formation issue de la base), sinon null.
+    const isUuid = (v?: string | null) =>
+      !!v && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v);
+    const validFormationId = isUuid(lead.formationId) ? lead.formationId : null;
+
     const dbLead = {
       name: lead.name,
       email: lead.email || null,
       phone: lead.phone || null,
       city: lead.city || null,
-      formation_id: lead.formationId || null,
+      formation_id: validFormationId,
       formation_title: lead.formationTitle || null,
       lead_type: lead.leadType || 'reservation',
       message: lead.message || null,
@@ -264,7 +271,10 @@ export const FunnelProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       const target = formations.find((f) => f.id === lead.formationId);
       if (target) {
         const newTaken = (target.seatsTaken || 0) + 1;
-        supabase.from('formations').update({ seats_taken: newTaken }).eq('id', lead.formationId).then(() => {});
+        // Mise à jour en base uniquement pour une vraie formation (id UUID)
+        if (validFormationId) {
+          supabase.from('formations').update({ seats_taken: newTaken }).eq('id', validFormationId).then(() => {});
+        }
         setFormations((prev) => prev.map((f) => (f.id === lead.formationId ? { ...f, seatsTaken: newTaken } : f)));
       }
     }
