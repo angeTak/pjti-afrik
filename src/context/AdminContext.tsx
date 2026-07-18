@@ -113,6 +113,8 @@ interface AdminContextType {
   isAuthLoading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
+  sendPasswordReset: (email: string) => Promise<{ success: boolean; error?: string }>;
+  updatePassword: (newPassword: string) => Promise<{ success: boolean; error?: string }>;
   addRegistration: (reg: Omit<Registration, 'id' | 'date' | 'status'>) => void;
   updateRegistrationStatus: (id: string, status: Registration['status']) => void;
   updateRegistrationPayment: (id: string, data: Partial<Pick<Registration, 'amountPaid' | 'paymentMethodActual' | 'installmentsPaid' | 'photo_url'>>) => void;
@@ -413,6 +415,36 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.removeItem('admin_auth');
     // Vider le cache pour éviter toute fuite de données après déconnexion
     localStorage.removeItem('pjti_data_cache');
+  };
+
+  // Envoie un email de récupération avec un lien vers /admin/reset-password
+  const sendPasswordReset = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/admin/reset-password`,
+      });
+      if (error) {
+        return { success: false, error: error.message };
+      }
+      return { success: true };
+    } catch (error: any) {
+      console.error("Erreur d'envoi de récupération:", error);
+      return { success: false, error: error.message || 'Erreur inconnue' };
+    }
+  };
+
+  // Définit un nouveau mot de passe (nécessite une session de récupération active)
+  const updatePassword = async (newPassword: string) => {
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) {
+        return { success: false, error: error.message };
+      }
+      return { success: true };
+    } catch (error: any) {
+      console.error("Erreur de mise à jour du mot de passe:", error);
+      return { success: false, error: error.message || 'Erreur inconnue' };
+    }
   };
 
   const addRegistration = async (reg: Omit<Registration, 'id' | 'date' | 'status'>) => {
@@ -871,7 +903,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <AdminContext.Provider value={{
       registrations, news, gallery, partners, experts, settings, partnershipRequests, teams, isAuthenticated, isAuthLoading,
-      login, logout, addRegistration, updateRegistrationStatus, updateRegistrationPayment, deleteRegistration,
+      login, logout, sendPasswordReset, updatePassword, addRegistration, updateRegistrationStatus, updateRegistrationPayment, deleteRegistration,
       addNews, updateNews, deleteNews, addGalleryImage, deleteGalleryImage,
       addPartner, updatePartner, deletePartner,
       addExpert, updateExpert, deleteExpert, updateSettings,

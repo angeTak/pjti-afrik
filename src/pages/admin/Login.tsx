@@ -108,7 +108,13 @@ const AdminLogin = () => {
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+        <div className="mt-6 text-center">
+          <a href="/admin/forgot-password" className="text-sm font-bold text-purple-600 hover:text-purple-700 transition-colors">
+            Mot de passe oublié ?
+          </a>
+        </div>
+
+        <div className="mt-6 pt-6 border-t border-slate-100 text-center">
           <a href="/" className="text-sm font-bold text-slate-400 hover:text-purple-600 transition-colors">
             Retour au site public
           </a>

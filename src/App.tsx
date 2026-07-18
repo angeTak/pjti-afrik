@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import React from "react";
 import { AdminProvider } from "./context/AdminContext";
+import { FunnelProvider } from "./context/FunnelContext";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import usePageTracking from "./hooks/usePageTracking";
 import ErrorBoundary from "./ErrorBoundary";
@@ -19,10 +20,13 @@ import Programme from "./pages/Programme";
 import Actualites from "./pages/Actualites";
 import Projets from "./pages/Projets";
 import ProjectDetails from "./pages/ProjectDetails";
+import Angelo from "./pages/Angelo";
 import NotFound from "./pages/NotFound";
 
 // Admin Pages
 import AdminLogin from "./pages/admin/Login";
+import AdminForgotPassword from "./pages/admin/ForgotPassword";
+import AdminResetPassword from "./pages/admin/ResetPassword";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminRegistrations from "./pages/admin/Registrations";
 import AdminNews from "./pages/admin/News";
@@ -32,6 +36,7 @@ import AdminPartnershipRequests from "./pages/admin/PartnershipRequests";
 import AdminTeams from "./pages/admin/Teams";
 import AdminAnalytics from "./pages/admin/Analytics";
 import AdminSettings from "./pages/admin/Settings";
+import AdminFunnel from "./pages/admin/Funnel";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -62,9 +67,12 @@ const AppContent = () => {
           <Route path="/actualites" element={<Actualites />} />
           <Route path="/projets" element={<Projets />} />
           <Route path="/projets/:id" element={<ProjectDetails />} />
-          
+          <Route path="/angelo" element={<Angelo />} />
+
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
+          <Route path="/admin/reset-password" element={<AdminResetPassword />} />
           <Route path="/admin" element={<ProtectedRoute />}>
             <Route index element={<AdminDashboard />} />
             <Route path="registrations" element={<AdminRegistrations />} />
@@ -74,6 +82,7 @@ const AppContent = () => {
             <Route path="partnership-requests" element={<AdminPartnershipRequests />} />
             <Route path="teams" element={<AdminTeams />} />
             <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="funnel" element={<AdminFunnel />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
           
@@ -88,9 +97,11 @@ const AppContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AdminProvider>
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
+      <FunnelProvider>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </FunnelProvider>
     </AdminProvider>
   </QueryClientProvider>
 );
