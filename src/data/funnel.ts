@@ -59,6 +59,10 @@ export interface FunnelSettings {
   stats: FunnelStat[];
   painTitle: string;
   pains: string[];
+  aboutTitle: string;
+  aboutText: string;
+  offerTitle: string;
+  offerDeadline: string; // date ISO pour le compte à rebours
   audienceTitle: string;
   audience: AudienceItem[];
   resultsTitle: string;
@@ -111,6 +115,11 @@ export const defaultFunnelSettings: FunnelSettings = {
     "Vous entendez parler de ChatGPT et de l'IA, mais vous ne savez pas comment les utiliser efficacement.",
     "Vous avez peur de prendre du retard face à des concurrents qui utilisent déjà l'IA.",
   ],
+  aboutTitle: 'Qui suis-je ?',
+  aboutText:
+    "Je suis Angelo, formateur et consultant en Intelligence Artificielle appliquée au business. J'accompagne les entrepreneurs, freelances et entreprises à intégrer l'IA dans leur quotidien pour gagner du temps, produire davantage et développer leur activité.\n\nAprès avoir formé des centaines de professionnels, ma mission est simple : rendre l'Intelligence Artificielle accessible et concrètement rentable pour votre entreprise.",
+  offerTitle: 'Ce que je vous offre aujourd\'hui',
+  offerDeadline: '2026-12-31T23:59:00',
   audienceTitle: 'Pour qui est cette formation ?',
   audience: [
     {

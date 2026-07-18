@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Check, X, ArrowDown, Play, Sparkles, Clock, MapPin, Users, Star, ChevronRight, Award,
 } from 'lucide-react';
@@ -14,7 +14,7 @@ const getYoutubeEmbed = (url: string) => {
 };
 
 // ---------- Photo avec repli élégant ----------
-const HeroPhoto: React.FC<{ url: string; alt: string }> = ({ url, alt }) => {
+const Photo: React.FC<{ url: string; alt: string }> = ({ url, alt }) => {
   const [failed, setFailed] = useState(false);
   if (!url || failed) {
     return (
@@ -55,14 +55,12 @@ const Angelo = () => {
     setModalOpen(true);
   };
 
-  const scrollToOffers = () => offersRef.current?.scrollIntoView({ behavior: 'smooth' });
-
   return (
     <div className="min-h-screen bg-[#080c17] text-white font-sans overflow-x-hidden">
-      {/* ===================== HERO ===================== */}
+      {/* ===================== 1. HERO : TITRE + VIDÉO ===================== */}
       <section className="relative">
         <div className="absolute top-0 right-0 w-[60%] h-[600px] bg-[radial-gradient(ellipse_at_top_right,rgba(201,162,75,0.12),transparent_60%)] pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-12 grid lg:grid-cols-2 gap-8 lg:gap-4 items-center relative">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-12 grid lg:grid-cols-2 gap-8 lg:gap-10 items-center relative">
           {/* Colonne texte */}
           <div className="order-2 lg:order-1 pt-2">
             <div className="flex items-center gap-2 mb-8">
@@ -94,47 +92,20 @@ const Angelo = () => {
             </div>
           </div>
 
-          {/* Colonne photo */}
+          {/* Colonne vidéo */}
           <div className="order-1 lg:order-2 relative">
-            <div className="relative mx-auto max-w-sm lg:max-w-none">
-              <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.18),transparent_70%)]" />
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 bg-[#0e1424] shadow-2xl">
-                <HeroPhoto url={s.photoUrl} alt={s.brand} />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#080c17] via-transparent to-transparent" />
-              </div>
-
-              {/* Badge flottant */}
-              {s.stats[0] && (
-                <div className="absolute -left-3 top-10 bg-[#0e1424]/90 backdrop-blur border border-[#c9a24b]/30 rounded-2xl px-4 py-3 shadow-xl">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-[#e8cd8a]" />
-                    <div>
-                      <p className="text-lg font-black text-white leading-none">{s.stats[0].value}</p>
-                      <p className="text-[10px] text-slate-400">{s.stats[0].label}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div className="absolute -right-2 bottom-16 bg-[#0e1424]/90 backdrop-blur border border-[#c9a24b]/30 rounded-2xl px-4 py-3 shadow-xl">
-                <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-[#e8cd8a]" />
-                  <div>
-                    <p className="text-sm font-black text-white leading-none">Certifiant</p>
-                    <p className="text-[10px] text-slate-400">à la fin du programme</p>
-                  </div>
-                </div>
-              </div>
+            <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.15),transparent_70%)]" />
+            <div className="relative">
+              <VideoBlock videoUrl={s.videoUrl} thumb={s.videoThumbUrl} photo={s.photoUrl} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===================== DOULEURS ===================== */}
+      {/* ===================== 2. DOULEURS ===================== */}
       <section className="max-w-5xl mx-auto px-5 sm:px-8 py-8">
         <div className="bg-[#0e1424] border border-white/10 rounded-3xl p-7 sm:p-10">
-          <h2 className="text-2xl sm:text-3xl font-black mb-8 text-center">
-            {s.painTitle}
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-black mb-8 text-center">{s.painTitle}</h2>
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
             {s.pains.map((pain, i) => (
               <div key={i} className="flex items-start gap-3">
@@ -160,11 +131,89 @@ const Angelo = () => {
         </div>
       </div>
 
-      {/* ===================== POUR QUI ===================== */}
+      {/* ===================== 3. QUI SUIS-JE : PHOTO + PRÉSENTATION ===================== */}
       <section className="max-w-6xl mx-auto px-5 sm:px-8 py-10">
-        <h2 className="text-2xl sm:text-3xl font-black text-center mb-3">
-          {s.audienceTitle}
-        </h2>
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Photo */}
+          <div className="relative order-1">
+            <div className="relative mx-auto max-w-sm lg:max-w-md">
+              <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.18),transparent_70%)]" />
+              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 bg-[#0e1424] shadow-2xl">
+                <Photo url={s.photoUrl} alt={s.brand} />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080c17] via-transparent to-transparent" />
+              </div>
+
+              {/* Badges flottants */}
+              {s.stats[0] && (
+                <div className="absolute -left-3 top-10 bg-[#0e1424]/90 backdrop-blur border border-[#c9a24b]/30 rounded-2xl px-4 py-3 shadow-xl">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-[#e8cd8a]" />
+                    <div>
+                      <p className="text-lg font-black text-white leading-none">{s.stats[0].value}</p>
+                      <p className="text-[10px] text-slate-400">{s.stats[0].label}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="absolute -right-2 bottom-16 bg-[#0e1424]/90 backdrop-blur border border-[#c9a24b]/30 rounded-2xl px-4 py-3 shadow-xl">
+                <div className="flex items-center gap-2">
+                  <Award className="w-5 h-5 text-[#e8cd8a]" />
+                  <div>
+                    <p className="text-sm font-black text-white leading-none">Certifiant</p>
+                    <p className="text-[10px] text-slate-400">à la fin du programme</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Présentation */}
+          <div className="order-2">
+            <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">À propos</span>
+            <h2 className="text-2xl sm:text-3xl font-black mt-2 mb-5">{s.aboutTitle}</h2>
+            <div className="space-y-4">
+              {s.aboutText.split('\n').filter((p) => p.trim()).map((para, i) => (
+                <p key={i} className="text-slate-300 text-base leading-relaxed">{para}</p>
+              ))}
+            </div>
+            <div className="mt-8">
+              <GoldButton onClick={() => offersRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+                Découvrir mon offre <ChevronRight className="w-4 h-4" />
+              </GoldButton>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== 4. CE QUE JE VOUS OFFRE + COMPTE À REBOURS ===================== */}
+      <section ref={offersRef} className="max-w-6xl mx-auto px-5 sm:px-8 py-12">
+        <div className="text-center mb-10">
+          <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">Offre spéciale</span>
+          <h2 className="text-2xl sm:text-3xl font-black mt-2">{s.offerTitle}</h2>
+          <p className="text-slate-400 mt-3 max-w-xl mx-auto text-sm">
+            Formations, coaching individuel ou accompagnement complet : choisissez la formule adaptée à vos objectifs.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {published.map((f) => (
+            <OfferCard key={f.id} formation={f} onReserve={() => openReservation(f)} />
+          ))}
+        </div>
+
+        {/* Compte à rebours */}
+        <Countdown deadline={s.offerDeadline} />
+
+        <div className="text-center mt-8">
+          <GoldButton onClick={() => openReservation(featured || null)}>
+            Je profite de l'offre maintenant <ChevronRight className="w-4 h-4" />
+          </GoldButton>
+        </div>
+      </section>
+
+      {/* ===================== 5. POUR QUI ===================== */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-10">
+        <h2 className="text-2xl sm:text-3xl font-black text-center mb-3">{s.audienceTitle}</h2>
         <p className="text-slate-400 text-center mb-10 max-w-xl mx-auto text-sm">
           Ce programme s'adresse à tous ceux qui veulent travailler plus efficacement grâce à l'IA.
         </p>
@@ -183,7 +232,7 @@ const Angelo = () => {
         </div>
       </section>
 
-      {/* ===================== RÉSULTATS ===================== */}
+      {/* ===================== 6. RÉSULTATS ===================== */}
       <section className="max-w-5xl mx-auto px-5 sm:px-8 py-10">
         <div className="bg-gradient-to-b from-[#12182b] to-[#0e1424] border border-[#c9a24b]/20 rounded-3xl p-7 sm:p-10">
           <div className="flex items-center justify-center gap-2 mb-8">
@@ -203,20 +252,7 @@ const Angelo = () => {
         </div>
       </section>
 
-      {/* ===================== OFFRES ===================== */}
-      <section ref={offersRef} className="max-w-6xl mx-auto px-5 sm:px-8 py-12">
-        <h2 className="text-2xl sm:text-3xl font-black text-center mb-3">Choisissez votre formule</h2>
-        <p className="text-slate-400 text-center mb-10 max-w-xl mx-auto text-sm">
-          Formations, coaching individuel ou accompagnement complet : trouvez la formule adaptée à vos objectifs.
-        </p>
-        <div className="grid md:grid-cols-3 gap-6">
-          {published.map((f) => (
-            <OfferCard key={f.id} formation={f} onReserve={() => openReservation(f)} />
-          ))}
-        </div>
-      </section>
-
-      {/* ===================== PROGRAMME (formation phare) ===================== */}
+      {/* ===================== 7. PROGRAMME (formation phare) ===================== */}
       {featured && featured.program.length > 0 && (
         <section className="max-w-5xl mx-auto px-5 sm:px-8 py-10">
           <div className="text-center mb-10">
@@ -270,21 +306,7 @@ const Angelo = () => {
         </section>
       )}
 
-      {/* ===================== VIDÉO ===================== */}
-      <section className="max-w-3xl mx-auto px-5 sm:px-8 py-12 text-center">
-        <h2 className="text-2xl sm:text-3xl font-black mb-2">
-          Regardez la vidéo pour tout <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e8cd8a] to-[#c9a24b]">comprendre</span>
-        </h2>
-        <p className="text-slate-400 text-sm mb-8">Découvrez en quelques minutes ce que ce programme peut changer pour vous.</p>
-        <VideoBlock videoUrl={s.videoUrl} thumb={s.videoThumbUrl} photo={s.photoUrl} />
-        <div className="mt-8">
-          <GoldButton onClick={() => openReservation(featured || null)}>
-            Oui, je veux commencer maintenant
-          </GoldButton>
-        </div>
-      </section>
-
-      {/* ===================== CTA FINAL ===================== */}
+      {/* ===================== 8. CTA FINAL ===================== */}
       <section className="relative py-16">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.1),transparent_65%)]" />
         <div className="relative max-w-2xl mx-auto px-5 sm:px-8 text-center">
@@ -317,6 +339,55 @@ const Angelo = () => {
         formation={modalFormation}
         intent={modalIntent}
       />
+    </div>
+  );
+};
+
+// ---------- Compte à rebours ----------
+const Countdown: React.FC<{ deadline: string }> = ({ deadline }) => {
+  const target = deadline ? new Date(deadline).getTime() : 0;
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    if (!target) return;
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [target]);
+
+  if (!deadline || isNaN(target)) return null;
+
+  const diff = Math.max(0, target - now);
+  const expired = target - now <= 0;
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+
+  const units = [
+    { value: days, label: 'Jours' },
+    { value: hours, label: 'Heures' },
+    { value: mins, label: 'Minutes' },
+    { value: secs, label: 'Secondes' },
+  ];
+
+  return (
+    <div className="mt-10 flex flex-col items-center">
+      <div className="flex items-center gap-2 mb-4 text-[#e8cd8a]">
+        <Clock className="w-5 h-5" />
+        <span className="font-bold uppercase tracking-widest text-sm">
+          {expired ? 'Offre terminée' : "L'offre se termine dans"}
+        </span>
+      </div>
+      <div className="flex gap-3 sm:gap-4">
+        {units.map((u, i) => (
+          <div key={i} className="w-16 sm:w-20 bg-[#0e1424] border border-[#c9a24b]/30 rounded-2xl py-3 sm:py-4 text-center shadow-lg">
+            <div className="text-2xl sm:text-3xl font-black text-white tabular-nums">
+              {String(u.value).padStart(2, '0')}
+            </div>
+            <div className="text-[10px] uppercase tracking-wider text-slate-400 mt-1">{u.label}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

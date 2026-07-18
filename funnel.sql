@@ -22,6 +22,10 @@ CREATE TABLE IF NOT EXISTS funnel_settings (
   stats jsonb DEFAULT '[]'::jsonb,          -- badges flottants [{value,label}]
   pain_title text,
   pains jsonb DEFAULT '[]'::jsonb,          -- liste des difficultés (strings)
+  about_title text,                 -- section "Qui suis-je ?"
+  about_text text,                  -- bio / présentation
+  offer_title text,                 -- section "Ce que je vous offre aujourd'hui"
+  offer_deadline text,              -- date ISO du compte à rebours
   audience_title text,
   audience jsonb DEFAULT '[]'::jsonb,       -- [{title, text}]
   results_title text,
@@ -34,6 +38,12 @@ CREATE TABLE IF NOT EXISTS funnel_settings (
 
 INSERT INTO funnel_settings (id) VALUES ('main')
 ON CONFLICT (id) DO NOTHING;
+
+-- Migration pour une table funnel_settings déjà existante :
+ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS about_title text;
+ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS about_text text;
+ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS offer_title text;
+ALTER TABLE funnel_settings ADD COLUMN IF NOT EXISTS offer_deadline text;
 
 -- ------------------------------------------------------------
 -- 2. FORMATIONS / OFFRES (formation, coaching, accompagnement)
