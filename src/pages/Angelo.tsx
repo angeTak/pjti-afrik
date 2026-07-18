@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Check, X, ArrowDown, Play, Sparkles, Clock, MapPin, Users, Star, ChevronRight, Award,
+  Check, X, ArrowDown, Play, Sparkles, Clock, MapPin, Users, Star, ChevronRight,
 } from 'lucide-react';
 import { useFunnel } from '@/context/FunnelContext';
 import { Formation, formationTypeLabels } from '@/data/funnel';
@@ -62,14 +62,7 @@ const Angelo = () => {
         <div className="absolute top-0 right-0 w-[60%] h-[600px] bg-[radial-gradient(ellipse_at_top_right,rgba(201,162,75,0.12),transparent_60%)] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-12 grid lg:grid-cols-2 gap-8 lg:gap-10 items-center relative">
           {/* Colonne texte */}
-          <div className="order-2 lg:order-1 pt-2">
-            <div className="flex items-center gap-2 mb-8">
-              <span className="text-2xl font-black tracking-tight text-white">{s.brand}</span>
-              <span className="h-5 w-px bg-[#c9a24b]/50" />
-              <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">IA & Business</span>
-            </div>
-
-            <p className="text-slate-300 font-semibold mb-4">{s.heroEyebrow}</p>
+          <div className="order-1 pt-2">
             <h1 className="text-3xl sm:text-4xl lg:text-[2.7rem] font-black leading-[1.12] mb-5">
               {s.heroTitle}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e8cd8a] to-[#c9a24b]">
@@ -93,7 +86,7 @@ const Angelo = () => {
           </div>
 
           {/* Colonne vidéo */}
-          <div className="order-1 lg:order-2 relative">
+          <div className="order-2 relative">
             <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.15),transparent_70%)]" />
             <div className="relative">
               <VideoBlock videoUrl={s.videoUrl} thumb={s.videoThumbUrl} photo={s.photoUrl} />
@@ -135,48 +128,25 @@ const Angelo = () => {
       <section className="max-w-6xl mx-auto px-5 sm:px-8 py-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Photo */}
-          <div className="relative order-1">
+          <div className="relative order-2 lg:order-1">
             <div className="relative mx-auto max-w-sm lg:max-w-md">
               <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.18),transparent_70%)]" />
               <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 bg-[#0e1424] shadow-2xl">
                 <Photo url={s.photoUrl} alt={s.brand} />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#080c17] via-transparent to-transparent" />
               </div>
-
-              {/* Badges flottants */}
-              {s.stats[0] && (
-                <div className="absolute -left-3 top-10 bg-[#0e1424]/90 backdrop-blur border border-[#c9a24b]/30 rounded-2xl px-4 py-3 shadow-xl">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-[#e8cd8a]" />
-                    <div>
-                      <p className="text-lg font-black text-white leading-none">{s.stats[0].value}</p>
-                      <p className="text-[10px] text-slate-400">{s.stats[0].label}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div className="absolute -right-2 bottom-16 bg-[#0e1424]/90 backdrop-blur border border-[#c9a24b]/30 rounded-2xl px-4 py-3 shadow-xl">
-                <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-[#e8cd8a]" />
-                  <div>
-                    <p className="text-sm font-black text-white leading-none">Certifiant</p>
-                    <p className="text-[10px] text-slate-400">à la fin du programme</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           {/* Présentation */}
-          <div className="order-2">
-            <span className="text-[#e8cd8a] text-xs font-bold uppercase tracking-widest">À propos</span>
-            <h2 className="text-2xl sm:text-3xl font-black mt-2 mb-5">{s.aboutTitle}</h2>
+          <div className="order-1 lg:order-2">
+            <h2 className="text-2xl sm:text-3xl font-black mb-5">{s.aboutTitle}</h2>
             <div className="space-y-4">
               {s.aboutText.split('\n').filter((p) => p.trim()).map((para, i) => (
                 <p key={i} className="text-slate-300 text-base leading-relaxed">{para}</p>
               ))}
             </div>
-            <div className="mt-8">
+            <div className="mt-8 text-center lg:text-left">
               <GoldButton onClick={() => offersRef.current?.scrollIntoView({ behavior: 'smooth' })}>
                 Découvrir mon offre <ChevronRight className="w-4 h-4" />
               </GoldButton>
@@ -311,8 +281,9 @@ const Angelo = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,162,75,0.1),transparent_65%)]" />
         <div className="relative max-w-2xl mx-auto px-5 sm:px-8 text-center">
           <h2 className="text-2xl sm:text-4xl font-black leading-tight mb-4">{s.finalTitle}</h2>
-          <p className="text-slate-400 mb-8 leading-relaxed">{s.finalSubtitle}</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <p className="text-slate-400 mb-6 leading-relaxed">{s.finalSubtitle}</p>
+          <Countdown deadline={s.offerDeadline} variant="red" />
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
             <GoldButton onClick={() => openReservation(featured || null)}>{s.finalCta}</GoldButton>
             <button
               onClick={() => openReservation(null, 'contact')}
@@ -344,7 +315,7 @@ const Angelo = () => {
 };
 
 // ---------- Compte à rebours ----------
-const Countdown: React.FC<{ deadline: string }> = ({ deadline }) => {
+const Countdown: React.FC<{ deadline: string; variant?: 'gold' | 'red' }> = ({ deadline, variant = 'gold' }) => {
   const target = deadline ? new Date(deadline).getTime() : 0;
   const [now, setNow] = useState(Date.now());
 
@@ -370,17 +341,23 @@ const Countdown: React.FC<{ deadline: string }> = ({ deadline }) => {
     { value: secs, label: 'Secondes' },
   ];
 
+  const isRed = variant === 'red';
+  const accentText = isRed ? 'text-red-400' : 'text-[#e8cd8a]';
+  const boxBg = isRed ? 'bg-red-950/30' : 'bg-[#0e1424]';
+  const boxBorder = isRed ? 'border-red-500/50' : 'border-[#c9a24b]/30';
+  const boxShadow = isRed ? 'shadow-lg shadow-red-900/30' : 'shadow-lg';
+
   return (
-    <div className="mt-10 flex flex-col items-center">
-      <div className="flex items-center gap-2 mb-4 text-[#e8cd8a]">
-        <Clock className="w-5 h-5" />
+    <div className="mt-8 flex flex-col items-center">
+      <div className={`flex items-center gap-2 mb-4 ${accentText}`}>
+        <Clock className={`w-5 h-5 ${isRed ? 'animate-pulse' : ''}`} />
         <span className="font-bold uppercase tracking-widest text-sm">
           {expired ? 'Offre terminée' : "L'offre se termine dans"}
         </span>
       </div>
       <div className="flex gap-3 sm:gap-4">
         {units.map((u, i) => (
-          <div key={i} className="w-16 sm:w-20 bg-[#0e1424] border border-[#c9a24b]/30 rounded-2xl py-3 sm:py-4 text-center shadow-lg">
+          <div key={i} className={`w-16 sm:w-20 ${boxBg} border ${boxBorder} rounded-2xl py-3 sm:py-4 text-center ${boxShadow}`}>
             <div className="text-2xl sm:text-3xl font-black text-white tabular-nums">
               {String(u.value).padStart(2, '0')}
             </div>

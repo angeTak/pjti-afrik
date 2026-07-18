@@ -119,7 +119,6 @@ const ContentTab = () => {
           <Input label="Nom de marque" value={data.brand} onChange={(v) => set({ brand: v })} placeholder="ANGELO" />
           <Input label="Texte du bouton principal" value={data.heroCta} onChange={(v) => set({ heroCta: v })} />
         </div>
-        <Input label="Petite phrase d'accroche (au-dessus du titre)" value={data.heroEyebrow} onChange={(v) => set({ heroEyebrow: v })} />
         <div className="grid sm:grid-cols-2 gap-4">
           <Input label="Titre principal" value={data.heroTitle} onChange={(v) => set({ heroTitle: v })} />
           <Input label="Partie du titre en doré" value={data.heroHighlight} onChange={(v) => set({ heroHighlight: v })} />

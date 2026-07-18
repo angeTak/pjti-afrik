@@ -176,14 +176,14 @@ export const defaultFunnelSettings: FunnelSettings = {
 };
 
 // ------------------------------------------------------------
-// Offres par défaut (formation phare + coaching + accompagnement)
+// Offres par défaut (2 formats : en présentiel + en ligne)
 // ------------------------------------------------------------
 export const defaultFormations: Formation[] = [
   {
-    id: 'ia-pro-business',
+    id: 'ia-pro-presentiel',
     type: 'formation',
     title: 'IA PRO BUSINESS',
-    category: 'Programme Entrepreneur',
+    category: 'Formation en présentiel',
     tagline: "Travaillez jusqu'à 5 fois plus vite grâce à l'Intelligence Artificielle.",
     description:
       "En seulement 3 jours, apprenez à utiliser les meilleurs outils d'IA pour développer votre entreprise, automatiser vos tâches et produire davantage en moins de temps. Ne laissez pas vos concurrents prendre de l'avance : faites de l'Intelligence Artificielle votre meilleur collaborateur et concentrez-vous sur ce qui compte vraiment — la croissance de votre entreprise.",
@@ -192,7 +192,7 @@ export const defaultFormations: Formation[] = [
     currency: 'FCFA',
     oldPrice: '250 000',
     duration: '3 jours intensifs',
-    format: 'Formation pratique — présentiel & en ligne',
+    format: 'En présentiel — en salle, cas pratiques',
     seatsTotal: 20,
     seatsTaken: 13,
     highlights: [
@@ -252,60 +252,76 @@ export const defaultFormations: Formation[] = [
     orderIndex: 0,
   },
   {
-    id: 'coaching-ia-1-1',
-    type: 'coaching',
-    title: 'Coaching IA Business — 1:1',
-    category: 'Accompagnement individuel',
-    tagline: "Un accompagnement personnalisé pour intégrer l'IA à VOTRE activité.",
+    id: 'ia-pro-en-ligne',
+    type: 'formation',
+    title: 'IA PRO BUSINESS',
+    category: 'Formation en ligne',
+    tagline: "Le même programme complet, en direct et où que vous soyez.",
     description:
-      "Des séances individuelles avec Angelo pour appliquer l'Intelligence Artificielle à votre métier précis : vos outils, vos processus, vos objectifs. On construit ensemble votre système IA sur-mesure, étape par étape.",
+      "Exactement la même formation IA PRO BUSINESS, suivie 100% en ligne et en direct par visioconférence. Suivez les 3 jours depuis chez vous, participez aux ateliers en temps réel et profitez des replays. Idéal si vous ne pouvez pas vous déplacer.",
     image: '',
-    price: '75 000',
+    price: '100 000',
     currency: 'FCFA',
-    duration: '4 séances de 1h',
-    format: 'Visioconférence ou présentiel',
-    seatsTotal: 8,
-    seatsTaken: 3,
+    oldPrice: '180 000',
+    duration: '3 jours intensifs',
+    format: 'En ligne — en direct par visioconférence',
+    seatsTotal: 0,
+    seatsTaken: 0,
     highlights: [
-      'Diagnostic personnalisé de votre activité',
-      'Plan d\'action IA sur-mesure',
-      'Suivi individuel entre les séances',
-      'Sélection d\'outils adaptés à votre métier',
+      'Sessions en direct par visioconférence',
+      'Replay disponible après chaque journée',
+      'Exercices et ateliers guidés en temps réel',
+      'Certificat de participation remis à la fin',
     ],
     audience: [],
-    program: [],
-    bonus: ['Templates personnalisés', 'Support WhatsApp prioritaire'],
+    program: [
+      {
+        day: 'Jour 1',
+        title: "Découvrir et maîtriser l'Intelligence Artificielle",
+        items: [
+          "Comprendre les fondamentaux de l'IA",
+          'Découvrir ChatGPT et les meilleurs outils IA',
+          "Maîtriser l'art du Prompt Engineering",
+          'Apprendre à obtenir des réponses précises et pertinentes',
+          'Créer vos premiers assistants IA adaptés à votre activité',
+        ],
+      },
+      {
+        day: 'Jour 2',
+        title: "Développer son entreprise avec l'IA",
+        items: [
+          'Construire un Business Model et un Business Plan',
+          'Réaliser une étude de marché',
+          'Définir une stratégie commerciale',
+          'Rédiger des propositions commerciales convaincantes',
+          'Créer une stratégie de communication performante',
+          "Développer votre marketing grâce à l'IA",
+        ],
+      },
+      {
+        day: 'Jour 3',
+        title: 'Produire plus en moins de temps',
+        items: [
+          'Créer des contenus professionnels',
+          "Générer des images et visuels avec l'IA",
+          'Concevoir des présentations professionnelles',
+          "Organiser votre travail avec l'IA",
+          "Découvrir les bases de l'automatisation",
+          'Construire votre plan d\'action IA personnalisé',
+        ],
+      },
+    ],
+    bonus: [
+      'Support de formation complet',
+      'Bibliothèque de prompts professionnels',
+      'Sélection des meilleurs outils IA',
+      'Modèles de documents prêts à l\'emploi',
+      'Certificat de fin de formation',
+      'Accès à un groupe privé d\'accompagnement',
+    ],
     isPublished: true,
     isFeatured: false,
     orderIndex: 1,
-  },
-  {
-    id: 'accompagnement-90j',
-    type: 'accompagnement',
-    title: 'Accompagnement Croissance — 90 jours',
-    category: 'Programme premium',
-    tagline: "3 mois pour transformer votre entreprise avec l'IA, à nos côtés.",
-    description:
-      "Un accompagnement complet sur 90 jours pour déployer l'IA dans toute votre entreprise : automatisation, marketing, contenu, organisation. Sessions collectives, suivi individuel et mise en œuvre concrète pour des résultats mesurables.",
-    image: '',
-    price: '350 000',
-    currency: 'FCFA',
-    duration: '90 jours',
-    format: 'Suivi hybride + communauté privée',
-    seatsTotal: 12,
-    seatsTaken: 5,
-    highlights: [
-      'Audit complet de votre entreprise',
-      'Déploiement de systèmes IA opérationnels',
-      'Sessions de groupe hebdomadaires',
-      'Suivi individuel mensuel',
-    ],
-    audience: [],
-    program: [],
-    bonus: ['Accès à vie à la communauté', 'Toutes les formations incluses'],
-    isPublished: true,
-    isFeatured: false,
-    orderIndex: 2,
   },
 ];
 
