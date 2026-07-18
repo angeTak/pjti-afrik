@@ -124,9 +124,6 @@ const ContentTab = () => {
           <Input label="Partie du titre en doré" value={data.heroHighlight} onChange={(v) => set({ heroHighlight: v })} />
         </div>
         <TextArea label="Sous-titre / description" value={data.heroSubtitle} onChange={(v) => set({ heroSubtitle: v })} />
-
-        <PairListEditor label="Chiffres clés (badges)" items={data.stats} onChange={(stats) => set({ stats })}
-          keyA="value" keyB="label" placeholderA="+500" placeholderB="entrepreneurs formés" />
       </Card>
 
       <Card collapsible defaultOpen={false} title="Vidéo (affichée dans le hero)" icon={ImageIcon}>
